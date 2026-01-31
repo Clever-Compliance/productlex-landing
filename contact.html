@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — ProductLex AI</title>
+  <meta name="description" content="Get in touch with ProductLex AI. Request a demo, ask about our compliance platform, or reach our team in Stockholm.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --color-bg: #ffffff;
+      --color-bg-warm: #fafaf8;
+      --color-bg-soft: #f4f3f0;
+      --color-bg-muted: #edecea;
+      --color-surface: #e8e7e4;
+      --color-border: #dddcd9;
+      --color-border-subtle: #e8e7e4;
+      --color-text: #1a1a1a;
+      --color-text-secondary: #5a5a58;
+      --color-text-tertiary: #8a8a86;
+      --color-accent: #4f46e5;
+      --color-accent-light: #6366f1;
+      --color-accent-bg: #eef2ff;
+      --color-accent-soft: rgba(79, 70, 229, 0.08);
+      --color-green: #16a34a;
+      --color-green-bg: #f0fdf4;
+      --color-dark: #111111;
+      --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --max-width: 1180px;
+      --radius: 12px;
+      --radius-lg: 20px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* Grain overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 256px;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 18px 0;
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid transparent;
+      transition: all 0.3s;
+    }
+
+    nav.scrolled {
+      border-bottom-color: var(--color-border);
+      background: rgba(255,255,255,0.92);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 19px;
+      letter-spacing: -0.03em;
+      color: var(--color-text);
+    }
+
+    .nav-logo-icon {
+      width: 34px;
+      height: 34px;
+      background: var(--color-dark);
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 800;
+      color: white;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--color-text); }
+    .nav-links a.active { color: var(--color-text); font-weight: 600; }
+
+    .nav-cta { display: flex; align-items: center; gap: 12px; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 600;
+      padding: 10px 22px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--color-text-secondary);
+    }
+
+    .btn-ghost:hover { color: var(--color-text); }
+
+    .btn-primary {
+      background: var(--color-dark);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #000;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+      transform: translateY(-1px);
+    }
+
+    .btn-accent {
+      background: var(--color-accent);
+      color: white;
+    }
+
+    .btn-accent:hover {
+      background: var(--color-accent-light);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--color-text);
+      border: 1.5px solid var(--color-border);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--color-text-tertiary);
+      background: var(--color-bg-warm);
+    }
+
+    .btn-lg {
+      padding: 14px 32px;
+      font-size: 15px;
+    }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      padding: 160px 0 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-header-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, var(--color-bg-warm) 0%, var(--color-bg) 100%);
+      z-index: -2;
+    }
+
+    .page-header-pattern {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      opacity: 0.4;
+      background-image:
+        radial-gradient(circle at 20% 30%, rgba(79, 70, 229, 0.06) 0%, transparent 50%),
+        radial-gradient(circle at 80% 60%, rgba(79, 70, 229, 0.04) 0%, transparent 50%);
+    }
+
+    .page-header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px 6px 8px;
+      background: var(--color-accent-bg);
+      border: 1px solid rgba(79, 70, 229, 0.12);
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-accent);
+      margin-bottom: 24px;
+      letter-spacing: 0.01em;
+    }
+
+    .page-header-badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--color-accent);
+    }
+
+    .page-header h1 {
+      font-size: clamp(36px, 5vw, 52px);
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .page-header p {
+      font-size: 18px;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+      max-width: 580px;
+    }
+
+    /* ── CONTACT LAYOUT ── */
+    .contact-section {
+      padding: 80px 0 120px;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    /* ── CONTACT INFO SIDEBAR ── */
+    .contact-info h3 {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .contact-info > p {
+      font-size: 15px;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+      margin-bottom: 40px;
+    }
+
+    .contact-detail {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      margin-bottom: 28px;
+    }
+
+    .contact-detail-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--color-accent-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .contact-detail-icon svg {
+      width: 20px;
+      height: 20px;
+      color: var(--color-accent);
+    }
+
+    .contact-detail-text h4 {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--color-text-tertiary);
+      margin-bottom: 4px;
+    }
+
+    .contact-detail-text p {
+      font-size: 15px;
+      color: var(--color-text);
+      line-height: 1.6;
+    }
+
+    .contact-detail-text a {
+      color: var(--color-accent);
+      transition: color 0.2s;
+    }
+
+    .contact-detail-text a:hover {
+      color: var(--color-accent-light);
+    }
+
+    /* ── FORM ── */
+    .contact-form-card {
+      background: var(--color-bg-warm);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+    }
+
+    .contact-form-card h3 {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-text);
+      margin-bottom: 6px;
+    }
+
+    .form-group label .optional {
+      font-weight: 400;
+      color: var(--color-text-tertiary);
+      font-size: 12px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      font-family: var(--font);
+      font-size: 14px;
+      padding: 11px 16px;
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius);
+      background: var(--color-bg);
+      color: var(--color-text);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: var(--color-text-tertiary);
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.08);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 130px;
+    }
+
+    .form-submit {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 8px;
+    }
+
+    .form-submit .btn {
+      padding: 13px 32px;
+      font-size: 15px;
+    }
+
+    .form-note {
+      font-size: 12px;
+      color: var(--color-text-tertiary);
+      line-height: 1.6;
+    }
+
+    /* ── DEMO CTA ── */
+    .demo-cta {
+      padding: 100px 0;
+      background: var(--color-bg-soft);
+      border-top: 1px solid var(--color-border-subtle);
+    }
+
+    .demo-cta-inner {
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .demo-cta-inner h2 {
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .demo-cta-inner p {
+      font-size: 17px;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+      margin-bottom: 36px;
+    }
+
+    .demo-cta-btns {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 56px 0 36px;
+      border-top: 1px solid var(--color-border-subtle);
+      background: var(--color-bg-warm);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 36px;
+    }
+
+    .footer-brand p {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+      margin-top: 16px;
+    }
+
+    .footer-col h4 {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-text-tertiary);
+      margin-bottom: 14px;
+    }
+
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .footer-col a { font-size: 13px; color: var(--color-text-tertiary); transition: color 0.2s; }
+    .footer-col a:hover { color: var(--color-text-secondary); }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 28px;
+      border-top: 1px solid var(--color-border-subtle);
+      font-size: 12px;
+      color: var(--color-text-tertiary);
+    }
+
+    .footer-legal { display: flex; gap: 24px; }
+
+    /* ── ANIMATIONS ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      .container { padding: 0 24px; }
+      .nav-inner { padding: 0 24px; }
+      .nav-links { display: none; }
+      .page-header { padding: 140px 0 60px; }
+      .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
+    }
+
+    @media (max-width: 600px) {
+      .form-row { grid-template-columns: 1fr; }
+      .demo-cta-btns { flex-direction: column; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+    }
+
+    /* COOKIE CONSENT BAR */
+    .cookie-consent {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 9998;
+      background: rgba(255, 255, 255, 0.97);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-top: 1px solid var(--color-border);
+      padding: 20px 0;
+      box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.06);
+      transform: translateY(100%);
+      transition: transform 0.4s ease;
+    }
+    .cookie-consent.visible { transform: translateY(0); }
+    .cookie-consent-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .cookie-consent-text {
+      font-size: 14px;
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+      flex: 1;
+    }
+    .cookie-consent-text a {
+      color: var(--color-accent);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .cookie-consent-text a:hover { color: var(--color-accent-light); }
+    .cookie-consent-buttons {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .cookie-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 9px 20px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .cookie-btn-accept { background: var(--color-accent); color: white; }
+    .cookie-btn-accept:hover { background: var(--color-accent-light); transform: translateY(-1px); }
+    .cookie-btn-manage { background: transparent; color: var(--color-text-secondary); border: 1.5px solid var(--color-border); }
+    .cookie-btn-manage:hover { border-color: var(--color-text-tertiary); color: var(--color-text); background: var(--color-bg-warm); }
+    @media (max-width: 960px) { .cookie-consent-inner { padding: 0 24px; } }
+    @media (max-width: 700px) {
+      .cookie-consent-inner { flex-direction: column; text-align: center; }
+      .cookie-consent-buttons { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="nav-logo-icon">P</div>
+        ProductLex
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="careers.html">Careers</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="signin.html" class="btn btn-ghost">Sign in</a>
+        <a href="contact.html" class="btn btn-primary">Request Demo</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <section class="page-header">
+    <div class="page-header-bg"></div>
+    <div class="page-header-pattern"></div>
+    <div class="container">
+      <div class="page-header-badge">
+        <span class="page-header-badge-dot"></span>
+        Get in touch
+      </div>
+      <h1>Let's Talk Compliance</h1>
+      <p>Whether you're exploring the platform, ready to schedule a demo, or have a specific compliance challenge — we'd love to hear from you.</p>
+    </div>
+  </section>
+
+  <!-- CONTACT SECTION -->
+  <section class="contact-section">
+    <div class="container">
+      <div class="contact-grid">
+
+        <!-- Left: Contact Info -->
+        <div class="contact-info fade-in">
+          <h3>Contact Information</h3>
+          <p>Reach out to our team directly or use the form. We typically respond within one business day.</p>
+
+          <div class="contact-detail">
+            <div class="contact-detail-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div class="contact-detail-text">
+              <h4>Email</h4>
+              <p><a href="mailto:carl@productlex.com">carl@productlex.com</a></p>
+            </div>
+          </div>
+
+          <div class="contact-detail">
+            <div class="contact-detail-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div class="contact-detail-text">
+              <h4>Address</h4>
+              <p>ProductLex AI<br>Stockholm, Sweden</p>
+            </div>
+          </div>
+
+          <div class="contact-detail">
+            <div class="contact-detail-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </div>
+            <div class="contact-detail-text">
+              <h4>Website</h4>
+              <p><a href="index.html">productlex.com</a></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Contact Form -->
+        <div class="contact-form-card fade-in">
+          <h3>Send Us a Message</h3>
+          <form action="https://formspree.io/f/xcontact" method="POST" id="contactForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" placeholder="Your full name" required>
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="you@company.com" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="title">Title <span class="optional">(optional)</span></label>
+                <input type="text" id="title" name="title" placeholder="e.g. Head of Compliance">
+              </div>
+              <div class="form-group">
+                <label for="company">Company <span class="optional">(optional)</span></label>
+                <input type="text" id="company" name="company" placeholder="Your company name">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" placeholder="Tell us about your compliance needs or ask a question..." required></textarea>
+            </div>
+            <div class="form-submit">
+              <button type="submit" class="btn btn-primary btn-lg">Send Message</button>
+              <span class="form-note">Or email us directly at <a href="mailto:carl@productlex.com" style="color: var(--color-accent);">carl@productlex.com</a></span>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- REQUEST A DEMO CTA -->
+  <section class="demo-cta" id="demo">
+    <div class="container">
+      <div class="demo-cta-inner fade-in">
+        <h2>Ready to See ProductLex in Action?</h2>
+        <p>Schedule a personalized demo with our team. We'll walk you through how ProductLex AI can transform your compliance workflow — tailored to your products and markets.</p>
+        <div class="demo-cta-btns">
+          <a href="mailto:carl@productlex.com?subject=Demo%20Request%20%E2%80%93%20ProductLex%20AI" class="btn btn-accent btn-lg">Request a Demo</a>
+          <a href="index.html#platform" class="btn btn-outline btn-lg">Explore the Platform</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+
+  <!-- Cookie Consent Bar -->
+  <div class="cookie-consent" id="cookieConsent">
+    <div class="cookie-consent-inner">
+      <p class="cookie-consent-text">We use cookies to improve your experience. By continuing to browse, you agree to our use of cookies. Read our <a href="cookies.html">Cookie Policy</a>.</p>
+      <div class="cookie-consent-buttons">
+        <button class="cookie-btn cookie-btn-manage" onclick="manageCookies()">Manage Preferences</button>
+        <button class="cookie-btn cookie-btn-accept" onclick="acceptCookies()">Accept All</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo"><div class="nav-logo-icon">P</div>ProductLex</a>
+          <p>Intelligent compliance automation for enterprise manufacturers. Total compliance control. Predictable market expansion.</p>
+        </div>
+        <div class="footer-col"><h4>Platform</h4><ul><li><a href="index.html#platform">Compliance Map</a></li><li><a href="index.html#ai-engine">AI Engine</a></li><li><a href="index.html#features">Regulatory Intelligence</a></li><li><a href="index.html#showcase">Monitoring</a></li><li><a href="documentation.html">API</a></li></ul></div>
+        <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About</a></li><li><a href="careers.html">Careers</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+        <div class="footer-col"><h4>Resources</h4><ul><li><a href="documentation.html">Documentation</a></li><li><a href="documentation.html">API Reference</a></li></ul></div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 ProductLex AI.</span>
+        <div class="footer-legal"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="security.html">Security</a><a href="cookies.html">Cookies</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Nav scroll effect
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    // Fade-in animations
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
+    document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', function(e) {
+        e.preventDefault();
+        const t = document.querySelector(this.getAttribute('href'));
+        if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    // Form fallback: if Formspree is not configured, fall back to mailto
+    const form = document.getElementById('contactForm');
+    form.addEventListener('submit', function(e) {
+      const action = form.getAttribute('action');
+      if (action.includes('xcontact')) {
+        e.preventDefault();
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const title = document.getElementById('title').value;
+        const company = document.getElementById('company').value;
+        const message = document.getElementById('message').value;
+        const subject = encodeURIComponent('Contact from ' + name + (company ? ' at ' + company : ''));
+        const body = encodeURIComponent(
+          'Name: ' + name + '\n' +
+          'Email: ' + email + '\n' +
+          (title ? 'Title: ' + title + '\n' : '') +
+          (company ? 'Company: ' + company + '\n' : '') +
+          '\n' + message
+        );
+        window.location.href = 'mailto:carl@productlex.com?subject=' + subject + '&body=' + body;
+      }
+    });
+  
+    // Cookie consent
+    function acceptCookies() {
+      localStorage.setItem('cookieConsent', 'accepted');
+      document.getElementById('cookieConsent').classList.remove('visible');
+    }
+    function manageCookies() {
+      localStorage.setItem('cookieConsent', 'essential');
+      document.getElementById('cookieConsent').classList.remove('visible');
+    }
+    (function() {
+      if (!localStorage.getItem('cookieConsent')) {
+        setTimeout(function() {
+          document.getElementById('cookieConsent').classList.add('visible');
+        }, 500);
+      }
+    })();
+  </script>
+</body>
+</html>

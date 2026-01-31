@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog — ProductLex AI | Insights & Intelligence</title>
+  <meta name="description" content="Insights on AI-powered compliance, regulatory intelligence, and market expansion. Stay ahead with ProductLex AI thought leadership.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --color-bg: #ffffff;
+      --color-bg-warm: #fafaf8;
+      --color-bg-soft: #f4f3f0;
+      --color-bg-muted: #edecea;
+      --color-surface: #e8e7e4;
+      --color-border: #dddcd9;
+      --color-border-subtle: #e8e7e4;
+      --color-text: #1a1a1a;
+      --color-text-secondary: #5a5a58;
+      --color-text-tertiary: #8a8a86;
+      --color-accent: #4f46e5;
+      --color-accent-light: #6366f1;
+      --color-accent-bg: #eef2ff;
+      --color-accent-soft: rgba(79, 70, 229, 0.08);
+      --color-green: #16a34a;
+      --color-green-bg: #f0fdf4;
+      --color-amber: #d97706;
+      --color-red: #dc2626;
+      --color-dark: #111111;
+      --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --max-width: 1180px;
+      --section-padding: 140px 0;
+      --radius: 12px;
+      --radius-lg: 20px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* Grain overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 256px;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    /* -- NAV -- */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 18px 0;
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid transparent;
+      transition: all 0.3s;
+    }
+
+    nav.scrolled {
+      border-bottom-color: var(--color-border);
+      background: rgba(255,255,255,0.92);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 19px;
+      letter-spacing: -0.03em;
+      color: var(--color-text);
+    }
+
+    .nav-logo-icon {
+      width: 34px;
+      height: 34px;
+      background: var(--color-dark);
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 800;
+      color: white;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--color-text); }
+    .nav-links a.active { color: var(--color-accent); }
+
+    .nav-cta { display: flex; align-items: center; gap: 12px; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 600;
+      padding: 10px 22px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--color-text-secondary);
+    }
+
+    .btn-ghost:hover { color: var(--color-text); }
+
+    .btn-primary {
+      background: var(--color-dark);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #000;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--color-text);
+      border: 1.5px solid var(--color-border);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--color-text-tertiary);
+      background: var(--color-bg-warm);
+    }
+
+    /* -- HERO -- */
+    .blog-hero {
+      padding: 160px 0 80px;
+      background: var(--color-bg-warm);
+      text-align: center;
+    }
+
+    .blog-hero-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--color-accent-bg);
+      color: var(--color-accent);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 16px;
+      border-radius: 50px;
+      margin-bottom: 24px;
+    }
+
+    .blog-hero h1 {
+      font-size: 52px;
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .blog-hero p {
+      font-size: 18px;
+      color: var(--color-text-secondary);
+      max-width: 560px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* -- FEATURED ARTICLE -- */
+    .blog-featured {
+      padding: 80px 0 0;
+    }
+
+    .featured-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: center;
+      background: var(--color-bg-warm);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 48px;
+      transition: box-shadow 0.3s;
+      cursor: default;
+    }
+
+    .featured-card:hover {
+      box-shadow: 0 8px 40px rgba(0,0,0,0.06);
+    }
+
+    .featured-image {
+      background: linear-gradient(135deg, var(--color-accent-bg), var(--color-bg-soft));
+      border-radius: var(--radius);
+      height: 320px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .featured-image-inner {
+      width: 80%;
+      height: 70%;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 24px rgba(79, 70, 229, 0.08);
+      display: flex;
+      flex-direction: column;
+      padding: 24px;
+      gap: 12px;
+    }
+
+    .featured-image-bar {
+      height: 8px;
+      border-radius: 4px;
+      background: var(--color-accent);
+      opacity: 0.15;
+    }
+
+    .featured-image-bar:nth-child(1) { width: 70%; opacity: 0.3; background: var(--color-accent); }
+    .featured-image-bar:nth-child(2) { width: 90%; }
+    .featured-image-bar:nth-child(3) { width: 50%; }
+    .featured-image-bar:nth-child(4) { width: 80%; }
+    .featured-image-bar:nth-child(5) { width: 40%; }
+
+    .featured-content { display: flex; flex-direction: column; gap: 16px; }
+
+    .featured-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .category-tag {
+      display: inline-flex;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 50px;
+      background: var(--color-accent-bg);
+      color: var(--color-accent);
+    }
+
+    .category-tag.technology { background: #f0fdf4; color: #16a34a; }
+    .category-tag.guide { background: #fff7ed; color: #d97706; }
+    .category-tag.insights { background: #faf5ff; color: #9333ea; }
+
+    .article-date {
+      font-size: 13px;
+      color: var(--color-text-tertiary);
+    }
+
+    .featured-content h2 {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      line-height: 1.3;
+    }
+
+    .featured-content .excerpt {
+      font-size: 16px;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+    }
+
+    /* Read More / Read Less buttons */
+    .read-more-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-accent);
+      transition: gap 0.2s;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: var(--font);
+      padding: 0;
+    }
+
+    .read-more-btn:hover { gap: 10px; }
+
+    .read-more-btn svg {
+      width: 16px;
+      height: 16px;
+      transition: transform 0.3s;
+    }
+
+    .read-more-btn.expanded svg {
+      transform: rotate(90deg);
+    }
+
+    /* -- EXPANDED ARTICLE CONTENT -- */
+    .article-expanded {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .article-expanded.open {
+      max-height: 3000px;
+      transition: max-height 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .article-expanded-inner {
+      max-width: 800px;
+      padding: 32px 0 8px;
+      line-height: 1.8;
+      font-size: 15px;
+      color: var(--color-text-secondary);
+    }
+
+    .article-expanded-inner p {
+      margin-bottom: 20px;
+    }
+
+    .article-expanded-inner p:last-of-type {
+      margin-bottom: 0;
+    }
+
+    .article-expanded-inner h4 {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: 12px;
+      margin-top: 28px;
+      letter-spacing: -0.01em;
+    }
+
+    .article-expanded-inner h4:first-child {
+      margin-top: 0;
+    }
+
+    .read-less-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-text-tertiary);
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: var(--font);
+      padding: 16px 0 0;
+      transition: color 0.2s;
+    }
+
+    .read-less-btn:hover { color: var(--color-text-secondary); }
+
+    /* Featured expanded - full width below the two-column grid */
+    .featured-expanded-wrapper {
+      grid-column: 1 / -1;
+    }
+
+    .featured-expanded-wrapper .article-expanded-inner {
+      padding: 16px 0 8px;
+    }
+
+    /* -- ARTICLE GRID -- */
+    .blog-grid-section {
+      padding: 80px 0 120px;
+    }
+
+    .blog-grid-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 48px;
+    }
+
+    .blog-grid-header h2 {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+
+    .article-card {
+      background: var(--color-bg-warm);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: box-shadow 0.3s, transform 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .article-card:hover {
+      box-shadow: 0 8px 40px rgba(0,0,0,0.06);
+      transform: translateY(-3px);
+    }
+
+    .article-card-image {
+      height: 200px;
+      background: linear-gradient(135deg, var(--color-bg-soft), var(--color-bg-muted));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .article-card-image.tech-bg { background: linear-gradient(135deg, #f0fdf4, #ecfdf5); }
+    .article-card-image.guide-bg { background: linear-gradient(135deg, #fff7ed, #fffbeb); }
+    .article-card-image.insights-bg { background: linear-gradient(135deg, #faf5ff, #f5f3ff); }
+    .article-card-image.news-bg { background: linear-gradient(135deg, var(--color-accent-bg), #e0e7ff); }
+
+    .article-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+
+    .article-icon svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    .article-card-body {
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      flex: 1;
+    }
+
+    .article-card-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .article-card-body h3 {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.35;
+    }
+
+    .article-card-body .excerpt {
+      font-size: 14px;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+      flex: 1;
+    }
+
+    .article-card-body .read-more-btn {
+      margin-top: auto;
+    }
+
+    .article-card-body .article-expanded-inner {
+      font-size: 14px;
+    }
+
+    /* -- NEWSLETTER CTA -- */
+    .newsletter-section {
+      padding: 0 0 80px;
+    }
+
+    .newsletter-card {
+      background: var(--color-dark);
+      border-radius: var(--radius-lg);
+      padding: 64px;
+      text-align: center;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .newsletter-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 40%, rgba(79, 70, 229, 0.15), transparent 60%);
+      pointer-events: none;
+    }
+
+    .newsletter-card h2 {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 12px;
+      position: relative;
+    }
+
+    .newsletter-card p {
+      font-size: 16px;
+      color: rgba(255,255,255,0.6);
+      max-width: 440px;
+      margin: 0 auto 32px;
+      position: relative;
+    }
+
+    .newsletter-form {
+      display: flex;
+      gap: 12px;
+      max-width: 440px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .newsletter-form input {
+      flex: 1;
+      padding: 14px 20px;
+      border-radius: 50px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.08);
+      color: white;
+      font-family: var(--font);
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .newsletter-form input::placeholder { color: rgba(255,255,255,0.4); }
+    .newsletter-form input:focus { border-color: var(--color-accent-light); }
+
+    .newsletter-form .btn-accent {
+      background: var(--color-accent);
+      color: white;
+      padding: 14px 28px;
+      border-radius: 50px;
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .newsletter-form .btn-accent:hover {
+      background: var(--color-accent-light);
+      transform: translateY(-1px);
+    }
+
+    /* -- INVESTOR BANNER -- */
+    .investor-banner {
+      padding: 0 0 120px;
+    }
+
+    .investor-card {
+      background: var(--color-bg-warm);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 40px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+    }
+
+    .investor-card-content {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .investor-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-accent);
+      margin-bottom: 4px;
+    }
+
+    .investor-card-content h3 {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--color-text);
+    }
+
+    .investor-card-content p {
+      font-size: 14px;
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+    }
+
+    .investor-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-accent);
+      padding: 12px 24px;
+      border: 1.5px solid var(--color-accent);
+      border-radius: 50px;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .investor-cta:hover {
+      background: var(--color-accent);
+      color: white;
+    }
+
+    /* -- FOOTER -- */
+    footer {
+      padding: 56px 0 36px;
+      border-top: 1px solid var(--color-border-subtle);
+      background: var(--color-bg-warm);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 48px;
+    }
+
+    .footer-brand p {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+      margin-top: 14px;
+      max-width: 260px;
+    }
+
+    .footer-col h4 {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 14px;
+      color: var(--color-text);
+    }
+
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .footer-col a { font-size: 13px; color: var(--color-text-tertiary); transition: color 0.2s; }
+    .footer-col a:hover { color: var(--color-text-secondary); }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 28px;
+      border-top: 1px solid var(--color-border-subtle);
+      font-size: 12px;
+      color: var(--color-text-tertiary);
+    }
+
+    .footer-legal { display: flex; gap: 24px; }
+
+    /* -- ANIMATIONS -- */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* -- RESPONSIVE -- */
+    @media (max-width: 960px) {
+      .container { padding: 0 24px; }
+      .nav-inner { padding: 0 24px; }
+      .nav-links { display: none; }
+      .blog-hero { padding: 130px 0 60px; }
+      .blog-hero h1 { font-size: 38px; }
+      .featured-card { grid-template-columns: 1fr; gap: 32px; padding: 32px; }
+      .featured-image { height: 240px; }
+      .blog-grid { grid-template-columns: 1fr 1fr; }
+      .newsletter-card { padding: 48px 32px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
+      .investor-card { flex-direction: column; text-align: center; padding: 32px; }
+    }
+
+    @media (max-width: 600px) {
+      .blog-hero h1 { font-size: 30px; }
+      .blog-grid { grid-template-columns: 1fr; }
+      .newsletter-form { flex-direction: column; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+    }
+
+    /* COOKIE CONSENT BAR */
+    .cookie-consent {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 9998;
+      background: rgba(255, 255, 255, 0.97);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-top: 1px solid var(--color-border);
+      padding: 20px 0;
+      box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.06);
+      transform: translateY(100%);
+      transition: transform 0.4s ease;
+    }
+    .cookie-consent.visible { transform: translateY(0); }
+    .cookie-consent-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .cookie-consent-text {
+      font-size: 14px;
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+      flex: 1;
+    }
+    .cookie-consent-text a {
+      color: var(--color-accent);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .cookie-consent-text a:hover { color: var(--color-accent-light); }
+    .cookie-consent-buttons {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .cookie-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 9px 20px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .cookie-btn-accept { background: var(--color-accent); color: white; }
+    .cookie-btn-accept:hover { background: var(--color-accent-light); transform: translateY(-1px); }
+    .cookie-btn-manage { background: transparent; color: var(--color-text-secondary); border: 1.5px solid var(--color-border); }
+    .cookie-btn-manage:hover { border-color: var(--color-text-tertiary); color: var(--color-text); background: var(--color-bg-warm); }
+    @media (max-width: 960px) { .cookie-consent-inner { padding: 0 24px; } }
+    @media (max-width: 700px) {
+      .cookie-consent-inner { flex-direction: column; text-align: center; }
+      .cookie-consent-buttons { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="nav-logo-icon">P</div>
+        ProductLex
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Platform</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="careers.html">Careers</a></li>
+        <li><a href="blog.html" class="active">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="signin.html" class="btn btn-ghost">Sign in</a>
+        <a href="contact.html" class="btn btn-primary">Request Demo</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="blog-hero">
+    <div class="container">
+      <div class="blog-hero-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        ProductLex AI Blog
+      </div>
+      <h1>Insights & Intelligence</h1>
+      <p>Expert perspectives on AI-powered compliance, regulatory intelligence, and the future of global market expansion.</p>
+    </div>
+  </section>
+
+  <!-- FEATURED ARTICLE -->
+  <section class="blog-featured">
+    <div class="container">
+      <div class="featured-card fade-in">
+        <div class="featured-image">
+          <div class="featured-image-inner">
+            <div class="featured-image-bar"></div>
+            <div class="featured-image-bar"></div>
+            <div class="featured-image-bar"></div>
+            <div class="featured-image-bar"></div>
+            <div class="featured-image-bar"></div>
+          </div>
+        </div>
+        <div class="featured-content">
+          <div class="featured-meta">
+            <span class="category-tag">Company News</span>
+            <span class="article-date">March 2026</span>
+          </div>
+          <h2>The Evolution of ProductLex AI: From Legacy SaaS to AI-Powered Compliance</h2>
+          <p class="excerpt">What began as a 3.4M SEK investment became the catalyst for a complete transformation. This is the story of how we rebuilt compliance from the ground up with artificial intelligence -- and why the old way of managing regulations was never going to scale for global manufacturers.</p>
+          <button class="read-more-btn" onclick="toggleArticle(this, 'featured-expanded')">
+            Read full article
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8h9M8.5 4l4 4-4 4"/></svg>
+          </button>
+        </div>
+        <div class="featured-expanded-wrapper">
+          <div id="featured-expanded" class="article-expanded">
+            <div class="article-expanded-inner">
+              <h4>The Journey from Traditional SaaS to AI</h4>
+              <p>For more than a decade, ProductLex operated as a traditional SaaS platform serving manufacturers who needed to track and manage product compliance across global markets. The platform was reliable and well-regarded, but it operated the way most compliance tools did: as a structured database where human experts manually entered, updated, and maintained regulatory data. That model worked when the regulatory landscape changed slowly and predictably. By 2023, it had become clear that the pace of regulatory change had outstripped the ability of any human team to keep up, no matter how skilled or dedicated.</p>
+
+              <h4>The 3.4M SEK Investment Round</h4>
+              <p>The 3.4 million SEK investment round in early 2024 was not simply a funding milestone -- it was a strategic inflection point. The capital enabled ProductLex to make a decisive commitment to artificial intelligence as the foundation of its platform, rather than treating AI as a feature bolted onto an existing product. This meant hiring machine learning engineers, licensing access to multiple large language models, and fundamentally rearchitecting the platform's data pipeline. The investment also funded an extended research phase where the team evaluated single-model approaches and ultimately rejected them in favor of a more robust multi-model architecture.</p>
+
+              <h4>Building on a Decade of Compliance Data</h4>
+              <p>One of ProductLex's most significant competitive advantages is the depth of its compliance data. Over ten years of operation, the platform accumulated detailed records of regulatory requirements across dozens of jurisdictions, thousands of product categories, and hundreds of thousands of individual compliance events. This data proved invaluable when training and fine-tuning the AI systems. Unlike a startup building from scratch, ProductLex could validate its AI outputs against a rich historical record, ensuring that the new system was at least as accurate as the human-curated data it was replacing -- and in most cases, significantly more comprehensive.</p>
+
+              <h4>The Multi-LLM Consensus Architecture</h4>
+              <p>The decision to build a multi-LLM consensus architecture was driven by a simple observation: in regulatory compliance, a single wrong answer can cost a manufacturer millions of euros in fines, product recalls, or market access delays. Single-model AI systems, no matter how capable, carry an inherent risk of hallucination -- generating plausible-sounding but factually incorrect regulatory information. ProductLex's consensus approach routes every query through three independent large language models and cross-validates their outputs. When all three models agree, the system delivers the result with high confidence. When they diverge, the system flags the discrepancy for human review. This architecture reduces hallucination risk by an order of magnitude compared to single-model approaches.</p>
+
+              <h4>Vision for the Future</h4>
+              <p>Looking ahead, ProductLex AI is building toward a future where compliance is not a bottleneck but a competitive advantage. The platform's roadmap includes real-time regulatory monitoring that alerts manufacturers to relevant changes within hours of publication, predictive compliance modeling that anticipates regulatory trends before they become law, and automated document generation that produces submission-ready compliance packages. The goal is not to replace compliance professionals but to amplify their capabilities -- turning a team of five into a team that operates with the reach and speed of fifty. For manufacturers competing in global markets, that kind of leverage is not optional; it is the price of entry.</p>
+
+              <button class="read-less-btn" onclick="toggleArticle(document.querySelector('[onclick*=\u0022featured-expanded\u0022]'), 'featured-expanded')">
+                Collapse article
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARTICLE GRID -->
+  <section class="blog-grid-section">
+    <div class="container">
+      <div class="blog-grid-header">
+        <h2>Latest Articles</h2>
+      </div>
+      <div class="blog-grid">
+
+        <!-- Article 1: Consensus AI -->
+        <div class="article-card fade-in">
+          <div class="article-card-image tech-bg">
+            <div class="article-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 1 4 4c0 1.95-1.4 3.58-3.25 3.93V12h2.75a2.5 2.5 0 0 1 2.5 2.5V16a4 4 0 1 1-2 0v-1.5a.5.5 0 0 0-.5-.5h-2.5v2a4 4 0 1 1-2 0v-2H8.25a.5.5 0 0 0-.5.5V16a4 4 0 1 1-2 0v-1.5A2.5 2.5 0 0 1 8.25 12H11V9.93A4.002 4.002 0 0 1 12 2z"/></svg>
+            </div>
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <span class="category-tag technology">Technology</span>
+              <span class="article-date">January 2026</span>
+            </div>
+            <h3>Why Three LLMs Are Better Than One: The Case for Consensus AI in Regulatory Compliance</h3>
+            <p class="excerpt">When a single AI model hallucinates a regulation that does not exist, the consequences for manufacturers can be catastrophic. Our multi-model consensus approach cross-validates every output across three independent LLMs, eliminating the hallucination risk that makes single-model compliance tools dangerous.</p>
+            <button class="read-more-btn" onclick="toggleArticle(this, 'article-1-expanded')">
+              Read more
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8h9M8.5 4l4 4-4 4"/></svg>
+            </button>
+            <div id="article-1-expanded" class="article-expanded">
+              <div class="article-expanded-inner">
+                <h4>The Single-Model Problem</h4>
+                <p>Large language models are remarkably capable at processing and synthesizing regulatory text, but they carry an inherent flaw: they can generate confident, well-structured responses that are factually wrong. In general consumer applications, this is an inconvenience. In regulatory compliance, it is a liability. A single hallucinated clause or a misinterpreted deadline can lead a manufacturer to ship a non-compliant product, resulting in fines, recalls, or loss of market access. The fundamental issue is not that LLMs are unreliable -- it is that no single model is reliable enough for high-stakes compliance decisions.</p>
+
+                <h4>How Consensus AI Works</h4>
+                <p>ProductLex AI addresses this challenge with a multi-LLM consensus architecture. Every regulatory query is independently processed by three separate large language models, each with different training data, architectures, and reasoning approaches. The system then cross-validates their outputs, looking for agreement on key facts: applicable regulations, specific requirements, compliance deadlines, and required documentation. When all three models converge on the same answer, the system assigns a high confidence score. When one model diverges, the system identifies the specific point of disagreement and flags it for human review with full context.</p>
+
+                <h4>Measurable Error Reduction</h4>
+                <p>Internal testing across thousands of regulatory queries has demonstrated that the consensus approach reduces factual errors by over 90% compared to any individual model operating alone. The architecture is particularly effective at catching subtle errors -- such as a model applying the correct regulation but citing an outdated version, or correctly identifying a requirement but misattributing it to the wrong product category. These are precisely the kinds of errors that human reviewers find most difficult to catch, because the surrounding context appears correct.</p>
+
+                <h4>Why Compliance Demands Higher Standards</h4>
+                <p>General-purpose AI applications can tolerate a 5-10% error rate because the cost of individual errors is low. Compliance cannot. A single incorrect classification under the EU Medical Device Regulation can delay market entry by months. A missed requirement under the Cyber Resilience Act can expose a manufacturer to significant penalties. ProductLex's consensus architecture is designed for domains where the acceptable error rate is measured in fractions of a percent, not single digits. This is not AI for convenience -- it is AI for confidence.</p>
+
+                <p>The consensus approach also provides a natural audit trail. Because each model's reasoning is logged independently, compliance teams can review not just what the system concluded but how each model arrived at its conclusion. This transparency is essential for regulated industries where demonstrating due diligence is as important as reaching the correct answer.</p>
+
+                <button class="read-less-btn" onclick="toggleArticle(this.closest('.article-card-body').querySelector('.read-more-btn'), 'article-1-expanded')">
+                  Collapse article
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Article 2: EU CRA Guide -->
+        <div class="article-card fade-in">
+          <div class="article-card-image guide-bg">
+            <div class="article-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            </div>
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <span class="category-tag guide">Compliance Guide</span>
+              <span class="article-date">January 2026</span>
+            </div>
+            <h3>The EU Cyber Resilience Act: What Manufacturers Need to Know in 2026</h3>
+            <p class="excerpt">The CRA introduces mandatory cybersecurity requirements for every product with digital elements sold in the EU. From vulnerability handling to software bill of materials, here is a practical breakdown of what product companies must do before the enforcement deadline.</p>
+            <button class="read-more-btn" onclick="toggleArticle(this, 'article-2-expanded')">
+              Read more
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8h9M8.5 4l4 4-4 4"/></svg>
+            </button>
+            <div id="article-2-expanded" class="article-expanded">
+              <div class="article-expanded-inner">
+                <h4>Understanding the CRA's Scope</h4>
+                <p>The EU Cyber Resilience Act represents the most significant horizontal cybersecurity regulation to affect product manufacturers in over a decade. Unlike sector-specific regulations, the CRA applies broadly to all products with digital elements -- from consumer IoT devices and smart appliances to industrial software platforms and network equipment. The regulation establishes essential cybersecurity requirements that must be met throughout a product's entire lifecycle, from design through end-of-support. For manufacturers accustomed to treating cybersecurity as a feature rather than a regulatory obligation, the CRA represents a fundamental shift in how digital products are brought to market in Europe.</p>
+
+                <h4>Key Requirements for Manufacturers</h4>
+                <p>The CRA mandates several concrete obligations. Manufacturers must conduct cybersecurity risk assessments during the design phase and document how identified risks are mitigated. Products must be delivered with secure default configurations, and manufacturers must provide clear documentation of the product's cybersecurity properties. Perhaps most significantly, the regulation requires manufacturers to provide security updates for the expected product lifetime and to establish coordinated vulnerability disclosure processes. The Software Bill of Materials (SBOM) requirement ensures transparency about third-party components, enabling faster response when vulnerabilities are discovered in widely used libraries.</p>
+
+                <h4>Implementation Timeline</h4>
+                <p>The CRA entered into force in late 2024, with a phased implementation schedule. Manufacturers of critical products face earlier compliance deadlines, while the broader market has until 2027 for full enforcement. However, the reporting obligation for actively exploited vulnerabilities takes effect significantly earlier, meaning manufacturers need incident response processes in place well before the full compliance deadline. Companies that wait until the last moment to begin preparation will find themselves in an extremely difficult position, as the documentation and process requirements are substantial.</p>
+
+                <h4>How AI Tools Help Manufacturers Prepare</h4>
+                <p>AI-powered compliance platforms like ProductLex can significantly accelerate CRA preparation. Automated gap analysis compares a manufacturer's existing cybersecurity practices against CRA requirements and identifies specific deficiencies. Natural language processing can parse the regulation and its associated harmonised standards to generate product-specific compliance checklists. AI can also monitor the evolving landscape of implementing acts and guidance documents, ensuring that manufacturers are working against the latest interpretations rather than outdated understandings of the regulation's requirements.</p>
+
+                <p>For IoT manufacturers and software developers, the CRA creates both challenges and opportunities. Companies that achieve compliance early will be able to market their products as CRA-ready, gaining a competitive advantage in the European market. Those that lag behind risk not only regulatory penalties but also exclusion from supply chains where CRA compliance becomes a procurement requirement. The manufacturers who treat the CRA as a catalyst for improving their cybersecurity posture, rather than a bureaucratic burden, will emerge from the transition period in the strongest position.</p>
+
+                <button class="read-less-btn" onclick="toggleArticle(this.closest('.article-card-body').querySelector('.read-more-btn'), 'article-2-expanded')">
+                  Collapse article
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Article 3: Market Expansion -->
+        <div class="article-card fade-in">
+          <div class="article-card-image insights-bg">
+            <div class="article-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#9333ea" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </div>
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <span class="category-tag insights">Industry Insights</span>
+              <span class="article-date">December 2024</span>
+            </div>
+            <h3>Entering New Markets Without Compliance Delays: How AI Changes the Game</h3>
+            <p class="excerpt">Market expansion used to mean months of regulatory research, expensive consultants, and unpredictable timelines. AI-powered regulation detection compresses that process from months to minutes, giving manufacturers a decisive competitive advantage in global expansion.</p>
+            <button class="read-more-btn" onclick="toggleArticle(this, 'article-3-expanded')">
+              Read more
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8h9M8.5 4l4 4-4 4"/></svg>
+            </button>
+            <div id="article-3-expanded" class="article-expanded">
+              <div class="article-expanded-inner">
+                <h4>The Traditional Compliance Bottleneck</h4>
+                <p>For most manufacturers, entering a new market has traditionally meant engaging regulatory consultants, commissioning gap analyses, and waiting weeks or months for a comprehensive picture of what compliance looks like in a new jurisdiction. This process is not only slow but also inherently sequential -- you typically cannot begin compliance work for market B until you understand how it differs from market A. The result is that market expansion plans are routinely delayed by compliance timelines, and the cost of regulatory preparation often exceeds the cost of product adaptation. For mid-size manufacturers competing against larger rivals with dedicated regulatory teams, this bottleneck can be the difference between capturing a market opportunity and missing it entirely.</p>
+
+                <h4>Mapping Regulatory Requirements Across Jurisdictions</h4>
+                <p>ProductLex AI approaches market expansion compliance differently. Rather than treating each jurisdiction as an isolated compliance project, the platform maintains a continuously updated regulatory map that covers product safety, environmental, cybersecurity, and sector-specific requirements across all major markets. When a manufacturer identifies a target market, the platform can instantly generate a comprehensive compliance profile: which regulations apply to their specific product, where their existing compliance satisfies local requirements, and precisely what additional work is needed. This transforms the initial scoping phase from a weeks-long consulting engagement into a conversation with the platform.</p>
+
+                <h4>Parallel Compliance Workflows</h4>
+                <p>One of the most significant advantages of AI-assisted compliance is the ability to pursue multiple markets simultaneously. In the traditional model, compliance teams work sequentially because each market analysis requires significant focused attention from a limited number of experts. With AI handling the initial regulatory mapping and gap analysis, compliance teams can run parallel workstreams across multiple jurisdictions. A manufacturer entering the EU, the United States, and Japan simultaneously can see all three compliance profiles side by side, identify shared requirements that satisfy multiple markets, and prioritize work that unlocks the largest number of markets with the least effort.</p>
+
+                <h4>Real Impact on Time-to-Market</h4>
+                <p>Manufacturers using AI-assisted compliance tools consistently report a reduction in their compliance preparation timeline of 60-80% compared to traditional approaches. More importantly, the predictability of the timeline improves dramatically. When compliance is a manual research process, it is extremely difficult to estimate how long preparation will take, because unknown requirements can surface late in the process and reset the timeline. AI-driven regulatory mapping surfaces the complete requirement set upfront, allowing project managers to plan with confidence and make reliable commitments to their commercial teams.</p>
+
+                <p>The strategic implications extend beyond speed. When compliance is no longer a bottleneck, manufacturers can make market entry decisions based on commercial opportunity rather than regulatory convenience. Instead of defaulting to markets where they already have compliance expertise, they can pursue the markets with the strongest demand for their products. This shift from compliance-constrained strategy to opportunity-driven strategy is one of the most powerful ways that AI is changing the competitive landscape for global manufacturers.</p>
+
+                <button class="read-less-btn" onclick="toggleArticle(this.closest('.article-card-body').querySelector('.read-more-btn'), 'article-3-expanded')">
+                  Collapse article
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Article 4: Spreadsheets to Intelligence -->
+        <div class="article-card fade-in">
+          <div class="article-card-image insights-bg">
+            <div class="article-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#9333ea" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg>
+            </div>
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <span class="category-tag insights">Industry Insights</span>
+              <span class="article-date">November 2024</span>
+            </div>
+            <h3>From Spreadsheets to Living Intelligence: The Evolution of Product Compliance Management</h3>
+            <p class="excerpt">For decades, compliance teams have relied on spreadsheets, shared drives, and institutional memory to track regulations. That approach was always fragile -- and in an era of accelerating regulatory change, it has become untenable. Here is how AI-driven platforms are replacing static tools with living, adaptive intelligence.</p>
+            <button class="read-more-btn" onclick="toggleArticle(this, 'article-4-expanded')">
+              Read more
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8h9M8.5 4l4 4-4 4"/></svg>
+            </button>
+            <div id="article-4-expanded" class="article-expanded">
+              <div class="article-expanded-inner">
+                <h4>The Spreadsheet Era</h4>
+                <p>For the better part of three decades, the compliance spreadsheet was the central artifact of product regulatory management. Compliance teams maintained elaborate workbooks tracking applicable regulations, required test reports, certification statuses, and renewal deadlines for every product in every market. These spreadsheets were often masterpieces of organizational knowledge, refined over years by experienced compliance managers who understood both the regulatory landscape and their company's product portfolio. But they were also brittle, opaque, and entirely dependent on the individuals who maintained them. When a key compliance manager left the organization, critical institutional knowledge walked out the door with them.</p>
+
+                <h4>Why Traditional Tools Fail at Scale</h4>
+                <p>As companies expanded their product lines and entered additional markets, the spreadsheet model broke down in predictable ways. Version control became a nightmare, with multiple copies of critical compliance data living on different team members' laptops. Updates to one product's compliance status did not automatically propagate to related products or markets. And perhaps most critically, there was no mechanism for proactively alerting teams to regulatory changes -- compliance managers had to manually monitor regulatory bodies, industry publications, and standards organizations across every jurisdiction where their products were sold. For a company with hundreds of products across dozens of markets, this monitoring task alone could consume the majority of a compliance team's time.</p>
+
+                <h4>The SaaS Compliance Platform Wave</h4>
+                <p>The emergence of SaaS compliance platforms in the 2010s addressed some of these pain points. Centralized databases replaced individual spreadsheets, role-based access controls improved data governance, and workflow automation streamlined routine compliance tasks. These platforms represented a genuine improvement, but they shared a fundamental limitation with the spreadsheets they replaced: the intelligence in the system was still entirely human-generated. Every regulation had to be manually analyzed, every requirement manually mapped to products, and every change manually propagated through the system. The SaaS platform was a better container for compliance knowledge, but it did not generate or maintain that knowledge autonomously.</p>
+
+                <h4>The AI-Powered Evolution</h4>
+                <p>AI-powered compliance platforms represent a qualitative shift, not merely an incremental improvement. Instead of serving as passive databases that store what humans tell them, these platforms actively analyze regulatory text, identify relevant requirements, map them to product categories, and monitor for changes. When a regulation is amended, the platform can automatically assess the impact on every affected product and generate updated compliance requirements without human intervention. When a new standard is published, the platform can parse it, extract actionable requirements, and alert the relevant product teams -- all within hours of publication rather than the weeks or months that manual processing requires.</p>
+
+                <p>The concept of "living intelligence" captures this shift precisely. A spreadsheet is a snapshot -- it reflects the state of compliance knowledge at the moment it was last updated. An AI-powered platform is a living system that continuously absorbs new information, reassesses existing conclusions, and proactively surfaces changes that require attention. For compliance teams, this means spending less time on data maintenance and more time on the strategic decisions that actually require human judgment: how to prioritize compliance investments, when to enter new markets, and how to balance regulatory risk against commercial opportunity.</p>
+
+                <button class="read-less-btn" onclick="toggleArticle(this.closest('.article-card-body').querySelector('.read-more-btn'), 'article-4-expanded')">
+                  Collapse article
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Article 5: Medical Devices MDR -->
+        <div class="article-card fade-in">
+          <div class="article-card-image guide-bg">
+            <div class="article-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            </div>
+          </div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <span class="category-tag guide">Compliance Guide</span>
+              <span class="article-date">October 2024</span>
+            </div>
+            <h3>AI-Powered MDR Compliance: Navigating EU Medical Device Regulation with Confidence</h3>
+            <p class="excerpt">The EU Medical Device Regulation demands rigorous clinical evaluation, post-market surveillance, and technical documentation that overwhelms traditional compliance workflows. AI is transforming how manufacturers approach MDR -- from automated gap analysis to intelligent document generation that keeps pace with evolving requirements.</p>
+            <button class="read-more-btn" onclick="toggleArticle(this, 'article-5-expanded')">
+              Read more
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8h9M8.5 4l4 4-4 4"/></svg>
+            </button>
+            <div id="article-5-expanded" class="article-expanded">
+              <div class="article-expanded-inner">
+                <h4>The Complexity of MDR Requirements</h4>
+                <p>The EU Medical Device Regulation (MDR 2017/745) replaced the previous Medical Device Directives and introduced significantly more stringent requirements for manufacturers. The regulation expanded the scope of devices covered, strengthened requirements for clinical evidence, introduced a unique device identification (UDI) system, and established new obligations for post-market surveillance. For manufacturers, the sheer volume of documentation required -- technical files, clinical evaluation reports, periodic safety update reports, and post-market clinical follow-up plans -- represents an unprecedented compliance burden. Many small and mid-size manufacturers have found that MDR compliance requires more documentation effort than all other regulatory requirements combined.</p>
+
+                <h4>Key Challenges for Medical Device Manufacturers</h4>
+                <p>The transition from MDD to MDR has exposed several critical challenges. Device classification rules have changed, meaning some products previously classified as lower-risk now require more extensive conformity assessment procedures. The clinical evidence requirements are substantially more demanding, with greater emphasis on clinical investigations and equivalence demonstrations. Notified Body capacity has been a persistent bottleneck, with the limited number of MDR-designated bodies creating long queues for conformity assessments. And the ongoing obligations -- including periodic safety update reports, post-market surveillance plans, and vigilance reporting -- require sustained resources that many manufacturers did not anticipate when planning their MDR transition.</p>
+
+                <h4>How AI Assists with Classification, Documentation, and Monitoring</h4>
+                <p>AI-powered tools are proving valuable at multiple stages of the MDR compliance lifecycle. At the classification stage, AI can analyze a device's intended purpose and characteristics against the MDR classification rules and relevant MDCG guidance to suggest the appropriate risk class. For documentation, natural language processing can help generate structured technical file sections by extracting and organizing information from design records, test reports, and clinical literature. AI can also continuously monitor the regulatory landscape for relevant MDCG guidance updates, harmonised standard revisions, and Common Specifications that affect specific device categories, ensuring that technical documentation remains current.</p>
+
+                <h4>Post-Market Surveillance Automation</h4>
+                <p>Post-market surveillance (PMS) is one of the areas where AI delivers the most immediate value. MDR requires manufacturers to proactively and systematically gather, record, and analyze data on the quality, performance, and safety of their devices throughout their lifetime. AI can automate the monitoring of adverse event databases (such as EUDAMED, MAUDE, and national vigilance databases), scientific literature, and field safety corrective actions from comparable devices. Rather than relying on periodic manual reviews, manufacturers can implement continuous AI-driven monitoring that surfaces relevant safety signals in near real-time, enabling faster response to emerging issues and more comprehensive periodic safety update reports.</p>
+
+                <p>As the MDR landscape continues to evolve -- with ongoing discussions about potential amendments, the delayed rollout of EUDAMED, and the development of additional Common Specifications -- manufacturers need compliance systems that adapt as quickly as the regulatory environment changes. AI-powered platforms that continuously ingest and analyze regulatory updates give manufacturers the confidence that their compliance posture reflects the current state of requirements, not the state of requirements as they existed when their last manual review was completed. For medical device manufacturers navigating the most complex regulatory environment they have ever faced, this adaptive capability is not a luxury but a necessity.</p>
+
+                <button class="read-less-btn" onclick="toggleArticle(this.closest('.article-card-body').querySelector('.read-more-btn'), 'article-5-expanded')">
+                  Collapse article
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER CTA -->
+  <section class="newsletter-section">
+    <div class="container">
+      <div class="newsletter-card fade-in">
+        <h2>Stay Ahead of Regulatory Change</h2>
+        <p>Get compliance insights, product updates, and regulatory intelligence delivered to your inbox.</p>
+        <form class="newsletter-form" onsubmit="event.preventDefault();">
+          <input type="email" placeholder="Your work email" required>
+          <button type="submit" class="btn-accent">Subscribe</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- INVESTOR BANNER -->
+  <section class="investor-banner">
+    <div class="container">
+      <div class="investor-card fade-in">
+        <div class="investor-card-content">
+          <span class="investor-label">Investment Opportunity</span>
+          <h3>ProductLex AI is raising a bridge round of &euro;1M at a &euro;10M valuation in Q3 2026.</h3>
+          <p>We are building the future of AI-powered product compliance for global manufacturers. Join us.</p>
+        </div>
+        <a href="mailto:carl@productlex.com" class="investor-cta">
+          Contact carl@productlex.com
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8h9M8.5 4l4 4-4 4"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cookie Consent Bar -->
+  <div class="cookie-consent" id="cookieConsent">
+    <div class="cookie-consent-inner">
+      <p class="cookie-consent-text">We use cookies to improve your experience. By continuing to browse, you agree to our use of cookies. Read our <a href="cookies.html">Cookie Policy</a>.</p>
+      <div class="cookie-consent-buttons">
+        <button class="cookie-btn cookie-btn-manage" onclick="manageCookies()">Manage Preferences</button>
+        <button class="cookie-btn cookie-btn-accept" onclick="acceptCookies()">Accept All</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo"><div class="nav-logo-icon">P</div>ProductLex</a>
+          <p>Intelligent compliance automation for enterprise manufacturers. Total compliance control. Predictable market expansion.</p>
+        </div>
+        <div class="footer-col"><h4>Platform</h4><ul><li><a href="index.html#platform">Compliance Map</a></li><li><a href="index.html#ai-engine">AI Engine</a></li><li><a href="index.html#features">Regulatory Intelligence</a></li><li><a href="index.html#showcase">Monitoring</a></li><li><a href="documentation.html">API</a></li></ul></div>
+        <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About</a></li><li><a href="careers.html">Careers</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+        <div class="footer-col"><h4>Resources</h4><ul><li><a href="documentation.html">Documentation</a></li><li><a href="documentation.html">API Reference</a></li></ul></div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 ProductLex AI.</span>
+        <div class="footer-legal"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="security.html">Security</a><a href="cookies.html">Cookies</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
+    document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+
+    function toggleArticle(btn, expandedId) {
+      var expanded = document.getElementById(expandedId);
+      var isOpen = expanded.classList.contains('open');
+
+      if (isOpen) {
+        expanded.classList.remove('open');
+        btn.classList.remove('expanded');
+        var label = (expandedId === 'featured-expanded') ? 'Read full article' : 'Read more';
+        btn.innerHTML = label + ' <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8h9M8.5 4l4 4-4 4"/></svg>';
+      } else {
+        expanded.classList.add('open');
+        btn.classList.add('expanded');
+        btn.innerHTML = 'Read less <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8h9M8.5 4l4 4-4 4"/></svg>';
+      }
+    }
+
+    // Cookie consent
+    function acceptCookies() {
+      localStorage.setItem('cookieConsent', 'accepted');
+      document.getElementById('cookieConsent').classList.remove('visible');
+    }
+    function manageCookies() {
+      localStorage.setItem('cookieConsent', 'essential');
+      document.getElementById('cookieConsent').classList.remove('visible');
+    }
+    (function() {
+      if (!localStorage.getItem('cookieConsent')) {
+        setTimeout(function() {
+          document.getElementById('cookieConsent').classList.add('visible');
+        }, 500);
+      }
+    })();
+  </script>
+</body>
+</html>

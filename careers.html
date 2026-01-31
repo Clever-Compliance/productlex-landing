@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Careers — ProductLex AI</title>
+  <meta name="description" content="Join ProductLex AI and help transform global compliance. We're building the future of regulatory intelligence with AI. View open positions in Stockholm and remote.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --color-bg: #ffffff;
+      --color-bg-warm: #fafaf8;
+      --color-bg-soft: #f4f3f0;
+      --color-bg-muted: #edecea;
+      --color-surface: #e8e7e4;
+      --color-border: #dddcd9;
+      --color-border-subtle: #e8e7e4;
+      --color-text: #1a1a1a;
+      --color-text-secondary: #5a5a58;
+      --color-text-tertiary: #8a8a86;
+      --color-accent: #4f46e5;
+      --color-accent-light: #6366f1;
+      --color-accent-bg: #eef2ff;
+      --color-accent-soft: rgba(79, 70, 229, 0.08);
+      --color-green: #16a34a;
+      --color-green-bg: #f0fdf4;
+      --color-amber: #d97706;
+      --color-red: #dc2626;
+      --color-dark: #111111;
+      --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --max-width: 1180px;
+      --section-padding: 140px 0;
+      --radius: 12px;
+      --radius-lg: 20px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* Grain overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 256px;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 18px 0;
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid transparent;
+      transition: all 0.3s;
+    }
+
+    nav.scrolled {
+      border-bottom-color: var(--color-border);
+      background: rgba(255,255,255,0.92);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 19px;
+      letter-spacing: -0.03em;
+      color: var(--color-text);
+    }
+
+    .nav-logo-icon {
+      width: 34px;
+      height: 34px;
+      background: var(--color-dark);
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 800;
+      color: white;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--color-text); }
+    .nav-links a.active { color: var(--color-accent); font-weight: 600; }
+
+    .nav-cta { display: flex; align-items: center; gap: 12px; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 600;
+      padding: 10px 22px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--color-text-secondary);
+    }
+
+    .btn-ghost:hover { color: var(--color-text); }
+
+    .btn-primary {
+      background: var(--color-dark);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #000;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--color-text);
+      border: 1.5px solid var(--color-border);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--color-text-tertiary);
+      background: var(--color-bg-warm);
+    }
+
+    .btn-lg {
+      padding: 14px 32px;
+      font-size: 15px;
+    }
+
+    .btn-accent {
+      background: var(--color-accent);
+      color: white;
+    }
+
+    .btn-accent:hover {
+      background: var(--color-accent-light);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(79, 70, 229, 0.25);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 180px 0 100px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, var(--color-bg-warm) 0%, var(--color-bg) 100%);
+      z-index: -2;
+    }
+
+    .hero-bg-pattern {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      opacity: 0.4;
+      background-image:
+        radial-gradient(circle at 20% 30%, rgba(79, 70, 229, 0.06) 0%, transparent 50%),
+        radial-gradient(circle at 80% 60%, rgba(79, 70, 229, 0.04) 0%, transparent 50%);
+    }
+
+    .hero-content {
+      max-width: 760px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px 6px 8px;
+      background: var(--color-accent-bg);
+      border: 1px solid rgba(79, 70, 229, 0.12);
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-accent);
+      margin-bottom: 28px;
+      letter-spacing: 0.01em;
+    }
+
+    .hero-badge-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--color-accent);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .hero h1 {
+      font-size: 52px;
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      color: var(--color-text);
+    }
+
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--color-accent), var(--color-accent-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+      max-width: 580px;
+      margin: 0 auto 40px;
+    }
+
+    .hero-cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+    }
+
+    /* ── SECTION SHARED ── */
+    .section {
+      padding: var(--section-padding);
+    }
+
+    .section-warm {
+      background: var(--color-bg-warm);
+    }
+
+    .section-soft {
+      background: var(--color-bg-soft);
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto 64px;
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-accent);
+      margin-bottom: 16px;
+    }
+
+    .section-label::before {
+      content: '';
+      width: 18px;
+      height: 1.5px;
+      background: var(--color-accent);
+      border-radius: 1px;
+    }
+
+    .section-header h2 {
+      font-size: 38px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .section-header p {
+      font-size: 16px;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+    }
+
+    /* ── CULTURE ── */
+    .culture-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .culture-card {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 36px 28px;
+      transition: all 0.3s;
+    }
+
+    .culture-card:hover {
+      border-color: var(--color-border);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+      transform: translateY(-2px);
+    }
+
+    .culture-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--color-accent-bg);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      font-size: 22px;
+    }
+
+    .culture-card h3 {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      letter-spacing: -0.02em;
+    }
+
+    .culture-card p {
+      font-size: 14px;
+      color: var(--color-text-secondary);
+      line-height: 1.65;
+    }
+
+    /* ── BENEFITS ── */
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .benefit-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: var(--color-bg-warm);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius);
+      padding: 24px;
+      transition: all 0.3s;
+    }
+
+    .benefit-item:hover {
+      border-color: var(--color-border);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.03);
+    }
+
+    .benefit-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--color-accent-bg);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+
+    .benefit-item h4 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      letter-spacing: -0.01em;
+    }
+
+    .benefit-item p {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ── POSITIONS ── */
+    .positions-list {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .position-card {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      transition: all 0.3s;
+    }
+
+    .position-card:hover {
+      border-color: var(--color-border);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.05);
+    }
+
+    .position-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 20px;
+    }
+
+    .position-title h3 {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+
+    .position-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .position-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 12px;
+      background: var(--color-bg-soft);
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+    }
+
+    .position-tag svg {
+      width: 13px;
+      height: 13px;
+    }
+
+    .position-tag.accent {
+      background: var(--color-accent-bg);
+      color: var(--color-accent);
+    }
+
+    .position-description {
+      font-size: 15px;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+      margin-bottom: 24px;
+      max-width: 720px;
+    }
+
+    .position-responsibilities h4 {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--color-text-tertiary);
+      margin-bottom: 12px;
+    }
+
+    .position-responsibilities ul {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 32px;
+      margin-bottom: 28px;
+    }
+
+    .position-responsibilities li {
+      font-size: 14px;
+      color: var(--color-text-secondary);
+      padding-left: 20px;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .position-responsibilities li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 9px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--color-accent);
+      opacity: 0.5;
+    }
+
+    .position-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 24px;
+      border-top: 1px solid var(--color-border-subtle);
+    }
+
+    .position-footer-note {
+      font-size: 13px;
+      color: var(--color-text-tertiary);
+    }
+
+    /* ── CTA SECTION ── */
+    .cta-section {
+      padding: 100px 0;
+      text-align: center;
+      background: var(--color-bg-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 30% 50%, rgba(79, 70, 229, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 70% 50%, rgba(79, 70, 229, 0.03) 0%, transparent 50%);
+    }
+
+    .cta-content {
+      position: relative;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    .cta-content h2 {
+      font-size: 34px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+
+    .cta-content p {
+      font-size: 16px;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 56px 0 36px;
+      border-top: 1px solid var(--color-border-subtle);
+      background: var(--color-bg-warm);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 48px;
+    }
+
+    .footer-brand p {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+      margin-top: 14px;
+      max-width: 260px;
+    }
+
+    .footer-col h4 {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 14px;
+      color: var(--color-text);
+    }
+
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .footer-col a { font-size: 13px; color: var(--color-text-tertiary); transition: color 0.2s; }
+    .footer-col a:hover { color: var(--color-text-secondary); }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 28px;
+      border-top: 1px solid var(--color-border-subtle);
+      font-size: 12px;
+      color: var(--color-text-tertiary);
+    }
+
+    .footer-legal { display: flex; gap: 24px; }
+
+    /* ── ANIMATIONS ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    .fade-in-delay-1 { transition-delay: 0.1s; }
+    .fade-in-delay-2 { transition-delay: 0.2s; }
+    .fade-in-delay-3 { transition-delay: 0.3s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      :root { --section-padding: 100px 0; }
+      .container { padding: 0 24px; }
+      .nav-inner { padding: 0 24px; }
+      .nav-links { display: none; }
+      .hero { padding: 140px 0 80px; }
+      .hero h1 { font-size: 38px; }
+      .culture-grid { grid-template-columns: 1fr 1fr; }
+      .benefits-grid { grid-template-columns: 1fr 1fr; }
+      .position-responsibilities ul { grid-template-columns: 1fr; }
+      .position-header { flex-direction: column; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 30px; }
+      .hero-cta { flex-direction: column; }
+      .culture-grid { grid-template-columns: 1fr; }
+      .benefits-grid { grid-template-columns: 1fr; }
+      .position-card { padding: 28px; }
+      .position-footer { flex-direction: column; gap: 16px; align-items: flex-start; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+    }
+
+    /* COOKIE CONSENT BAR */
+    .cookie-consent {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 9998;
+      background: rgba(255, 255, 255, 0.97);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-top: 1px solid var(--color-border);
+      padding: 20px 0;
+      box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.06);
+      transform: translateY(100%);
+      transition: transform 0.4s ease;
+    }
+    .cookie-consent.visible { transform: translateY(0); }
+    .cookie-consent-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .cookie-consent-text {
+      font-size: 14px;
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+      flex: 1;
+    }
+    .cookie-consent-text a {
+      color: var(--color-accent);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .cookie-consent-text a:hover { color: var(--color-accent-light); }
+    .cookie-consent-buttons {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .cookie-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 9px 20px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .cookie-btn-accept { background: var(--color-accent); color: white; }
+    .cookie-btn-accept:hover { background: var(--color-accent-light); transform: translateY(-1px); }
+    .cookie-btn-manage { background: transparent; color: var(--color-text-secondary); border: 1.5px solid var(--color-border); }
+    .cookie-btn-manage:hover { border-color: var(--color-text-tertiary); color: var(--color-text); background: var(--color-bg-warm); }
+    @media (max-width: 960px) { .cookie-consent-inner { padding: 0 24px; } }
+    @media (max-width: 700px) {
+      .cookie-consent-inner { flex-direction: column; text-align: center; }
+      .cookie-consent-buttons { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="nav-logo-icon">P</div>
+        ProductLex
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Platform</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="careers.html" class="active">Careers</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="signin.html" class="btn btn-ghost">Sign in</a>
+        <a href="contact.html" class="btn btn-primary">Request Demo</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-bg-pattern"></div>
+    <div class="container">
+      <div class="hero-content fade-in">
+        <div class="hero-badge">
+          <span class="hero-badge-dot"></span>
+          We're hiring across multiple roles
+        </div>
+        <h1>Join Us in Transforming <span>Global Compliance</span></h1>
+        <p>We're building AI that makes product compliance predictable, automated, and accessible. Help us reshape how manufacturers navigate the world's most complex regulatory landscape.</p>
+        <div class="hero-cta">
+          <a href="#positions" class="btn btn-accent btn-lg">View Open Positions</a>
+          <a href="#culture" class="btn btn-outline btn-lg">Our Culture</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CULTURE -->
+  <section id="culture" class="section section-warm">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="section-label">Who We Are</div>
+        <h2>Built on Nordic values, driven by global ambition</h2>
+        <p>We're a small team tackling one of the largest challenges in international trade. Every person here has outsized impact on the product and the company.</p>
+      </div>
+      <div class="culture-grid">
+        <div class="culture-card fade-in fade-in-delay-1">
+          <div class="culture-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </div>
+          <h3>Innovation First</h3>
+          <p>We apply cutting-edge AI to a domain that's been stuck in manual processes for decades. If you want to solve hard, meaningful problems with technology, this is the place.</p>
+        </div>
+        <div class="culture-card fade-in fade-in-delay-2">
+          <div class="culture-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <h3>Real-World Impact</h3>
+          <p>Our platform directly enables safer products reaching more markets. The compliance work we automate protects consumers and opens trade routes globally.</p>
+        </div>
+        <div class="culture-card fade-in fade-in-delay-2">
+          <div class="culture-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3>Nordic Values</h3>
+          <p>Flat hierarchy, trust-based leadership, and work-life balance aren't just words here. We believe the best work comes from people who have space to think and room to grow.</p>
+        </div>
+        <div class="culture-card fade-in fade-in-delay-3">
+          <div class="culture-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <h3>Small Team, Big Ambition</h3>
+          <p>Join early and shape the company from the ground up. Every team member is a key player with real ownership, equity potential, and a direct line to strategic decisions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENEFITS -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="section-label">Benefits</div>
+        <h2>What we offer</h2>
+        <p>We take care of our team so they can focus on building exceptional technology. Here's what you can expect when you join ProductLex.</p>
+      </div>
+      <div class="benefits-grid">
+        <div class="benefit-item fade-in">
+          <div class="benefit-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>
+          </div>
+          <div>
+            <h4>Remote-Friendly</h4>
+            <p>Work from Stockholm HQ or remotely. We trust you to deliver great work wherever you are.</p>
+          </div>
+        </div>
+        <div class="benefit-item fade-in">
+          <div class="benefit-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+          </div>
+          <div>
+            <h4>Equity &amp; Ownership</h4>
+            <p>Early employees receive meaningful equity. Your success is the company's success.</p>
+          </div>
+        </div>
+        <div class="benefit-item fade-in">
+          <div class="benefit-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          </div>
+          <div>
+            <h4>Learning Budget</h4>
+            <p>Annual budget for conferences, courses, books, and certifications to keep growing.</p>
+          </div>
+        </div>
+        <div class="benefit-item fade-in">
+          <div class="benefit-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <div>
+            <h4>Flexible Hours</h4>
+            <p>Results matter more than clock-watching. Structure your day around when you do your best work.</p>
+          </div>
+        </div>
+        <div class="benefit-item fade-in">
+          <div class="benefit-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </div>
+          <div>
+            <h4>Health &amp; Wellness</h4>
+            <p>Wellness allowance and health insurance to support your physical and mental well-being.</p>
+          </div>
+        </div>
+        <div class="benefit-item fade-in">
+          <div class="benefit-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+          </div>
+          <div>
+            <h4>Latest Tools</h4>
+            <p>Top-spec equipment, best-in-class dev tools, and AI-powered workflows from day one.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OPEN POSITIONS -->
+  <section id="positions" class="section section-warm">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="section-label">Open Positions</div>
+        <h2>Find your role at ProductLex</h2>
+        <p>We're looking for exceptional people who want to make a real difference in how the world handles product compliance.</p>
+      </div>
+      <div class="positions-list">
+
+        <!-- Senior Full-Stack Developer -->
+        <div class="position-card fade-in">
+          <div class="position-header">
+            <div class="position-title">
+              <h3>Senior Full-Stack Developer</h3>
+              <div class="position-meta">
+                <span class="position-tag">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                  Stockholm / Remote
+                </span>
+                <span class="position-tag accent">Full-time</span>
+              </div>
+            </div>
+          </div>
+          <p class="position-description">Build the next generation of compliance AI infrastructure. You'll work across the entire stack -- from designing intuitive React interfaces that make complex regulatory data accessible, to architecting Python services that power our AI engine. This is a high-impact role where your code directly shapes how manufacturers worldwide navigate compliance.</p>
+          <div class="position-responsibilities">
+            <h4>Key Responsibilities</h4>
+            <ul>
+              <li>Design and build full-stack features using React, TypeScript, and Python with PostgreSQL</li>
+              <li>Architect scalable APIs and data pipelines that process regulatory information in real time</li>
+              <li>Collaborate with AI/ML engineers to integrate intelligent compliance analysis into the platform</li>
+              <li>Drive technical decisions on architecture, tooling, and engineering best practices</li>
+              <li>Contribute to a culture of code quality through reviews, testing, and documentation</li>
+            </ul>
+          </div>
+          <div class="position-footer">
+            <span class="position-footer-note">AI/ML experience is a strong plus</span>
+            <a href="mailto:carl@productlex.com?subject=Application%3A%20Senior%20Full-Stack%20Developer" class="btn btn-accent">Apply Now</a>
+          </div>
+        </div>
+
+        <!-- CFO -->
+        <div class="position-card fade-in">
+          <div class="position-header">
+            <div class="position-title">
+              <h3>CFO (Chief Financial Officer)</h3>
+              <div class="position-meta">
+                <span class="position-tag">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                  Stockholm
+                </span>
+                <span class="position-tag accent">Full-time</span>
+              </div>
+            </div>
+          </div>
+          <p class="position-description">Drive the financial strategy of a fast-growing AI compliance startup as we scale from early traction to market leadership. You'll own everything from financial planning and SaaS metrics to fundraising and investor relations. This is a foundational leadership role with a seat at the table on every major strategic decision.</p>
+          <div class="position-responsibilities">
+            <h4>Key Responsibilities</h4>
+            <ul>
+              <li>Build and own the financial model, forecasting, budgeting, and reporting infrastructure</li>
+              <li>Lead fundraising efforts including pitch preparation, due diligence, and investor communications</li>
+              <li>Define and track key SaaS metrics (ARR, churn, LTV, CAC) to guide growth decisions</li>
+              <li>Manage cash flow, runway planning, and capital allocation across the business</li>
+              <li>Partner with the CEO on strategic planning, board presentations, and go-to-market finance</li>
+            </ul>
+          </div>
+          <div class="position-footer">
+            <span class="position-footer-note">Startup experience preferred</span>
+            <a href="mailto:carl@productlex.com?subject=Application%3A%20CFO%20(Chief%20Financial%20Officer)" class="btn btn-accent">Apply Now</a>
+          </div>
+        </div>
+
+        <!-- Compliance Expert -->
+        <div class="position-card fade-in">
+          <div class="position-header">
+            <div class="position-title">
+              <h3>Compliance Expert</h3>
+              <div class="position-meta">
+                <span class="position-tag">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                  Stockholm / Remote
+                </span>
+                <span class="position-tag accent">Full-time</span>
+              </div>
+            </div>
+          </div>
+          <p class="position-description">Shape how AI interprets and applies regulatory requirements across the EU and beyond. You'll bring deep expertise in CE marking, EU directives, and harmonised standards to ensure our platform delivers accurate, trustworthy compliance intelligence. This role bridges the gap between regulatory knowledge and cutting-edge technology.</p>
+          <div class="position-responsibilities">
+            <h4>Key Responsibilities</h4>
+            <ul>
+              <li>Define compliance logic and regulatory mappings for EU directives, CE marking, and harmonised standards</li>
+              <li>Validate and improve AI-generated compliance assessments for accuracy and completeness</li>
+              <li>Stay current on regulatory changes and translate them into platform requirements</li>
+              <li>Work closely with engineering to build domain-specific features and compliance workflows</li>
+              <li>Develop compliance content, guidance documents, and knowledge base resources</li>
+            </ul>
+          </div>
+          <div class="position-footer">
+            <span class="position-footer-note">Deep EU regulatory knowledge required</span>
+            <a href="mailto:carl@productlex.com?subject=Application%3A%20Compliance%20Expert" class="btn btn-accent">Apply Now</a>
+          </div>
+        </div>
+
+        <!-- KAM / Enterprise Sales -->
+        <div class="position-card fade-in">
+          <div class="position-header">
+            <div class="position-title">
+              <h3>KAM / Enterprise Sales</h3>
+              <div class="position-meta">
+                <span class="position-tag">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                  Stockholm / Europe
+                </span>
+                <span class="position-tag accent">Full-time</span>
+              </div>
+            </div>
+          </div>
+          <p class="position-description">Drive enterprise adoption of ProductLex AI across European manufacturers. As a Key Account Manager, you'll own the full sales cycle from prospecting to close, building lasting relationships with compliance leaders, quality managers, and C-suite executives. Experience in B2B SaaS, compliance, or regulatory technology is highly valued.</p>
+          <div class="position-responsibilities">
+            <h4>Key Responsibilities</h4>
+            <ul>
+              <li>Identify, qualify, and close enterprise deals with manufacturers and regulated industries</li>
+              <li>Build and maintain a robust pipeline through outbound prospecting, events, and partnerships</li>
+              <li>Develop deep relationships with key stakeholders including compliance teams and executive buyers</li>
+              <li>Collaborate with product and marketing to refine positioning and go-to-market strategies</li>
+              <li>Represent ProductLex at industry events, trade shows, and regulatory conferences across Europe</li>
+            </ul>
+          </div>
+          <div class="position-footer">
+            <span class="position-footer-note">Relationship-driven sales approach valued</span>
+            <a href="mailto:carl@productlex.com?subject=Application%3A%20KAM%20%2F%20Enterprise%20Sales" class="btn btn-accent">Apply Now</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-content fade-in">
+        <h2>Don't see the right role?</h2>
+        <p>We're always looking for talented people who share our mission. Send us your CV and tell us how you'd contribute to ProductLex AI.</p>
+        <a href="mailto:carl@productlex.com?subject=General%20Application%20%E2%80%94%20ProductLex%20AI" class="btn btn-accent btn-lg">Send Open Application</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Cookie Consent Bar -->
+  <div class="cookie-consent" id="cookieConsent">
+    <div class="cookie-consent-inner">
+      <p class="cookie-consent-text">We use cookies to improve your experience. By continuing to browse, you agree to our use of cookies. Read our <a href="cookies.html">Cookie Policy</a>.</p>
+      <div class="cookie-consent-buttons">
+        <button class="cookie-btn cookie-btn-manage" onclick="manageCookies()">Manage Preferences</button>
+        <button class="cookie-btn cookie-btn-accept" onclick="acceptCookies()">Accept All</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo"><div class="nav-logo-icon">P</div>ProductLex</a>
+          <p>Intelligent compliance automation for enterprise manufacturers. Total compliance control. Predictable market expansion.</p>
+        </div>
+        <div class="footer-col"><h4>Platform</h4><ul><li><a href="index.html#platform">Compliance Map</a></li><li><a href="index.html#ai-engine">AI Engine</a></li><li><a href="index.html#features">Regulatory Intelligence</a></li><li><a href="index.html#showcase">Monitoring</a></li><li><a href="documentation.html">API</a></li></ul></div>
+        <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About</a></li><li><a href="careers.html">Careers</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+        <div class="footer-col"><h4>Resources</h4><ul><li><a href="documentation.html">Documentation</a></li><li><a href="documentation.html">API Reference</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="terms.html">Terms</a></li><li><a href="security.html">Security</a></li></ul></div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 ProductLex AI.</span>
+        <div class="footer-legal"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="security.html">Security</a><a href="cookies.html">Cookies</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
+    document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', function(e) {
+        e.preventDefault();
+        const t = document.querySelector(this.getAttribute('href'));
+        if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  
+    // Cookie consent
+    function acceptCookies() {
+      localStorage.setItem('cookieConsent', 'accepted');
+      document.getElementById('cookieConsent').classList.remove('visible');
+    }
+    function manageCookies() {
+      localStorage.setItem('cookieConsent', 'essential');
+      document.getElementById('cookieConsent').classList.remove('visible');
+    }
+    (function() {
+      if (!localStorage.getItem('cookieConsent')) {
+        setTimeout(function() {
+          document.getElementById('cookieConsent').classList.add('visible');
+        }, 500);
+      }
+    })();
+  </script>
+</body>
+</html>

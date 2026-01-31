@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Security — ProductLex AI</title>
+  <meta name="description" content="Enterprise-grade security at ProductLex AI. Learn how we protect your compliance data.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --color-bg: #ffffff;
+      --color-bg-warm: #fafaf8;
+      --color-bg-soft: #f4f3f0;
+      --color-bg-muted: #edecea;
+      --color-surface: #e8e7e4;
+      --color-border: #dddcd9;
+      --color-border-subtle: #e8e7e4;
+      --color-text: #1a1a1a;
+      --color-text-secondary: #5a5a58;
+      --color-text-tertiary: #8a8a86;
+      --color-accent: #4f46e5;
+      --color-accent-light: #6366f1;
+      --color-accent-bg: #eef2ff;
+      --color-accent-soft: rgba(79, 70, 229, 0.08);
+      --color-dark: #111111;
+      --color-green: #16a34a;
+      --color-green-bg: #f0fdf4;
+      --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --max-width: 1180px;
+      --radius: 12px;
+      --radius-lg: 20px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 256px;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 18px 0;
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid transparent;
+      transition: all 0.3s;
+    }
+
+    nav.scrolled {
+      border-bottom-color: var(--color-border);
+      background: rgba(255,255,255,0.92);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 19px;
+      letter-spacing: -0.03em;
+      color: var(--color-text);
+    }
+
+    .nav-logo-icon {
+      width: 34px; height: 34px;
+      background: var(--color-dark);
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 800;
+      color: white;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--color-text); }
+
+    .nav-cta { display: flex; align-items: center; gap: 12px; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 600;
+      padding: 10px 22px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn-ghost { background: transparent; color: var(--color-text-secondary); }
+    .btn-ghost:hover { color: var(--color-text); }
+
+    .btn-primary { background: var(--color-dark); color: white; }
+    .btn-primary:hover {
+      background: #000;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+      transform: translateY(-1px);
+    }
+
+    .btn-accent { background: var(--color-accent); color: white; }
+    .btn-accent:hover {
+      background: var(--color-accent-light);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--color-text);
+      border: 1.5px solid var(--color-border);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--color-text-tertiary);
+      background: var(--color-bg-warm);
+    }
+
+    .btn-lg {
+      padding: 14px 32px;
+      font-size: 15px;
+    }
+
+    /* PAGE HEADER */
+    .page-header {
+      padding: 160px 0 60px;
+      background: linear-gradient(180deg, var(--color-bg-warm) 0%, var(--color-bg) 100%);
+      position: relative;
+    }
+
+    .page-header-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      opacity: 0.4;
+      background-image:
+        radial-gradient(circle at 20% 30%, rgba(79, 70, 229, 0.06) 0%, transparent 50%),
+        radial-gradient(circle at 80% 60%, rgba(79, 70, 229, 0.04) 0%, transparent 50%);
+    }
+
+    .page-header .container { position: relative; z-index: 1; }
+
+    .page-header h1 {
+      font-size: 42px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+
+    .page-header p {
+      font-size: 16px;
+      color: var(--color-text-secondary);
+      max-width: 600px;
+    }
+
+    .page-header .header-badges {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: var(--color-green-bg);
+      border: 1px solid rgba(22, 163, 74, 0.15);
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-green);
+    }
+
+    .header-badge svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* SECURITY CARDS */
+    .security-section {
+      padding: 80px 0;
+    }
+
+    .security-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .security-card {
+      background: var(--color-bg-warm);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 36px;
+      transition: all 0.3s ease;
+    }
+
+    .security-card:hover {
+      border-color: var(--color-border);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+      transform: translateY(-2px);
+    }
+
+    .security-card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      font-size: 22px;
+    }
+
+    .security-card-icon.blue {
+      background: var(--color-accent-bg);
+      color: var(--color-accent);
+    }
+
+    .security-card-icon.green {
+      background: var(--color-green-bg);
+      color: var(--color-green);
+    }
+
+    .security-card-icon.dark {
+      background: var(--color-bg-muted);
+      color: var(--color-text);
+    }
+
+    .security-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+      color: var(--color-text);
+    }
+
+    .security-card p {
+      font-size: 14px;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+    }
+
+    .security-card ul {
+      list-style: none;
+      margin-top: 16px;
+    }
+
+    .security-card li {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      padding: 6px 0;
+      border-bottom: 1px solid var(--color-border-subtle);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .security-card li:last-child {
+      border-bottom: none;
+    }
+
+    .security-card li svg {
+      width: 14px;
+      height: 14px;
+      color: var(--color-green);
+      flex-shrink: 0;
+    }
+
+    /* WIDE CARD */
+    .security-card-wide {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+      background: var(--color-dark);
+      color: white;
+      border-color: transparent;
+    }
+
+    .security-card-wide:hover {
+      border-color: transparent;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+    }
+
+    .security-card-wide h3 {
+      color: white;
+      font-size: 24px;
+    }
+
+    .security-card-wide p {
+      color: rgba(255,255,255,0.7);
+      font-size: 15px;
+    }
+
+    .security-card-wide li {
+      color: rgba(255,255,255,0.7);
+      border-bottom-color: rgba(255,255,255,0.1);
+    }
+
+    .security-card-wide li svg {
+      color: #4ade80;
+    }
+
+    .security-card-wide .btn-accent {
+      margin-top: 24px;
+    }
+
+    /* CONTACT CTA */
+    .security-cta {
+      padding: 80px 0 100px;
+      text-align: center;
+    }
+
+    .security-cta h2 {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 12px;
+    }
+
+    .security-cta p {
+      font-size: 16px;
+      color: var(--color-text-secondary);
+      max-width: 480px;
+      margin: 0 auto 28px;
+    }
+
+    .security-cta .btn-group {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 56px 0 36px;
+      border-top: 1px solid var(--color-border-subtle);
+      background: var(--color-bg-warm);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 48px;
+    }
+
+    .footer-brand p {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+      margin-top: 14px;
+      max-width: 260px;
+    }
+
+    .footer-col h4 {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 14px;
+      color: var(--color-text);
+    }
+
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .footer-col a { font-size: 13px; color: var(--color-text-tertiary); transition: color 0.2s; }
+    .footer-col a:hover { color: var(--color-text-secondary); }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 28px;
+      border-top: 1px solid var(--color-border-subtle);
+      font-size: 12px;
+      color: var(--color-text-tertiary);
+    }
+
+    .footer-legal { display: flex; gap: 24px; }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 960px) {
+      .container { padding: 0 24px; }
+      .nav-inner { padding: 0 24px; }
+      .nav-links { display: none; }
+      .page-header h1 { font-size: 32px; }
+      .security-grid { grid-template-columns: 1fr; }
+      .security-card-wide { grid-template-columns: 1fr; gap: 24px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
+    }
+
+    @media (max-width: 600px) {
+      .header-badges { flex-direction: column; align-items: flex-start; }
+      .security-cta .btn-group { flex-direction: column; align-items: center; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+    }
+
+    /* COOKIE CONSENT BAR */
+    .cookie-consent {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 9998;
+      background: rgba(255, 255, 255, 0.97);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-top: 1px solid var(--color-border);
+      padding: 20px 0;
+      box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.06);
+      transform: translateY(100%);
+      transition: transform 0.4s ease;
+    }
+    .cookie-consent.visible { transform: translateY(0); }
+    .cookie-consent-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .cookie-consent-text {
+      font-size: 14px;
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+      flex: 1;
+    }
+    .cookie-consent-text a {
+      color: var(--color-accent);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .cookie-consent-text a:hover { color: var(--color-accent-light); }
+    .cookie-consent-buttons {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .cookie-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 9px 20px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .cookie-btn-accept { background: var(--color-accent); color: white; }
+    .cookie-btn-accept:hover { background: var(--color-accent-light); transform: translateY(-1px); }
+    .cookie-btn-manage { background: transparent; color: var(--color-text-secondary); border: 1.5px solid var(--color-border); }
+    .cookie-btn-manage:hover { border-color: var(--color-text-tertiary); color: var(--color-text); background: var(--color-bg-warm); }
+    @media (max-width: 960px) { .cookie-consent-inner { padding: 0 24px; } }
+    @media (max-width: 700px) {
+      .cookie-consent-inner { flex-direction: column; text-align: center; }
+      .cookie-consent-buttons { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="nav-logo-icon">P</div>
+        ProductLex
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Platform</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="careers.html">Careers</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="signin.html" class="btn btn-ghost">Sign in</a>
+        <a href="contact.html" class="btn btn-primary">Request Demo</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="page-header">
+    <div class="page-header-bg"></div>
+    <div class="container">
+      <h1 class="fade-in">Enterprise Security</h1>
+      <p class="fade-in">ProductLex AI is built with security at every layer. Your compliance data is protected by industry-leading practices and infrastructure.</p>
+      <div class="header-badges fade-in">
+        <span class="header-badge">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13.5 4.5l-7 7L3 8"/></svg>
+          GDPR Compliant
+        </span>
+        <span class="header-badge">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13.5 4.5l-7 7L3 8"/></svg>
+          SOC 2 Roadmap
+        </span>
+        <span class="header-badge">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13.5 4.5l-7 7L3 8"/></svg>
+          EU Data Residency
+        </span>
+        <span class="header-badge">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13.5 4.5l-7 7L3 8"/></svg>
+          Encrypted End-to-End
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <section class="security-section">
+    <div class="container">
+      <div class="security-grid">
+
+        <!-- Data Protection -->
+        <div class="security-card fade-in">
+          <div class="security-card-icon blue">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <h3>Data Protection</h3>
+          <p>Your data is encrypted at every stage with enterprise-grade cryptography.</p>
+          <ul>
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13.5 4.5l-7 7L3 8"/></svg> AES-256 encryption at rest</li>
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13.5 4.5l-7 7L3 8"/></svg> TLS 1.2+ encryption in transit</li>
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13.5 4.5l-7 7L3 8"/></svg> SOC 2 Type II compliance roadmap</li>
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13.5 4.5l-7 7L3 8"/></svg> Regular penetration testing</li>
+          </ul>
+        </div>
+
+        <!-- Infrastructure -->
+        <div class="security-card fade-in">
+          <div class="security-card-icon green">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+          </div>
+          <h3>Infrastructure</h3>
+          <p>Hosted on world-class cloud infrastructure with EU data residency.</p>
+          <ul>
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13.5 4.5l-7 7L3 8"/></svg> Cloud-hosted in EU (AWS / Azure)</li>
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13.5 4.5l-7 7L3 8"/></svg> Auto-scaling with high availability</li>
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13.5 4.5l-7 7L3 8"/></svg> Automated daily backups</li>
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13.5 4.5l-7 7L3 8"/></svg> 99.9% uptime SLA</li>
+          </ul>
+        </div>
+
+        <!-- Access Control -->
+        <div class="security-card fade-in">
+          <div class="security-card-icon dark">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3>Access Control</h3>
+          <p>Fine-grained access management with enterprise authentication.</p>
+          <ul>
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13.5 4.5l-7 7L3 8"/></svg> Single Sign-On (SSO) support</li>
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13.5 4.5l-7 7L3 8"/></svg> Role-Based Access Control (RBAC)</li>
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13.5 4.5l-7 7L3 8"/></svg> Multi-Factor Authentication (MFA)</li>
+            <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13.5 4.5l-7 7L3 8"/></svg> Detailed audit logging</li>
+          </ul>
+        </div>
+
+        <!-- Compliance — wide card -->
+        <div class="security-card security-card-wide fade-in">
+          <div>
+            <h3>Compliance & Data Governance</h3>
+            <p>ProductLex AI is designed to meet the strictest data governance requirements. We provide the documentation and controls your legal and security teams need.</p>
+            <ul>
+              <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13.5 4.5l-7 7L3 8"/></svg> Full GDPR compliance with EU data residency</li>
+              <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13.5 4.5l-7 7L3 8"/></svg> Data Processing Agreements (DPA) available</li>
+              <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13.5 4.5l-7 7L3 8"/></svg> Sub-processor transparency and documentation</li>
+              <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13.5 4.5l-7 7L3 8"/></svg> Regular compliance audits and reviews</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Vulnerability Management</h3>
+            <p>We take a proactive approach to identifying and resolving potential security issues before they impact our customers.</p>
+            <ul>
+              <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13.5 4.5l-7 7L3 8"/></svg> Continuous dependency scanning</li>
+              <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13.5 4.5l-7 7L3 8"/></svg> Automated vulnerability detection</li>
+              <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13.5 4.5l-7 7L3 8"/></svg> Responsible disclosure program</li>
+              <li><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13.5 4.5l-7 7L3 8"/></svg> Incident response within 24 hours</li>
+            </ul>
+            <a href="contact.html" class="btn btn-accent btn-lg">Contact Security Team</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="security-cta fade-in">
+    <div class="container">
+      <h2>Have Security Questions?</h2>
+      <p>Our team is happy to walk you through our security architecture, provide compliance documentation, or discuss your specific requirements.</p>
+      <div class="btn-group">
+        <a href="contact.html" class="btn btn-primary btn-lg">Request a Demo</a>
+        <a href="mailto:carl@productlex.com" class="btn btn-outline btn-lg">Email Security Team</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Cookie Consent Bar -->
+  <div class="cookie-consent" id="cookieConsent">
+    <div class="cookie-consent-inner">
+      <p class="cookie-consent-text">We use cookies to improve your experience. By continuing to browse, you agree to our use of cookies. Read our <a href="cookies.html">Cookie Policy</a>.</p>
+      <div class="cookie-consent-buttons">
+        <button class="cookie-btn cookie-btn-manage" onclick="manageCookies()">Manage Preferences</button>
+        <button class="cookie-btn cookie-btn-accept" onclick="acceptCookies()">Accept All</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo"><div class="nav-logo-icon">P</div>ProductLex</a>
+          <p>Intelligent compliance automation for enterprise manufacturers. Total compliance control. Predictable market expansion.</p>
+        </div>
+        <div class="footer-col"><h4>Platform</h4><ul><li><a href="index.html#platform">Compliance Map</a></li><li><a href="index.html#ai-engine">AI Engine</a></li><li><a href="index.html#features">Regulatory Intelligence</a></li><li><a href="index.html#showcase">Monitoring</a></li><li><a href="documentation.html">API</a></li></ul></div>
+        <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About</a></li><li><a href="careers.html">Careers</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+        <div class="footer-col"><h4>Resources</h4><ul><li><a href="documentation.html">Documentation</a></li><li><a href="documentation.html">API Reference</a></li></ul></div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 ProductLex AI.</span>
+        <div class="footer-legal"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="security.html">Security</a><a href="cookies.html">Cookies</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
+    document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+  
+    // Cookie consent
+    function acceptCookies() {
+      localStorage.setItem('cookieConsent', 'accepted');
+      document.getElementById('cookieConsent').classList.remove('visible');
+    }
+    function manageCookies() {
+      localStorage.setItem('cookieConsent', 'essential');
+      document.getElementById('cookieConsent').classList.remove('visible');
+    }
+    (function() {
+      if (!localStorage.getItem('cookieConsent')) {
+        setTimeout(function() {
+          document.getElementById('cookieConsent').classList.add('visible');
+        }, 500);
+      }
+    })();
+  </script>
+</body>
+</html>

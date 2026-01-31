@@ -1,0 +1,3432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ProductLex AI — Total Compliance Control. Predictable Market Expansion.</title>
+  <meta name="description" content="Any Product. Any Market. Any Regulation. One Platform. ProductLex AI delivers total compliance control through modular AI intelligence.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --color-bg: #ffffff;
+      --color-bg-warm: #fafaf8;
+      --color-bg-soft: #f4f3f0;
+      --color-bg-muted: #edecea;
+      --color-surface: #e8e7e4;
+      --color-border: #dddcd9;
+      --color-border-subtle: #e8e7e4;
+      --color-text: #1a1a1a;
+      --color-text-secondary: #5a5a58;
+      --color-text-tertiary: #8a8a86;
+      --color-accent: #4f46e5;
+      --color-accent-light: #6366f1;
+      --color-accent-bg: #eef2ff;
+      --color-accent-soft: rgba(79, 70, 229, 0.08);
+      --color-green: #16a34a;
+      --color-green-bg: #f0fdf4;
+      --color-amber: #d97706;
+      --color-red: #dc2626;
+      --color-dark: #111111;
+      --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --max-width: 1180px;
+      --section-padding: 140px 0;
+      --radius: 12px;
+      --radius-lg: 20px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* Grain overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 256px;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 18px 0;
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid transparent;
+      transition: all 0.3s;
+    }
+
+    nav.scrolled {
+      border-bottom-color: var(--color-border);
+      background: rgba(255,255,255,0.92);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 19px;
+      letter-spacing: -0.03em;
+      color: var(--color-text);
+    }
+
+    .nav-logo-icon {
+      width: 34px;
+      height: 34px;
+      background: var(--color-dark);
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 800;
+      color: white;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--color-text); }
+
+    .nav-cta { display: flex; align-items: center; gap: 12px; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 600;
+      padding: 10px 22px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--color-text-secondary);
+    }
+
+    .btn-ghost:hover { color: var(--color-text); }
+
+    .btn-primary {
+      background: var(--color-dark);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #000;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--color-text);
+      border: 1.5px solid var(--color-border);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--color-text-tertiary);
+      background: var(--color-bg-warm);
+    }
+
+    .btn-lg {
+      padding: 14px 32px;
+      font-size: 15px;
+    }
+
+    .btn-accent {
+      background: var(--color-accent);
+      color: white;
+    }
+
+    .btn-accent:hover {
+      background: var(--color-accent-light);
+      transform: translateY(-1px);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 180px 0 100px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, var(--color-bg-warm) 0%, var(--color-bg) 100%);
+      z-index: -2;
+    }
+
+    .hero-bg-pattern {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      opacity: 0.4;
+      background-image:
+        radial-gradient(circle at 20% 30%, rgba(79, 70, 229, 0.06) 0%, transparent 50%),
+        radial-gradient(circle at 80% 60%, rgba(79, 70, 229, 0.04) 0%, transparent 50%);
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px 6px 8px;
+      background: var(--color-accent-bg);
+      border: 1px solid rgba(79, 70, 229, 0.12);
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-accent);
+      margin-bottom: 28px;
+      letter-spacing: 0.01em;
+    }
+
+    .hero-badge-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--color-accent);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.85); }
+    }
+
+    .hero h1 {
+      font-size: clamp(40px, 4.5vw, 60px);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.035em;
+      margin-bottom: 24px;
+      color: var(--color-text);
+    }
+
+    .hero h1 span {
+      color: var(--color-accent);
+    }
+
+    .hero-sub {
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--color-text-secondary);
+      max-width: 480px;
+      margin-bottom: 36px;
+    }
+
+    .hero-cta {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .hero-note {
+      font-size: 13px;
+      color: var(--color-text-tertiary);
+    }
+
+    /* Hero mockup */
+    .hero-mockup {
+      position: relative;
+    }
+
+    .hero-mockup-window {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    .mockup-bar {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 13px 16px;
+      background: var(--color-bg-warm);
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+
+    .mockup-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .mockup-dot:nth-child(1) { background: #ff5f57; }
+    .mockup-dot:nth-child(2) { background: #febc2e; }
+    .mockup-dot:nth-child(3) { background: #28c840; }
+
+    .mockup-bar-text {
+      flex: 1;
+      text-align: center;
+      font-size: 11px;
+      color: var(--color-text-tertiary);
+      font-weight: 500;
+    }
+
+    .mockup-body { padding: 20px; }
+
+    /* Map Mock */
+    .map-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    .map-header h3 { font-size: 14px; font-weight: 700; }
+
+    .map-legend { display: flex; gap: 14px; font-size: 11px; color: var(--color-text-tertiary); }
+    .map-legend-item { display: flex; align-items: center; gap: 5px; }
+    .legend-dot { width: 7px; height: 7px; border-radius: 50%; }
+    .legend-dot.ok { background: var(--color-green); }
+    .legend-dot.warn { background: var(--color-amber); }
+    .legend-dot.crit { background: var(--color-red); }
+
+    .map-regions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+    .map-region {
+      background: var(--color-bg-warm);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius);
+      padding: 14px;
+    }
+
+    .map-region-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .map-region-name { font-size: 12px; font-weight: 700; }
+
+    .map-badge {
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 50px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .map-badge.ok { background: var(--color-green-bg); color: var(--color-green); }
+    .map-badge.warn { background: #fffbeb; color: var(--color-amber); }
+
+    .map-countries { display: flex; flex-wrap: wrap; gap: 4px; }
+
+    .map-c {
+      font-size: 10px;
+      padding: 3px 8px;
+      background: var(--color-bg);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: 6px;
+      color: var(--color-text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .c-dot { width: 5px; height: 5px; border-radius: 50%; }
+
+    .map-bottom {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .map-kpi {
+      background: var(--color-bg-warm);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: 10px;
+      padding: 12px;
+      text-align: center;
+    }
+
+    .map-kpi-val { font-size: 18px; font-weight: 800; color: var(--color-text); }
+    .map-kpi-lbl { font-size: 9px; color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 2px; font-weight: 600; }
+
+    /* ── SOCIAL PROOF ── */
+    .social-proof {
+      padding: 60px 0;
+      border-top: 1px solid var(--color-border-subtle);
+      border-bottom: 1px solid var(--color-border-subtle);
+      background: var(--color-bg-warm);
+    }
+
+    .social-proof-label {
+      text-align: center;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 32px;
+    }
+
+    .social-proof-grid {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 56px;
+      flex-wrap: wrap;
+    }
+
+    .social-proof-item {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--color-text-tertiary);
+      opacity: 0.45;
+      transition: opacity 0.3s;
+      letter-spacing: -0.01em;
+    }
+
+    .social-proof-item:hover { opacity: 0.8; }
+
+    /* ── SECTION COMMON ── */
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--color-accent);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+      gap: 8px;
+    }
+
+    .section-label::before {
+      content: '';
+      width: 20px;
+      height: 2px;
+      background: var(--color-accent);
+      border-radius: 1px;
+    }
+
+    .section-title {
+      font-size: clamp(32px, 3.5vw, 48px);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 18px;
+    }
+
+    .section-subtitle {
+      font-size: 17px;
+      line-height: 1.75;
+      color: var(--color-text-secondary);
+      max-width: 600px;
+    }
+
+    /* ── LEGACY CORE ── */
+    .legacy {
+      padding: var(--section-padding);
+      background: var(--color-bg-warm);
+    }
+
+    .legacy-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .legacy-text .section-subtitle { margin-bottom: 32px; }
+
+    .legacy-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .legacy-stat {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius);
+      padding: 20px;
+    }
+
+    .legacy-stat-val { font-size: 22px; font-weight: 800; color: var(--color-accent); margin-bottom: 4px; }
+    .legacy-stat-lbl { font-size: 12px; color: var(--color-text-secondary); font-weight: 500; }
+
+    .legacy-visual {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.07);
+    }
+
+    .legacy-layers {
+      padding: 28px;
+    }
+
+    .legacy-layer {
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.25s;
+    }
+
+    .legacy-layer:last-child { margin-bottom: 0; }
+
+    .legacy-layer.ai {
+      background: var(--color-accent);
+      border-color: var(--color-accent);
+      color: white;
+    }
+
+    .legacy-layer.ai .legacy-layer-sub { color: rgba(255,255,255,0.7); }
+
+    .legacy-layer.core {
+      background: var(--color-bg-warm);
+    }
+
+    .legacy-layer-left { display: flex; align-items: center; gap: 12px; }
+
+    .legacy-layer-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .legacy-layer.ai .legacy-layer-icon { background: rgba(255,255,255,0.2); color: white; }
+    .legacy-layer.core .legacy-layer-icon { background: var(--color-accent-bg); color: var(--color-accent); }
+
+    .legacy-layer-name { font-size: 13px; font-weight: 700; }
+    .legacy-layer-sub { font-size: 11px; color: var(--color-text-tertiary); margin-top: 1px; }
+
+    .legacy-layer-badge {
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 3px 10px;
+      border-radius: 50px;
+    }
+
+    .legacy-layer.ai .legacy-layer-badge { background: rgba(255,255,255,0.2); color: white; }
+    .legacy-layer.core .legacy-layer-badge { background: var(--color-accent-bg); color: var(--color-accent); }
+
+    /* ── STAKEHOLDER IMPACT ── */
+    .stakeholder {
+      padding: var(--section-padding);
+    }
+
+    .stakeholder-header { text-align: center; margin-bottom: 72px; }
+    .stakeholder-header .section-label { justify-content: center; }
+    .stakeholder-header .section-subtitle { margin: 0 auto; }
+
+    .stakeholder-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .stake-card {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      background: var(--color-bg-warm);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: all 0.25s;
+    }
+
+    .stake-card:hover {
+      border-color: var(--color-border);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.05);
+    }
+
+    .stake-card-left {
+      padding: 36px;
+      border-right: 1px solid var(--color-border-subtle);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stake-card-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-accent);
+      background: var(--color-accent-bg);
+      padding: 4px 12px;
+      border-radius: 50px;
+      margin-bottom: 18px;
+      width: fit-content;
+    }
+
+    .stake-card-left h3 {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+
+    .stake-card-left p {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--color-text-secondary);
+      flex: 1;
+    }
+
+    .stake-card-right {
+      padding: 36px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .stake-benefit {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .stake-benefit-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--color-text-tertiary);
+    }
+
+    .stake-benefit h4 {
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: var(--color-text);
+    }
+
+    .stake-benefit p {
+      font-size: 12px;
+      line-height: 1.6;
+      color: var(--color-text-secondary);
+    }
+
+    .stake-effect {
+      grid-column: 1 / -1;
+      background: var(--color-bg);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .stake-effect-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--color-green-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .stake-effect-icon svg { width: 14px; height: 14px; color: var(--color-green); }
+
+    .stake-effect-text {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--color-green);
+    }
+
+    @media (max-width: 960px) {
+      .legacy-inner { grid-template-columns: 1fr; gap: 48px; }
+      .stake-card { grid-template-columns: 1fr; }
+      .stake-card-left { border-right: none; border-bottom: 1px solid var(--color-border-subtle); }
+    }
+
+    /* ── MODULAR ── */
+    .modular {
+      padding: var(--section-padding);
+    }
+
+    .modular-header {
+      text-align: center;
+      margin-bottom: 72px;
+    }
+
+    .modular-header .section-label { justify-content: center; }
+    .modular-header .section-subtitle { margin: 0 auto; }
+
+    .modular-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 72px;
+    }
+
+    .modular-card {
+      background: var(--color-bg-warm);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      transition: all 0.25s;
+    }
+
+    .modular-card:hover {
+      border-color: var(--color-border);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.05);
+      transform: translateY(-3px);
+    }
+
+    .modular-card-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-accent);
+      background: var(--color-accent-bg);
+      padding: 4px 10px;
+      border-radius: 50px;
+      margin-bottom: 18px;
+    }
+
+    .modular-card h3 {
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+
+    .modular-card p {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--color-text-secondary);
+    }
+
+    .modular-quote {
+      max-width: 780px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 48px 0;
+      border-top: 1px solid var(--color-border-subtle);
+    }
+
+    .modular-quote blockquote {
+      font-size: clamp(22px, 2.5vw, 30px);
+      font-weight: 500;
+      line-height: 1.5;
+      color: var(--color-text-secondary);
+      letter-spacing: -0.015em;
+    }
+
+    .modular-quote blockquote strong {
+      color: var(--color-text);
+      font-weight: 800;
+    }
+
+    /* ── AI ENGINE ── */
+    .ai-engine {
+      padding: var(--section-padding);
+      background: var(--color-dark);
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ai-engine::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 15% 50%, rgba(79, 70, 229, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 85% 30%, rgba(99, 102, 241, 0.1) 0%, transparent 50%);
+    }
+
+    .ai-engine .container { position: relative; z-index: 1; }
+
+    .ai-engine-header {
+      text-align: center;
+      margin-bottom: 72px;
+    }
+
+    .ai-engine .section-label { color: #818cf8; justify-content: center; }
+    .ai-engine .section-label::before { background: #818cf8; }
+    .ai-engine .section-title { color: white; }
+    .ai-engine .section-subtitle { color: rgba(255,255,255,0.6); margin: 0 auto; }
+
+    .ai-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .ai-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      backdrop-filter: blur(10px);
+      transition: all 0.25s;
+    }
+
+    .ai-card:hover {
+      background: rgba(255,255,255,0.09);
+      border-color: rgba(255,255,255,0.14);
+    }
+
+    .ai-card.wide { grid-column: 1 / -1; }
+
+    .ai-card-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #a5b4fc;
+      background: rgba(99, 102, 241, 0.15);
+      padding: 4px 10px;
+      border-radius: 50px;
+      margin-bottom: 16px;
+    }
+
+    .ai-card h3 {
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+      color: white;
+    }
+
+    .ai-card p {
+      font-size: 14px;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .ai-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .ai-tag {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 6px 14px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 50px;
+      color: rgba(255,255,255,0.7);
+    }
+
+    /* ── ADVANTAGE ── */
+    .advantage {
+      padding: var(--section-padding);
+      background: var(--color-bg-warm);
+    }
+
+    .advantage-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .advantage-text .section-subtitle { margin-bottom: 36px; }
+
+    .advantage-list { list-style: none; display: flex; flex-direction: column; gap: 24px; }
+
+    .advantage-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .advantage-icon {
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+      border-radius: 10px;
+      background: var(--color-accent-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .advantage-icon svg { width: 16px; height: 16px; color: var(--color-accent); }
+
+    .advantage-item h4 { font-size: 15px; font-weight: 700; margin-bottom: 3px; letter-spacing: -0.01em; }
+    .advantage-item p { font-size: 13px; line-height: 1.65; color: var(--color-text-secondary); }
+
+    .adv-visual-card {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.06);
+    }
+
+    .adv-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+
+    .adv-head-title { font-size: 14px; font-weight: 700; }
+    .adv-head-badge {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--color-accent);
+      background: var(--color-accent-bg);
+      padding: 4px 12px;
+      border-radius: 50px;
+    }
+
+    .adv-rows { display: flex; flex-direction: column; gap: 16px; }
+
+    .adv-row { display: grid; grid-template-columns: 120px 1fr 1fr; gap: 10px; align-items: center; }
+
+    .adv-row-label { font-size: 12px; font-weight: 600; color: var(--color-text-tertiary); }
+
+    .adv-bar { height: 6px; border-radius: 3px; background: var(--color-bg-muted); overflow: hidden; }
+    .adv-bar-fill { height: 100%; border-radius: 3px; }
+    .adv-bar-fill.ours { background: var(--color-accent); }
+    .adv-bar-fill.old { background: var(--color-text-tertiary); opacity: 0.25; }
+
+    .adv-legend {
+      display: flex;
+      gap: 20px;
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid var(--color-border-subtle);
+      font-size: 11px;
+      color: var(--color-text-tertiary);
+      font-weight: 500;
+    }
+
+    .adv-legend-item { display: flex; align-items: center; gap: 6px; }
+    .adv-legend-dot { width: 8px; height: 4px; border-radius: 2px; }
+
+    /* ── FEATURES ── */
+    .features {
+      padding: var(--section-padding);
+    }
+
+    .features-header {
+      text-align: center;
+      margin-bottom: 88px;
+    }
+
+    .features-header .section-label { justify-content: center; }
+    .features-header .section-subtitle { margin: 0 auto; }
+
+    .feature-block {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+      margin-bottom: 120px;
+    }
+
+    .feature-block:last-child { margin-bottom: 0; }
+    .feature-block.reverse { direction: rtl; }
+    .feature-block.reverse > * { direction: ltr; }
+
+    .feature-text h3 {
+      font-size: 30px;
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.025em;
+      margin-bottom: 14px;
+    }
+
+    .feature-text p {
+      font-size: 15px;
+      line-height: 1.75;
+      color: var(--color-text-secondary);
+      margin-bottom: 24px;
+    }
+
+    .feature-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .feature-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+    }
+
+    .feature-list li::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--color-accent);
+      flex-shrink: 0;
+      margin-top: 8px;
+    }
+
+    /* AI Chat Mock */
+    .chat-mock {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.07);
+    }
+
+    .chat-head {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--color-border-subtle);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--color-text-secondary);
+    }
+
+    .chat-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--color-accent);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    .chat-body { padding: 18px; display: flex; flex-direction: column; gap: 12px; }
+
+    .chat-msg {
+      max-width: 88%;
+      padding: 12px 16px;
+      border-radius: var(--radius);
+      font-size: 12.5px;
+      line-height: 1.6;
+    }
+
+    .chat-msg.user {
+      align-self: flex-end;
+      background: var(--color-accent);
+      color: white;
+      border-bottom-right-radius: 4px;
+    }
+
+    .chat-msg.ai {
+      align-self: flex-start;
+      background: var(--color-bg-warm);
+      color: var(--color-text-secondary);
+      border: 1px solid var(--color-border-subtle);
+      border-bottom-left-radius: 4px;
+    }
+
+    .chat-msg.ai strong { color: var(--color-text); }
+
+    .chat-input {
+      padding: 14px 18px;
+      border-top: 1px solid var(--color-border-subtle);
+    }
+
+    .chat-input-field {
+      width: 100%;
+      padding: 10px 14px;
+      background: var(--color-bg-warm);
+      border: 1px solid var(--color-border);
+      border-radius: 50px;
+      font-size: 12px;
+      color: var(--color-text-tertiary);
+    }
+
+    /* Reg Table Mock */
+    .reg-mock {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.07);
+    }
+
+    .reg-head {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--color-border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .reg-head-title { font-size: 12px; font-weight: 700; }
+
+    .reg-head-search {
+      padding: 5px 12px;
+      background: var(--color-bg-warm);
+      border: 1px solid var(--color-border);
+      border-radius: 50px;
+      font-size: 11px;
+      color: var(--color-text-tertiary);
+      width: 160px;
+    }
+
+    .reg-row {
+      display: grid;
+      grid-template-columns: 1fr 90px 70px;
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--color-border-subtle);
+      align-items: center;
+      font-size: 12px;
+      transition: background 0.15s;
+    }
+
+    .reg-row:hover { background: var(--color-bg-warm); }
+    .reg-row:last-child { border-bottom: none; }
+
+    .reg-row.head {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--color-text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .reg-row.head:hover { background: transparent; }
+
+    .reg-name { font-weight: 600; color: var(--color-text); }
+    .reg-name small { display: block; font-weight: 400; font-size: 10px; color: var(--color-text-tertiary); margin-top: 2px; }
+
+    .reg-type {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: var(--color-bg-soft);
+      color: var(--color-text-secondary);
+      width: fit-content;
+    }
+
+    .reg-status {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 50px;
+      width: fit-content;
+    }
+
+    .reg-status.ok { background: var(--color-green-bg); color: var(--color-green); }
+    .reg-status.warn { background: #fffbeb; color: var(--color-amber); }
+    .reg-status.crit { background: #fef2f2; color: var(--color-red); }
+
+    /* Alert Mock */
+    .alert-mock {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.07);
+    }
+
+    .alert-head {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--color-border-subtle);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .alert-head-dot { width: 7px; height: 7px; background: var(--color-amber); border-radius: 50%; }
+
+    .alert-body { padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+
+    .alert-item {
+      background: var(--color-bg-warm);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius);
+      padding: 14px;
+    }
+
+    .alert-item-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+    .alert-sev { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+    .alert-sev.crit { color: var(--color-red); }
+    .alert-sev.high { color: var(--color-amber); }
+    .alert-sev.info { color: var(--color-accent); }
+    .alert-time { font-size: 10px; color: var(--color-text-tertiary); }
+
+    .alert-title { font-size: 12px; font-weight: 700; margin-bottom: 4px; }
+    .alert-desc { font-size: 11px; color: var(--color-text-secondary); line-height: 1.6; }
+
+    /* ── HOW IT WORKS ── */
+    .how {
+      padding: var(--section-padding);
+      background: var(--color-bg-warm);
+    }
+
+    .how-header { text-align: center; margin-bottom: 72px; }
+    .how-header .section-label { justify-content: center; }
+    .how-header .section-subtitle { margin: 0 auto; }
+
+    .how-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+
+    .how-step {
+      text-align: center;
+      padding: 40px 28px;
+      background: var(--color-bg);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-lg);
+    }
+
+    .how-step-num {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      font-weight: 800;
+      margin: 0 auto 20px;
+      background: var(--color-dark);
+      color: white;
+    }
+
+    .how-step h3 { font-size: 18px; font-weight: 800; margin-bottom: 10px; letter-spacing: -0.01em; }
+    .how-step p { font-size: 14px; line-height: 1.7; color: var(--color-text-secondary); }
+
+    /* ── PRODUCT SHOWCASE ── */
+    .showcase {
+      padding: var(--section-padding);
+    }
+
+    .showcase-header {
+      text-align: center;
+      margin-bottom: 72px;
+    }
+
+    .showcase-header .section-label { justify-content: center; }
+    .showcase-header .section-subtitle { margin: 0 auto; }
+
+    .showcase-screens {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    .showcase-screen {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    .showcase-screen-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 24px;
+      background: var(--color-bg-warm);
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+
+    .showcase-screen-label-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .showcase-screen-label h4 { font-size: 13px; font-weight: 700; }
+    .showcase-screen-label .mockup-dots { display: flex; gap: 6px; }
+
+    .showcase-screen-body { padding: 24px; }
+
+    /* Dashboard Mock */
+    .dash-top { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 20px; }
+
+    .dash-stat {
+      background: var(--color-bg-warm);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius);
+      padding: 18px;
+    }
+
+    .dash-stat-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--color-text-tertiary);
+      margin-bottom: 6px;
+    }
+
+    .dash-stat-val { font-size: 26px; font-weight: 800; color: var(--color-text); }
+    .dash-stat-change { font-size: 11px; font-weight: 600; margin-top: 4px; }
+    .dash-stat-change.up { color: var(--color-green); }
+    .dash-stat-change.down { color: var(--color-red); }
+
+    .dash-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 14px; }
+
+    .dash-panel {
+      background: var(--color-bg-warm);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius);
+      padding: 18px;
+    }
+
+    .dash-panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .dash-panel-title { font-size: 12px; font-weight: 700; }
+
+    .dash-chart-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      height: 120px;
+    }
+
+    .dash-bar {
+      flex: 1;
+      background: var(--color-accent-bg);
+      border-radius: 4px 4px 0 0;
+      position: relative;
+    }
+
+    .dash-bar-fill {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--color-accent);
+      border-radius: 4px 4px 0 0;
+      transition: height 0.6s ease;
+    }
+
+    .dash-bar-label {
+      text-align: center;
+      font-size: 9px;
+      color: var(--color-text-tertiary);
+      margin-top: 6px;
+      font-weight: 600;
+    }
+
+    .dash-activity { display: flex; flex-direction: column; gap: 10px; }
+
+    .dash-act-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+
+    .dash-act-item:last-child { border-bottom: none; }
+
+    .dash-act-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+
+    .dash-act-text { font-size: 12px; line-height: 1.5; color: var(--color-text-secondary); }
+    .dash-act-text strong { color: var(--color-text); }
+    .dash-act-time { font-size: 10px; color: var(--color-text-tertiary); margin-top: 2px; }
+
+    /* Task Mock */
+    .task-cols {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .task-col {
+      background: var(--color-bg-soft);
+      border-radius: var(--radius);
+      padding: 14px;
+    }
+
+    .task-col-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--color-text-tertiary);
+    }
+
+    .task-col-count {
+      font-size: 10px;
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      padding: 1px 7px;
+      border-radius: 50px;
+      font-weight: 700;
+      color: var(--color-text-secondary);
+    }
+
+    .task-cards { display: flex; flex-direction: column; gap: 8px; }
+
+    .task-card {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: 10px;
+      padding: 14px;
+    }
+
+    .task-card-title { font-size: 12px; font-weight: 700; margin-bottom: 6px; color: var(--color-text); }
+    .task-card-desc { font-size: 11px; color: var(--color-text-tertiary); line-height: 1.5; margin-bottom: 10px; }
+
+    .task-card-meta { display: flex; align-items: center; justify-content: space-between; }
+
+    .task-card-priority {
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+
+    .task-card-priority.crit { background: #fef2f2; color: var(--color-red); }
+    .task-card-priority.high { background: #fffbeb; color: var(--color-amber); }
+    .task-card-priority.med { background: var(--color-accent-bg); color: var(--color-accent); }
+    .task-card-priority.low { background: var(--color-green-bg); color: var(--color-green); }
+
+    .task-card-assignee {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--color-accent-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8px;
+      font-weight: 800;
+      color: var(--color-accent);
+    }
+
+    @media (max-width: 960px) {
+      .dash-top { grid-template-columns: repeat(2, 1fr); }
+      .dash-grid { grid-template-columns: 1fr; }
+      .task-cols { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      .task-cols { grid-template-columns: 1fr; }
+    }
+
+    /* ── CAPABILITIES ── */
+    .capabilities { padding: var(--section-padding); }
+
+    .cap-header { text-align: center; margin-bottom: 56px; }
+    .cap-header .section-label { justify-content: center; }
+    .cap-header .section-subtitle { margin: 0 auto; }
+
+    .cap-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+    .cap-card {
+      background: var(--color-bg-warm);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      transition: all 0.25s;
+    }
+
+    .cap-card:hover {
+      border-color: var(--color-border);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.05);
+    }
+
+    .cap-line {
+      width: 28px;
+      height: 3px;
+      background: var(--color-accent);
+      border-radius: 2px;
+      margin-bottom: 18px;
+    }
+
+    .cap-card h4 { font-size: 15px; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.01em; }
+    .cap-card p { font-size: 13px; line-height: 1.65; color: var(--color-text-secondary); }
+
+    /* ── CTA ── */
+    .cta {
+      padding: var(--section-padding);
+      background: var(--color-dark);
+      color: white;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 100%, rgba(79, 70, 229, 0.2) 0%, transparent 60%);
+    }
+
+    .cta .container { position: relative; z-index: 1; }
+
+    .cta h2 {
+      font-size: clamp(30px, 3.5vw, 46px);
+      font-weight: 800;
+      line-height: 1.12;
+      letter-spacing: -0.03em;
+      margin-bottom: 18px;
+    }
+
+    .cta p {
+      font-size: 17px;
+      color: rgba(255,255,255,0.6);
+      max-width: 500px;
+      margin: 0 auto 40px;
+      line-height: 1.75;
+    }
+
+    .cta-btns { display: flex; align-items: center; justify-content: center; gap: 14px; }
+
+    .cta .btn-primary { background: white; color: var(--color-dark); }
+    .cta .btn-primary:hover { box-shadow: 0 4px 20px rgba(255,255,255,0.2); }
+    .cta .btn-outline { color: white; border-color: rgba(255,255,255,0.2); }
+    .cta .btn-outline:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.3); }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials {
+      padding: var(--section-padding);
+    }
+
+    .testimonials-header {
+      text-align: center;
+      margin-bottom: 72px;
+    }
+
+    .testimonials-header .section-label { justify-content: center; }
+    .testimonials-header .section-subtitle { margin: 0 auto; }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .testimonial-card {
+      background: var(--color-bg-warm);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 36px;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.25s;
+    }
+
+    .testimonial-card:hover {
+      border-color: var(--color-border);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.05);
+      transform: translateY(-3px);
+    }
+
+    .testimonial-stars {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 20px;
+    }
+
+    .testimonial-stars svg { width: 16px; height: 16px; color: var(--color-accent); fill: var(--color-accent); }
+
+    .testimonial-quote {
+      font-size: 15px;
+      line-height: 1.75;
+      color: var(--color-text-secondary);
+      flex: 1;
+      margin-bottom: 28px;
+    }
+
+    .testimonial-quote strong { color: var(--color-text); font-weight: 700; }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding-top: 20px;
+      border-top: 1px solid var(--color-border-subtle);
+    }
+
+    .testimonial-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--color-accent-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--color-accent);
+      flex-shrink: 0;
+    }
+
+    .testimonial-name { font-size: 14px; font-weight: 700; color: var(--color-text); }
+    .testimonial-role { font-size: 12px; color: var(--color-text-tertiary); margin-top: 2px; line-height: 1.4; }
+
+    /* ── STICKY DEMO CTA ── */
+    .sticky-demo {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      z-index: 90;
+      opacity: 0;
+      transform: translateY(20px);
+      pointer-events: none;
+      transition: all 0.4s ease;
+    }
+
+    .sticky-demo.visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .sticky-demo a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 28px;
+      background: var(--color-accent);
+      color: white;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: 0 8px 32px rgba(79, 70, 229, 0.35), 0 2px 8px rgba(0,0,0,0.1);
+      transition: all 0.25s;
+      font-family: var(--font);
+    }
+
+    .sticky-demo a:hover {
+      background: var(--color-accent-light);
+      box-shadow: 0 12px 40px rgba(79, 70, 229, 0.45), 0 4px 12px rgba(0,0,0,0.1);
+      transform: translateY(-2px);
+    }
+
+    .sticky-demo a svg { width: 18px; height: 18px; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 56px 0 36px;
+      border-top: 1px solid var(--color-border-subtle);
+      background: var(--color-bg-warm);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 48px;
+    }
+
+    .footer-brand p {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+      margin-top: 14px;
+      max-width: 260px;
+    }
+
+    .footer-col h4 {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 14px;
+      color: var(--color-text);
+    }
+
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .footer-col a { font-size: 13px; color: var(--color-text-tertiary); transition: color 0.2s; }
+    .footer-col a:hover { color: var(--color-text-secondary); }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 28px;
+      border-top: 1px solid var(--color-border-subtle);
+      font-size: 12px;
+      color: var(--color-text-tertiary);
+    }
+
+    .footer-legal { display: flex; gap: 24px; }
+
+    /* ── ANIMATIONS ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      :root { --section-padding: 100px 0; }
+      .container { padding: 0 24px; }
+      .nav-inner { padding: 0 24px; }
+      .nav-links { display: none; }
+      .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+      .hero { padding: 140px 0 80px; }
+      .modular-grid, .how-steps, .cap-grid, .testimonials-grid { grid-template-columns: 1fr; }
+      .ai-grid { grid-template-columns: 1fr; }
+      .feature-block, .feature-block.reverse { grid-template-columns: 1fr; gap: 40px; direction: ltr; }
+      .advantage-inner { grid-template-columns: 1fr; gap: 48px; }
+      .map-regions { grid-template-columns: 1fr; }
+      .map-bottom { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
+    }
+
+    @media (max-width: 600px) {
+      .hero-cta { flex-direction: column; align-items: flex-start; }
+      .cta-btns { flex-direction: column; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+    }
+
+    /* ── LEAFLET MAP ── */
+    #hero-map, #dashboard-map {
+      width: 100%;
+      border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+      z-index: 1;
+    }
+    #hero-map { height: 360px; }
+    #dashboard-map { height: 340px; }
+
+    .leaflet-container {
+      background: #ffffff !important;
+      font-family: var(--font) !important;
+    }
+
+    .leaflet-popup-content-wrapper {
+      border-radius: var(--radius) !important;
+      font-family: var(--font) !important;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12) !important;
+    }
+
+    .leaflet-popup-content {
+      margin: 12px 16px !important;
+      font-size: 13px !important;
+      line-height: 1.5 !important;
+    }
+
+    .map-popup-city { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+    .map-popup-status { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
+    .map-popup-status.green { color: #079455; }
+    .map-popup-status.blue { color: #1570EF; }
+    .map-popup-status.purple { color: #7F56D9; }
+    .map-popup-status.orange { color: #ff902b; }
+    .map-popup-status.red { color: #f05050; }
+    .map-popup-status.gray { color: #6b7280; }
+    .map-popup-detail { font-size: 12px; color: var(--color-text-secondary); margin-top: 4px; }
+
+    /* ── SCREENSHOT IMAGES ── */
+    .screenshot-img {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      display: block;
+    }
+
+    .showcase-screen-body .screenshot-img {
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    .feature-visual .screenshot-img {
+      border-radius: var(--radius-lg);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.07);
+      border: 1px solid var(--color-border);
+    }
+
+    .showcase-screens .showcase-screen + .showcase-screen { margin-top: 0; }
+
+    /* COOKIE CONSENT BAR */
+    .cookie-consent {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 9998;
+      background: rgba(255, 255, 255, 0.97);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-top: 1px solid var(--color-border);
+      padding: 20px 0;
+      box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.06);
+      transform: translateY(100%);
+      transition: transform 0.4s ease;
+    }
+    .cookie-consent.visible { transform: translateY(0); }
+    .cookie-consent-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .cookie-consent-text {
+      font-size: 14px;
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+      flex: 1;
+    }
+    .cookie-consent-text a {
+      color: var(--color-accent);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .cookie-consent-text a:hover { color: var(--color-accent-light); }
+    .cookie-consent-buttons {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .cookie-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 9px 20px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .cookie-btn-accept { background: var(--color-accent); color: white; }
+    .cookie-btn-accept:hover { background: var(--color-accent-light); transform: translateY(-1px); }
+    .cookie-btn-manage { background: transparent; color: var(--color-text-secondary); border: 1.5px solid var(--color-border); }
+    .cookie-btn-manage:hover { border-color: var(--color-text-tertiary); color: var(--color-text); background: var(--color-bg-warm); }
+    @media (max-width: 960px) { .cookie-consent-inner { padding: 0 24px; } }
+    @media (max-width: 700px) {
+      .cookie-consent-inner { flex-direction: column; text-align: center; }
+      .cookie-consent-buttons { width: 100%; justify-content: center; }
+    }
+
+    /* ── CSS MOCKUP UIs ── */
+    .css-mockup {
+      background: #fafaf8;
+      border-radius: var(--radius-lg);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.07);
+      border: 1px solid var(--color-border);
+      overflow: hidden;
+      font-family: var(--font);
+      font-size: 12px;
+      color: var(--color-text);
+      width: 100%;
+    }
+    .showcase-screen-body .css-mockup {
+      border-radius: 0;
+      box-shadow: none;
+      border: none;
+    }
+    .css-mockup-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      background: #fff;
+      border-bottom: 1px solid var(--color-border-subtle);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .css-mockup-header .mock-search {
+      background: var(--color-bg-soft);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: 8px;
+      padding: 6px 14px;
+      font-size: 11px;
+      color: var(--color-text-tertiary);
+      min-width: 180px;
+    }
+    .css-mockup-body { padding: 16px 20px; background: #fff; }
+
+    /* Chat mockup */
+    .mock-chat { display: flex; height: 340px; }
+    .mock-chat-sidebar {
+      width: 52px;
+      background: var(--color-accent);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 14px 0;
+      gap: 16px;
+      flex-shrink: 0;
+    }
+    .mock-chat-sidebar .mock-logo {
+      width: 28px; height: 28px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-weight: 800; font-size: 14px;
+    }
+    .mock-chat-sidebar .mock-nav-dot {
+      width: 8px; height: 8px;
+      background: rgba(255,255,255,0.25);
+      border-radius: 50%;
+    }
+    .mock-chat-sidebar .mock-nav-dot.active { background: rgba(255,255,255,0.7); }
+    .mock-chat-main { flex: 1; display: flex; flex-direction: column; background: #fff; min-width: 0; }
+    .mock-chat-messages { flex: 1; padding: 16px 20px; overflow: hidden; display: flex; flex-direction: column; gap: 12px; }
+    .mock-msg {
+      max-width: 85%;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+    .mock-msg.user {
+      align-self: flex-end;
+      background: var(--color-accent);
+      color: #fff;
+    }
+    .mock-msg.ai {
+      align-self: flex-start;
+      background: var(--color-bg-soft);
+      color: var(--color-text);
+    }
+    .mock-msg.ai strong { font-weight: 700; }
+    .mock-msg.ai ul { margin: 6px 0 0 16px; }
+    .mock-msg.ai li { margin-bottom: 3px; }
+    .mock-chat-input {
+      padding: 12px 20px;
+      border-top: 1px solid var(--color-border-subtle);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .mock-chat-input-field {
+      flex: 1;
+      background: var(--color-bg-soft);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-size: 11px;
+      color: var(--color-text-tertiary);
+    }
+    .mock-chat-input-btn {
+      width: 32px; height: 32px;
+      background: var(--color-accent);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .mock-chat-input-btn svg { width: 14px; height: 14px; fill: #fff; }
+
+    /* Table mockup */
+    .mock-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    .mock-table th {
+      text-align: left;
+      padding: 10px 14px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-text-tertiary);
+      border-bottom: 1px solid var(--color-border-subtle);
+      background: var(--color-bg-warm);
+    }
+    .mock-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--color-border-subtle);
+      font-size: 12px;
+      vertical-align: middle;
+    }
+    .mock-table tr:last-child td { border-bottom: none; }
+    .mock-badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 50px;
+      font-size: 10px;
+      font-weight: 600;
+      line-height: 1.6;
+    }
+    .mock-badge-green { background: #f0fdf4; color: #16a34a; }
+    .mock-badge-blue { background: #eff6ff; color: #2563eb; }
+    .mock-badge-purple { background: #f5f3ff; color: #7c3aed; }
+    .mock-badge-red { background: #fef2f2; color: #dc2626; }
+    .mock-badge-orange { background: #fff7ed; color: #c2410c; }
+    .mock-badge-gray { background: var(--color-bg-soft); color: var(--color-text-tertiary); }
+
+    /* Alert cards */
+    .mock-alert {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      border: 1px solid;
+    }
+    .mock-alert:last-child { margin-bottom: 0; }
+    .mock-alert-critical { background: #fef2f2; border-color: #fecaca; }
+    .mock-alert-warning { background: #fff7ed; border-color: #fed7aa; }
+    .mock-alert-info { background: #eff6ff; border-color: #bfdbfe; }
+    .mock-alert-icon {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+    .mock-alert-critical .mock-alert-icon { background: #dc2626; }
+    .mock-alert-warning .mock-alert-icon { background: #d97706; }
+    .mock-alert-info .mock-alert-icon { background: #2563eb; }
+    .mock-alert-content { flex: 1; }
+    .mock-alert-title { font-weight: 700; font-size: 12px; margin-bottom: 2px; }
+    .mock-alert-desc { font-size: 11px; color: var(--color-text-secondary); line-height: 1.5; }
+
+    /* Product detail mockup */
+    .mock-product-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--color-border-subtle);
+      margin-bottom: 14px;
+    }
+    .mock-product-header h3 { font-size: 16px; font-weight: 800; margin: 0; }
+    .mock-tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+    .mock-tab {
+      padding: 8px 16px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--color-text-tertiary);
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+    }
+    .mock-tab.active { color: var(--color-accent); border-bottom-color: var(--color-accent); }
+    .mock-info-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .mock-info-card {
+      background: var(--color-bg-warm);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: 10px;
+      padding: 14px;
+      text-align: center;
+    }
+    .mock-info-card-val { font-size: 22px; font-weight: 800; color: var(--color-accent); }
+    .mock-info-card-label { font-size: 10px; color: var(--color-text-tertiary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; margin-top: 2px; }
+    .mock-legal-list { list-style: none; padding: 0; margin: 0; }
+    .mock-legal-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--color-border-subtle);
+      font-size: 12px;
+    }
+    .mock-legal-list li:last-child { border-bottom: none; }
+    .mock-check { color: #16a34a; font-weight: 700; font-size: 13px; flex-shrink: 0; }
+
+    /* Roadmap mockup */
+    .mock-progress-bar {
+      height: 8px;
+      background: var(--color-bg-soft);
+      border-radius: 50px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    .mock-progress-fill {
+      height: 100%;
+      background: var(--color-accent);
+      border-radius: 50px;
+    }
+    .mock-progress-label { font-size: 11px; color: var(--color-text-secondary); margin-bottom: 10px; font-weight: 600; }
+    .mock-task-list { list-style: none; padding: 0; margin: 0; }
+    .mock-task-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--color-border-subtle);
+      font-size: 12px;
+    }
+    .mock-task-list li:last-child { border-bottom: none; }
+    .mock-task-icon {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700;
+      flex-shrink: 0;
+    }
+    .mock-task-done { background: #f0fdf4; color: #16a34a; }
+    .mock-task-progress { background: #eff6ff; color: #2563eb; }
+    .mock-task-pending { background: var(--color-bg-soft); color: var(--color-text-tertiary); }
+    .mock-task-label { flex: 1; }
+    .mock-task-status { font-size: 10px; font-weight: 600; }
+    .mock-task-status-done { color: #16a34a; }
+    .mock-task-status-progress { color: #2563eb; }
+    .mock-task-status-pending { color: var(--color-text-tertiary); }
+
+    /* Market badge */
+    .mock-market-count {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: var(--color-accent-bg);
+      color: var(--color-accent);
+      font-size: 10px; font-weight: 700;
+      width: 24px; height: 20px;
+      border-radius: 6px;
+    }
+    .mock-category-tag {
+      display: inline-block;
+      padding: 2px 8px;
+      background: var(--color-bg-soft);
+      border-radius: 6px;
+      font-size: 10px;
+      color: var(--color-text-secondary);
+      font-weight: 500;
+    }
+
+  </style>
+</head>
+<body>
+
+  <nav id="nav">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <div class="nav-logo-icon">P</div>
+        ProductLex
+      </a>
+      <ul class="nav-links">
+        <li><a href="#platform">Platform</a></li>
+        <li><a href="#stakeholders">Stakeholders</a></li>
+        <li><a href="#ai-engine">AI Engine</a></li>
+        <li><a href="#features">Features</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="signin.html" class="btn btn-ghost">Sign in</a>
+        <a href="contact.html" class="btn btn-primary">Request Demo</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-bg-pattern"></div>
+    <div class="container">
+      <div class="hero-inner">
+        <div class="hero-text">
+          <div class="hero-badge">
+            <span class="hero-badge-dot"></span>
+            Any product. Any market. Any regulation.
+          </div>
+          <h1>Total Compliance Control. <span>Predictable Market Expansion.</span></h1>
+          <p class="hero-sub">Purpose-built for manufacturing companies navigating global product compliance. Built on a decade of production compliance expertise and supercharged with AI — ProductLex delivers living regulation intelligence that turns compliance from a cost center into your strongest competitive advantage.</p>
+          <div class="hero-cta">
+            <a href="contact.html" class="btn btn-primary btn-lg">Request a Demo</a>
+            <a href="#" class="btn btn-outline btn-lg">Explore the Platform</a>
+          </div>
+          <p class="hero-note">Enterprise-grade security. Deployed in weeks, not months.</p>
+        </div>
+        <div class="hero-mockup fade-in">
+          <div class="hero-mockup-window" style="overflow:hidden;">
+            <!-- Top nav bar -->
+            <div style="background:#0f172a;display:flex;align-items:center;padding:0 20px;height:48px;gap:16px;">
+              <span style="color:#fff;font-weight:700;font-size:14px;letter-spacing:0.5px;white-space:nowrap;">PRODUCTLEX AI</span>
+              <div style="flex:0 0 auto;display:flex;align-items:center;background:#1e293b;border-radius:20px;padding:4px 16px;gap:8px;">
+                <span style="color:#94a3b8;font-size:11px;">Score:</span>
+                <div style="width:80px;height:4px;background:#334155;border-radius:2px;overflow:hidden;"><div style="width:94%;height:100%;background:#079455;border-radius:2px;"></div></div>
+                <span style="color:#fff;font-size:12px;font-weight:600;">94%</span>
+                <span style="color:#079455;font-size:11px;font-weight:500;">+5.2%</span>
+              </div>
+              <div style="flex:1;display:flex;justify-content:center;">
+                <div style="display:flex;align-items:center;background:#1e293b;border-radius:8px;padding:6px 16px;gap:8px;max-width:280px;width:100%;">
+                  <span style="color:#64748b;font-size:12px;">Search anything...</span>
+                  <span style="margin-left:auto;color:#64748b;font-size:10px;background:#334155;border-radius:4px;padding:1px 6px;">⌘K</span>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;">
+                <span style="color:#94a3b8;font-size:11px;border:1px solid #334155;border-radius:6px;padding:4px 10px;cursor:default;">⚙ Customize</span>
+                <span style="color:#94a3b8;font-size:14px;">◑</span>
+                <span style="color:#94a3b8;font-size:14px;">☀</span>
+                <div style="position:relative;"><span style="color:#94a3b8;font-size:14px;">🔔</span><span style="position:absolute;top:-4px;right:-6px;background:#f05050;color:#fff;font-size:8px;width:14px;height:14px;border-radius:50%;display:flex;align-items:center;justify-content:center;">3</span></div>
+              </div>
+            </div>
+            <!-- Sub nav -->
+            <div style="background:#fff;display:flex;align-items:center;padding:0 20px;height:40px;gap:24px;border-bottom:1px solid #e2e8f0;font-size:12px;font-weight:600;color:#475569;">
+              <span style="color:#1e40af;border-bottom:2px solid #1e40af;padding:10px 0;margin-bottom:-1px;">COMPLY ▾</span>
+              <span style="cursor:default;">WORK ▾</span>
+              <span style="cursor:default;">PRODUCTS ▾</span>
+              <span style="cursor:default;">INTELLIGENCE ▾</span>
+              <span style="cursor:default;">LIBRARY ▾</span>
+              <span style="cursor:default;">REPORTS ▾</span>
+              <span style="cursor:default;">ADMIN ▾</span>
+            </div>
+            <!-- Status bar -->
+            <div style="background:#fff;padding:16px 20px 12px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span style="font-size:13px;font-weight:500;color:#1e293b;">Overall Status:</span>
+                <span style="display:inline-flex;align-items:center;gap:4px;background:#fff7ed;border:1px solid #fed7aa;border-radius:6px;padding:2px 10px;font-size:11px;font-weight:600;color:#c2410c;">Warning</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:6px;color:#64748b;font-size:12px;">
+                <span style="font-size:14px;">ⓘ</span>
+                <span>14 target regions</span>
+              </div>
+              <span style="color:#64748b;font-size:12px;">Avg: 70%</span>
+            </div>
+            <!-- Map toggle tabs -->
+            <div style="background:#fff;padding:0 20px 12px;">
+              <div style="display:inline-flex;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;">
+                <span style="display:flex;align-items:center;gap:6px;padding:6px 14px;font-size:12px;font-weight:500;background:#f1f5f9;color:#1e293b;border-right:1px solid #e2e8f0;">🌐 World Map</span>
+                <span style="display:flex;align-items:center;gap:6px;padding:6px 14px;font-size:12px;color:#64748b;">🏴 US States</span>
+              </div>
+            </div>
+            <!-- Map -->
+            <div id="hero-map"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="social-proof">
+    <div class="container">
+      <p class="social-proof-label">Trusted by enterprise manufacturers across industries</p>
+      <div class="social-proof-grid">
+        <span class="social-proof-item">Industrial Automation</span>
+        <span class="social-proof-item">Medical Devices</span>
+        <span class="social-proof-item">Consumer Electronics</span>
+        <span class="social-proof-item">Energy Systems</span>
+        <span class="social-proof-item">Telecommunications</span>
+        <span class="social-proof-item">Home Appliances</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEGACY CORE -->
+  <section class="legacy" id="platform">
+    <div class="container">
+      <div class="legacy-inner">
+        <div class="legacy-text fade-in">
+          <div class="section-label">Proven Foundation</div>
+          <div class="section-title">A decade of compliance expertise. Now supercharged with AI.</div>
+          <p class="section-subtitle">ProductLex is not a startup experiment. It is built on a battle-tested compliance SaaS platform with over a decade of production use by enterprise manufacturers. Thousands of compliance workflows, regulatory mappings, and audit processes — refined over ten years — form the foundation. We then layered cutting-edge AI on top of this proven core, combining deep domain expertise with the power of multiple large language models.</p>
+          <div class="legacy-stats">
+            <div class="legacy-stat"><div class="legacy-stat-val">10+ Years</div><div class="legacy-stat-lbl">Production SaaS platform</div></div>
+            <div class="legacy-stat"><div class="legacy-stat-val">50+ Countries</div><div class="legacy-stat-lbl">Regulatory coverage</div></div>
+            <div class="legacy-stat"><div class="legacy-stat-val">36,000+</div><div class="legacy-stat-lbl">Standards and regulations</div></div>
+            <div class="legacy-stat"><div class="legacy-stat-val">3 LLMs</div><div class="legacy-stat-lbl">Consensus AI architecture</div></div>
+          </div>
+        </div>
+        <div class="legacy-visual fade-in">
+          <div class="showcase-screen-label">
+            <div class="showcase-screen-label-left">
+              <div class="mockup-dots"><span class="mockup-dot"></span><span class="mockup-dot"></span><span class="mockup-dot"></span></div>
+              <h4>Platform Architecture</h4>
+            </div>
+          </div>
+          <div class="legacy-layers">
+            <div class="legacy-layer ai">
+              <div class="legacy-layer-left">
+                <div class="legacy-layer-icon">AI</div>
+                <div>
+                  <div class="legacy-layer-name">AI Intelligence Layer</div>
+                  <div class="legacy-layer-sub">3 LLMs, 20+ specialized agents, consensus validation</div>
+                </div>
+              </div>
+              <div class="legacy-layer-badge">New</div>
+            </div>
+            <div class="legacy-layer ai" style="background:var(--color-accent-light);border-color:var(--color-accent-light)">
+              <div class="legacy-layer-left">
+                <div class="legacy-layer-icon">M</div>
+                <div>
+                  <div class="legacy-layer-name">Modular Application Layer</div>
+                  <div class="legacy-layer-sub">Dashboards, workflows, monitoring, document gen</div>
+                </div>
+              </div>
+              <div class="legacy-layer-badge">New</div>
+            </div>
+            <div class="legacy-layer core">
+              <div class="legacy-layer-left">
+                <div class="legacy-layer-icon">R</div>
+                <div>
+                  <div class="legacy-layer-name">Regulatory Intelligence Core</div>
+                  <div class="legacy-layer-sub">36,000+ standards, 50+ countries, continuous updates</div>
+                </div>
+              </div>
+              <div class="legacy-layer-badge">10+ yrs</div>
+            </div>
+            <div class="legacy-layer core">
+              <div class="legacy-layer-left">
+                <div class="legacy-layer-icon">C</div>
+                <div>
+                  <div class="legacy-layer-name">Compliance Workflow Engine</div>
+                  <div class="legacy-layer-sub">Tasks, certificates, audits, supplier management</div>
+                </div>
+              </div>
+              <div class="legacy-layer-badge">10+ yrs</div>
+            </div>
+            <div class="legacy-layer core">
+              <div class="legacy-layer-left">
+                <div class="legacy-layer-icon">D</div>
+                <div>
+                  <div class="legacy-layer-name">Enterprise Data Layer</div>
+                  <div class="legacy-layer-sub">Products, markets, organizations, audit trails</div>
+                </div>
+              </div>
+              <div class="legacy-layer-badge">10+ yrs</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STAKEHOLDER IMPACT -->
+  <section class="stakeholder" id="stakeholders">
+    <div class="container">
+      <div class="stakeholder-header">
+        <div class="section-label">One Platform, Every Stakeholder</div>
+        <div class="section-title">Built for everyone who touches compliance</div>
+        <p class="section-subtitle">ProductLex delivers tailored value to every team — from the boardroom to the engineering bench. Each stakeholder gets the view they need, powered by the same shared intelligence.</p>
+      </div>
+      <div class="stakeholder-cards">
+
+        <!-- Management -->
+        <div class="stake-card fade-in">
+          <div class="stake-card-left">
+            <span class="stake-card-tag">Management &amp; Board</span>
+            <h3>Total Risk Visibility. Zero Blind Spots.</h3>
+            <p>Real-time compliance posture across all products, markets, and regulatory frameworks. Executive dashboards that turn regulatory complexity into strategic decisions — with risk quantified, not guessed.</p>
+          </div>
+          <div class="stake-card-right">
+            <div class="stake-benefit">
+              <span class="stake-benefit-label">What they get</span>
+              <h4>Risk & Compliance Dashboards</h4>
+              <p>Live compliance status across every product and market. Risk scoring with financial exposure estimates.</p>
+            </div>
+            <div class="stake-benefit">
+              <span class="stake-benefit-label">What they get</span>
+              <h4>Board-Ready Reporting</h4>
+              <p>Automated compliance reports with trends, KPIs, and regulatory change impact — ready for board presentations.</p>
+            </div>
+            <div class="stake-benefit">
+              <span class="stake-benefit-label">What they get</span>
+              <h4>Market Expansion Intelligence</h4>
+              <p>Know the compliance cost and timeline to enter any new market before committing resources.</p>
+            </div>
+            <div class="stake-benefit">
+              <span class="stake-benefit-label">What they get</span>
+              <h4>Predictive Risk Alerts</h4>
+              <p>AI surfaces regulatory changes that will impact your portfolio — months before enforcement deadlines.</p>
+            </div>
+            <div class="stake-effect">
+              <div class="stake-effect-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 12l4-8 4 8"/></svg></div>
+              <span class="stake-effect-text">Effect: Compliance becomes a boardroom strategic asset — not a cost center. Risk is quantified. Market entry is predictable.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Compliance Teams -->
+        <div class="stake-card fade-in">
+          <div class="stake-card-left">
+            <span class="stake-card-tag">Compliance Teams</span>
+            <h3>From Spreadsheets to Living Intelligence.</h3>
+            <p>Replace manual regulation tracking, gap analysis, and certificate management with AI-driven automation. Your compliance team focuses on strategic decisions — the platform handles the complexity.</p>
+          </div>
+          <div class="stake-card-right">
+            <div class="stake-benefit">
+              <span class="stake-benefit-label">What they get</span>
+              <h4>AI-Powered Gap Analysis</h4>
+              <p>Automatic identification of every applicable regulation per product. Gaps surfaced with prioritized remediation plans.</p>
+            </div>
+            <div class="stake-benefit">
+              <span class="stake-benefit-label">What they get</span>
+              <h4>Certificate & Audit Tracking</h4>
+              <p>Expiry alerts, renewal workflows, and complete evidence management. Never miss a certificate deadline again.</p>
+            </div>
+            <div class="stake-benefit">
+              <span class="stake-benefit-label">What they get</span>
+              <h4>Auto Document Generation</h4>
+              <p>AI generates Declarations of Conformity, technical files, and compliance reports — all traceable to regulatory source.</p>
+            </div>
+            <div class="stake-benefit">
+              <span class="stake-benefit-label">What they get</span>
+              <h4>Regulatory Change Monitoring</h4>
+              <p>Continuous monitoring across every jurisdiction. When a standard changes, your gap analysis updates automatically.</p>
+            </div>
+            <div class="stake-effect">
+              <div class="stake-effect-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 12l4-8 4 8"/></svg></div>
+              <span class="stake-effect-text">Effect: Compliance teams scale without headcount. Manual research eliminated. Gap analysis compressed from weeks to minutes.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Development Teams -->
+        <div class="stake-card fade-in">
+          <div class="stake-card-left">
+            <span class="stake-card-tag">Product Development</span>
+            <h3>Compliance Built In. Not Bolted On.</h3>
+            <p>Identify every applicable regulation before development begins. AI maps product attributes to requirements automatically — so engineering knows the compliance landscape before a single prototype is built.</p>
+          </div>
+          <div class="stake-card-right">
+            <div class="stake-benefit">
+              <span class="stake-benefit-label">What they get</span>
+              <h4>Pre-Development Regulation Map</h4>
+              <p>AI identifies all applicable standards and directives based on product specs and target markets — before design starts.</p>
+            </div>
+            <div class="stake-benefit">
+              <span class="stake-benefit-label">What they get</span>
+              <h4>Design-Phase Checklists</h4>
+              <p>Auto-generated compliance checklists mapped to specific product components and technical requirements.</p>
+            </div>
+            <div class="stake-benefit">
+              <span class="stake-benefit-label">What they get</span>
+              <h4>Test Lab Integration</h4>
+              <p>Direct collaboration with test labs through the platform. Test requirements, scheduling, and results in one place.</p>
+            </div>
+            <div class="stake-benefit">
+              <span class="stake-benefit-label">What they get</span>
+              <h4>Impact Analysis on Changes</h4>
+              <p>When product specs change, AI instantly recalculates the regulatory impact — new standards, new tests, new gaps.</p>
+            </div>
+            <div class="stake-effect">
+              <div class="stake-effect-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 12l4-8 4 8"/></svg></div>
+              <span class="stake-effect-text">Effect: No late-stage compliance surprises. Products reach testing with requirements already built in. Redesign costs eliminated.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sales Teams -->
+        <div class="stake-card fade-in">
+          <div class="stake-card-left">
+            <span class="stake-card-tag">Sales &amp; Market Expansion</span>
+            <h3>Sell Into Any Market. With Certainty.</h3>
+            <p>Sales teams no longer wait months for compliance assessments to know if a market is viable. ProductLex gives instant visibility into the regulatory requirements for any geography — turning compliance into a competitive sales advantage.</p>
+          </div>
+          <div class="stake-card-right">
+            <div class="stake-benefit">
+              <span class="stake-benefit-label">What they get</span>
+              <h4>Instant Market Readiness</h4>
+              <p>Check any product against any market in seconds. See exactly what's compliant, what's missing, and what it takes.</p>
+            </div>
+            <div class="stake-benefit">
+              <span class="stake-benefit-label">What they get</span>
+              <h4>Customer Compliance Proof</h4>
+              <p>Generate compliance summaries and documentation for customers and procurement teams on demand.</p>
+            </div>
+            <div class="stake-benefit">
+              <span class="stake-benefit-label">What they get</span>
+              <h4>New Market Opportunity Scoring</h4>
+              <p>AI ranks market opportunities by compliance readiness — so sales prioritizes markets with the fastest path to revenue.</p>
+            </div>
+            <div class="stake-benefit">
+              <span class="stake-benefit-label">What they get</span>
+              <h4>Competitive Intelligence</h4>
+              <p>Understand which regulatory barriers competitors face. Position compliance readiness as a differentiator in deals.</p>
+            </div>
+            <div class="stake-effect">
+              <div class="stake-effect-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 12l4-8 4 8"/></svg></div>
+              <span class="stake-effect-text">Effect: Sales cycles shortened. New markets entered faster than competitors. Compliance becomes a revenue accelerator, not a blocker.</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="modular-quote fade-in" style="margin-top: 72px;">
+        <blockquote>Any Product. Any Market. Any Regulation. <strong>One Platform.</strong> A decade of compliance expertise combined with cutting-edge AI — through a modular architecture that scales with your business.</blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI ENGINE -->
+  <section class="ai-engine" id="ai-engine">
+    <div class="container">
+      <div class="ai-engine-header">
+        <div class="section-label">The AI Engine</div>
+        <div class="section-title">Three LLMs. 20+ Specialized Agents. One Truth.</div>
+        <p class="section-subtitle">A consensus-based AI architecture — multiple large language models cross-validate every analysis to eliminate hallucinations and deliver answers you can trust.</p>
+      </div>
+      <div class="ai-grid">
+        <div class="ai-card fade-in">
+          <span class="ai-card-tag">Consensus Architecture</span>
+          <h3>Multi-LLM Validation</h3>
+          <p>Every regulatory analysis is processed through multiple AI models simultaneously — Claude, GPT-4, and Gemini. Only when models reach consensus does ProductLex present an answer, eliminating single-model hallucinations.</p>
+        </div>
+        <div class="ai-card fade-in">
+          <span class="ai-card-tag">Real-Time Intelligence</span>
+          <h3>Living Regulation Database</h3>
+          <p>Your compliance intelligence is never stale. ProductLex continuously monitors regulatory sources, enriches standards with AI-generated analysis, and updates your compliance posture in real-time.</p>
+        </div>
+        <div class="ai-card wide fade-in">
+          <span class="ai-card-tag">Specialized Agents</span>
+          <h3>20+ Domain-Expert AI Agents</h3>
+          <p>Over 20 specialized AI agents trained on specific regulatory domains and compliance functions. EU directives, US FDA requirements, APAC regulations — each handled by dedicated agents that understand the nuances of every jurisdiction.</p>
+          <div class="ai-tags">
+            <span class="ai-tag">EU Regulatory Agent</span>
+            <span class="ai-tag">US FDA Agent</span>
+            <span class="ai-tag">APAC Compliance Agent</span>
+            <span class="ai-tag">CE Marking Agent</span>
+            <span class="ai-tag">REACH/RoHS Agent</span>
+            <span class="ai-tag">MDR Agent</span>
+            <span class="ai-tag">Gap Analyzer</span>
+            <span class="ai-tag">Risk Assessor</span>
+            <span class="ai-tag">Document Generator</span>
+            <span class="ai-tag">Standards Mapper</span>
+            <span class="ai-tag">Change Monitor</span>
+            <span class="ai-tag">Translation Agent</span>
+            <span class="ai-tag">Audit Trail Agent</span>
+            <span class="ai-tag">Market Access Agent</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ADVANTAGE -->
+  <section class="advantage fade-in">
+    <div class="container">
+      <div class="advantage-inner">
+        <div class="advantage-text">
+          <div class="section-label">Competitive Advantage</div>
+          <div class="section-title">Compliance as a strategic weapon</div>
+          <p class="section-subtitle">While competitors spend months navigating regulatory complexity with consultants and spreadsheets, ProductLex customers enter new markets with speed and certainty.</p>
+          <ul class="advantage-list">
+            <li class="advantage-item">
+              <div class="advantage-icon">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 8h12M8 2v12"/></svg>
+              </div>
+              <div>
+                <h4>Faster Time to Market</h4>
+                <p>AI-powered regulation detection compresses months of manual research into hours. Enter new markets before competitors finish their assessments.</p>
+              </div>
+            </li>
+            <li class="advantage-item">
+              <div class="advantage-icon">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8l3 3 5-6"/></svg>
+              </div>
+              <div>
+                <h4>Predictive Lead Time</h4>
+                <p>See regulatory changes coming before they take effect. Monitor draft legislation, proposed amendments, and standards revisions proactively.</p>
+              </div>
+            </li>
+            <li class="advantage-item">
+              <div class="advantage-icon">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 2v6l4 4"/></svg>
+              </div>
+              <div>
+                <h4>Audit-Ready at All Times</h4>
+                <p>Complete audit trails, automated documentation, and real-time compliance status. When auditors arrive, you're prepared.</p>
+              </div>
+            </li>
+            <li class="advantage-item">
+              <div class="advantage-icon">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg>
+              </div>
+              <div>
+                <h4>Rapid Deployment</h4>
+                <p>Modular architecture means you deploy in weeks, not months. Start with the modules you need, expand as demands grow.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="advantage-visual">
+          <div class="adv-visual-card">
+            <div class="adv-head">
+              <span class="adv-head-title">Deployment Comparison</span>
+              <span class="adv-head-badge">ProductLex Advantage</span>
+            </div>
+            <div class="adv-rows">
+              <div class="adv-row"><span class="adv-row-label">Deployment</span><div class="adv-bar"><div class="adv-bar-fill ours" style="width:25%"></div></div><div class="adv-bar"><div class="adv-bar-fill old" style="width:90%"></div></div></div>
+              <div class="adv-row"><span class="adv-row-label">Reg. Detection</span><div class="adv-bar"><div class="adv-bar-fill ours" style="width:15%"></div></div><div class="adv-bar"><div class="adv-bar-fill old" style="width:85%"></div></div></div>
+              <div class="adv-row"><span class="adv-row-label">Gap Analysis</span><div class="adv-bar"><div class="adv-bar-fill ours" style="width:10%"></div></div><div class="adv-bar"><div class="adv-bar-fill old" style="width:75%"></div></div></div>
+              <div class="adv-row"><span class="adv-row-label">Market Entry</span><div class="adv-bar"><div class="adv-bar-fill ours" style="width:20%"></div></div><div class="adv-bar"><div class="adv-bar-fill old" style="width:95%"></div></div></div>
+              <div class="adv-row"><span class="adv-row-label">Monitoring</span><div class="adv-bar"><div class="adv-bar-fill ours" style="width:5%"></div></div><div class="adv-bar"><div class="adv-bar-fill old" style="width:80%"></div></div></div>
+            </div>
+            <div class="adv-legend">
+              <div class="adv-legend-item"><span class="adv-legend-dot" style="background:var(--color-accent)"></span>ProductLex AI</div>
+              <div class="adv-legend-item"><span class="adv-legend-dot" style="background:var(--color-text-tertiary); opacity:0.3"></span>Legacy / Manual</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features" id="features">
+    <div class="container">
+      <div class="features-header">
+        <div class="section-label">AI-Powered Features</div>
+        <div class="section-title">Ask anything. Get answers. Take action.</div>
+        <p class="section-subtitle">Natural language queries across the full regulatory corpus. Questions that used to require senior consultants are now answered instantly.</p>
+      </div>
+
+      <div class="feature-block">
+        <div class="feature-text">
+          <div class="section-label">AI Assistant</div>
+          <h3>Your compliance team's most knowledgeable colleague</h3>
+          <p>Ask anything about regulations, standards, or your compliance posture in plain language. The AI responds with precise, actionable intelligence backed by your actual data.</p>
+          <ul class="feature-list">
+            <li>Multi-LLM consensus validation eliminates hallucinations</li>
+            <li>Auto-identification of every applicable regulation per product</li>
+            <li>Gap analysis with prioritized remediation and task generation</li>
+            <li>Predictive risk scoring — see issues before they surface</li>
+            <li>Document generation: DoCs, technical files, test reports</li>
+          </ul>
+        </div>
+        <div class="feature-visual">
+          <div class="css-mockup">
+            <div class="mock-chat">
+              <div class="mock-chat-sidebar">
+                <div class="mock-logo">P</div>
+                <div class="mock-nav-dot active"></div>
+                <div class="mock-nav-dot"></div>
+                <div class="mock-nav-dot"></div>
+                <div class="mock-nav-dot"></div>
+              </div>
+              <div class="mock-chat-main">
+                <div class="mock-chat-messages">
+                  <div class="mock-msg user">What EU directives apply to our new IoT device?</div>
+                  <div class="mock-msg ai">
+                    <strong>Based on your product classification, the following EU directives apply:</strong>
+                    <ul>
+                      <li><strong>RED 2014/53/EU</strong> &mdash; Radio Equipment Directive</li>
+                      <li><strong>LVD 2014/35/EU</strong> &mdash; Low Voltage Directive</li>
+                      <li><strong>EMC 2014/30/EU</strong> &mdash; Electromagnetic Compatibility</li>
+                    </ul>
+                  </div>
+                  <div class="mock-msg ai" style="font-size:11px;color:var(--color-text-secondary);">I've identified 14 harmonised standards mapped to these directives. Shall I generate a compliance roadmap?</div>
+                </div>
+                <div class="mock-chat-input">
+                  <div class="mock-chat-input-field">Ask ProductLex anything...</div>
+                  <div class="mock-chat-input-btn"><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-block reverse">
+        <div class="feature-text">
+          <div class="section-label">Living Intelligence</div>
+          <h3>The most comprehensive regulatory intelligence layer ever built</h3>
+          <p>Every harmonised standard, EU legal act, and global regulation — enriched with AI-generated scope descriptions, mapped to product categories, and monitored for changes continuously.</p>
+          <ul class="feature-list">
+            <li>Comprehensive harmonised standards with AI-enriched scope data</li>
+            <li>Full EU legal act coverage — directives and regulations</li>
+            <li>Real-time change monitoring with proactive alert system</li>
+            <li>Direct links to EUR-Lex, SIS.se, and official sources</li>
+            <li>Semantic search across the entire regulatory corpus</li>
+          </ul>
+        </div>
+        <div class="feature-visual">
+          <div class="css-mockup">
+            <div class="css-mockup-header">Regulatory Intelligence</div>
+            <div class="css-mockup-body" style="padding:0;">
+              <table class="mock-table">
+                <thead>
+                  <tr><th>Standard</th><th>Type</th><th>Status</th><th>Last Updated</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td style="font-weight:600;">EN 62368-1</td><td>Safety</td><td><span class="mock-badge mock-badge-green">Active</span></td><td>2024-12-01</td></tr>
+                  <tr><td style="font-weight:600;">EN 301 489-1</td><td>EMC</td><td><span class="mock-badge mock-badge-blue">Updated</span></td><td>2025-01-15</td></tr>
+                  <tr><td style="font-weight:600;">EN IEC 63000</td><td>RoHS</td><td><span class="mock-badge mock-badge-green">Active</span></td><td>2024-09-20</td></tr>
+                  <tr><td style="font-weight:600;">EU 2024/1689</td><td>AI Act</td><td><span class="mock-badge mock-badge-purple">New</span></td><td>2025-02-01</td></tr>
+                  <tr><td style="font-weight:600;">EN ISO 13849-1</td><td>Machinery Safety</td><td><span class="mock-badge mock-badge-green">Active</span></td><td>2024-11-10</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-block">
+        <div class="feature-text">
+          <div class="section-label">Proactive Monitoring</div>
+          <h3>Never be caught off guard by regulatory change</h3>
+          <p>ProductLex continuously monitors regulatory authorities and standards organisations across every market. When something changes, you know first — with actionable intelligence, not raw data.</p>
+          <ul class="feature-list">
+            <li>EU Legislative Tracker for pending directives and regulations</li>
+            <li>US Congress bill monitoring for regulatory impact</li>
+            <li>Certificate expiry tracking with automated renewal alerts</li>
+            <li>Personalized compliance digests delivered to your inbox</li>
+            <li>Predictive lead time on upcoming regulatory changes</li>
+          </ul>
+        </div>
+        <div class="feature-visual">
+          <div class="css-mockup">
+            <div class="css-mockup-header">Compliance Alerts</div>
+            <div class="css-mockup-body">
+              <div class="mock-alert mock-alert-critical">
+                <div class="mock-alert-icon"></div>
+                <div class="mock-alert-content">
+                  <div class="mock-alert-title">EN 62368-1 transition deadline in 30 days</div>
+                  <div class="mock-alert-desc">Products must comply with the updated standard by the transition date. Review affected products and initiate testing.</div>
+                </div>
+                <span class="mock-badge mock-badge-red">Critical</span>
+              </div>
+              <div class="mock-alert mock-alert-warning">
+                <div class="mock-alert-icon"></div>
+                <div class="mock-alert-content">
+                  <div class="mock-alert-title">EU Cyber Resilience Act &mdash; new obligations published</div>
+                  <div class="mock-alert-desc">New cybersecurity requirements for products with digital elements. Impact assessment recommended for 4 products.</div>
+                </div>
+                <span class="mock-badge mock-badge-orange">Warning</span>
+              </div>
+              <div class="mock-alert mock-alert-info">
+                <div class="mock-alert-icon"></div>
+                <div class="mock-alert-content">
+                  <div class="mock-alert-title">FDA 510(k) guidance update &mdash; review recommended</div>
+                  <div class="mock-alert-desc">Updated guidance for medical device premarket submissions. Affects Medical Display product line.</div>
+                </div>
+                <span class="mock-badge mock-badge-blue">Info</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how">
+    <div class="container">
+      <div class="how-header">
+        <div class="section-label">Process</div>
+        <div class="section-title">From complexity to clarity</div>
+        <p class="section-subtitle">ProductLex integrates into your existing workflow and immediately begins mapping your entire compliance landscape.</p>
+      </div>
+      <div class="how-steps">
+        <div class="how-step fade-in">
+          <div class="how-step-num">1</div>
+          <h3>Connect Your Products</h3>
+          <p>Import your portfolio via API, bulk upload, or manual entry. ProductLex maps each product to relevant regulatory frameworks across every target market.</p>
+        </div>
+        <div class="how-step fade-in">
+          <div class="how-step-num">2</div>
+          <h3>AI Identifies Everything</h3>
+          <p>The AI engine cross-references your products against the full regulatory corpus — identifying every applicable standard, directive, and regulation instantly.</p>
+        </div>
+        <div class="how-step fade-in">
+          <div class="how-step-num">3</div>
+          <h3>Monitor and Expand</h3>
+          <p>Continuous monitoring keeps you compliant. When you're ready to expand into new markets, ProductLex already knows what's required.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCT SHOWCASE -->
+  <section class="showcase" id="showcase">
+    <div class="container">
+      <div class="showcase-header">
+        <div class="section-label">Inside the Platform</div>
+        <div class="section-title">Built for clarity at enterprise scale</div>
+        <p class="section-subtitle">Every screen designed for compliance professionals who need instant answers, not information overload.</p>
+      </div>
+      <div class="showcase-screens">
+
+        <!-- Dashboard Overview -->
+        <div class="showcase-screen fade-in">
+          <div class="showcase-screen-label">
+            <div class="showcase-screen-label-left">
+              <div class="mockup-dots"><span class="mockup-dot"></span><span class="mockup-dot"></span><span class="mockup-dot"></span></div>
+              <h4>Executive Dashboard — Compliance Overview</h4>
+            </div>
+            <span class="map-badge ok">Live</span>
+          </div>
+          <div class="showcase-screen-body">
+            <div class="css-mockup">
+              <div class="css-mockup-header">
+                Product Inventory
+                <div class="mock-search">Search products...</div>
+              </div>
+              <div class="css-mockup-body" style="padding:0;">
+                <table class="mock-table">
+                  <thead>
+                    <tr><th>Product</th><th>Markets</th><th>Category</th><th>Status</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td style="font-weight:600;">IoT Sensor v2</td><td><span class="mock-market-count">12</span></td><td><span class="mock-category-tag">Electronics</span></td><td><span class="mock-badge mock-badge-green">Compliant</span></td></tr>
+                    <tr><td style="font-weight:600;">Power Controller</td><td><span class="mock-market-count">8</span></td><td><span class="mock-category-tag">Industrial</span></td><td><span class="mock-badge mock-badge-green">Compliant</span></td></tr>
+                    <tr><td style="font-weight:600;">Medical Display</td><td><span class="mock-market-count">5</span></td><td><span class="mock-category-tag">Medical</span></td><td><span class="mock-badge mock-badge-orange">In Review</span></td></tr>
+                    <tr><td style="font-weight:600;">Industrial Motor</td><td><span class="mock-market-count">15</span></td><td><span class="mock-category-tag">Machinery</span></td><td><span class="mock-badge mock-badge-green">Compliant</span></td></tr>
+                    <tr><td style="font-weight:600;">Smart Gateway</td><td><span class="mock-market-count">9</span></td><td><span class="mock-category-tag">Telecom</span></td><td><span class="mock-badge mock-badge-blue">Pending</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product Overview -->
+        <div class="showcase-screen fade-in">
+          <div class="showcase-screen-label">
+            <div class="showcase-screen-label-left">
+              <div class="mockup-dots"><span class="mockup-dot"></span><span class="mockup-dot"></span><span class="mockup-dot"></span></div>
+              <h4>Product Overview — Compliance Status & Legal Acts</h4>
+            </div>
+            <span class="map-badge ok">Live</span>
+          </div>
+          <div class="showcase-screen-body">
+            <div class="css-mockup">
+              <div class="css-mockup-body">
+                <div class="mock-product-header">
+                  <h3>IoT Sensor v2</h3>
+                  <span class="mock-badge mock-badge-green">Compliant</span>
+                </div>
+                <div class="mock-tabs">
+                  <div class="mock-tab active">Overview</div>
+                  <div class="mock-tab">Standards</div>
+                  <div class="mock-tab">Roadmap</div>
+                  <div class="mock-tab">Documents</div>
+                </div>
+                <div class="mock-info-cards">
+                  <div class="mock-info-card">
+                    <div class="mock-info-card-val">12</div>
+                    <div class="mock-info-card-label">Markets</div>
+                  </div>
+                  <div class="mock-info-card">
+                    <div class="mock-info-card-val">87%</div>
+                    <div class="mock-info-card-label">Compliant</div>
+                  </div>
+                  <div class="mock-info-card">
+                    <div class="mock-info-card-val" style="color:#dc2626;">3</div>
+                    <div class="mock-info-card-label">Actions Required</div>
+                  </div>
+                </div>
+                <ul class="mock-legal-list">
+                  <li><span class="mock-check">&#10003;</span> <span>Radio Equipment Directive 2014/53/EU</span></li>
+                  <li><span class="mock-check">&#10003;</span> <span>Low Voltage Directive 2014/35/EU</span></li>
+                  <li><span class="mock-check">&#10003;</span> <span>EMC Directive 2014/30/EU</span></li>
+                  <li><span class="mock-check">&#10003;</span> <span>RoHS Directive 2011/65/EU</span></li>
+                  <li><span class="mock-check" style="color:var(--color-text-tertiary);">&#9675;</span> <span>Cyber Resilience Act (EU) 2024/2847</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Task Management -->
+        <div class="showcase-screen fade-in">
+          <div class="showcase-screen-label">
+            <div class="showcase-screen-label-left">
+              <div class="mockup-dots"><span class="mockup-dot"></span><span class="mockup-dot"></span><span class="mockup-dot"></span></div>
+              <h4>Compliance Roadmap — CE Marking Tasks & Progress</h4>
+            </div>
+            <span class="map-badge warn">Active</span>
+          </div>
+          <div class="showcase-screen-body">
+            <div class="css-mockup">
+              <div class="css-mockup-header">CE Marking Roadmap &mdash; IoT Sensor v2</div>
+              <div class="css-mockup-body">
+                <div class="mock-progress-label">5 of 8 tasks complete</div>
+                <div class="mock-progress-bar"><div class="mock-progress-fill" style="width:62.5%;"></div></div>
+                <ul class="mock-task-list">
+                  <li>
+                    <div class="mock-task-icon mock-task-done">&#10003;</div>
+                    <span class="mock-task-label">Identify applicable directives</span>
+                    <span class="mock-task-status mock-task-status-done">Complete</span>
+                  </li>
+                  <li>
+                    <div class="mock-task-icon mock-task-done">&#10003;</div>
+                    <span class="mock-task-label">Identify harmonised standards</span>
+                    <span class="mock-task-status mock-task-status-done">Complete</span>
+                  </li>
+                  <li>
+                    <div class="mock-task-icon mock-task-done">&#10003;</div>
+                    <span class="mock-task-label">Perform testing</span>
+                    <span class="mock-task-status mock-task-status-done">Complete</span>
+                  </li>
+                  <li>
+                    <div class="mock-task-icon mock-task-done">&#10003;</div>
+                    <span class="mock-task-label">Compile technical file</span>
+                    <span class="mock-task-status mock-task-status-done">Complete</span>
+                  </li>
+                  <li>
+                    <div class="mock-task-icon mock-task-done">&#10003;</div>
+                    <span class="mock-task-label">Draft Declaration of Conformity</span>
+                    <span class="mock-task-status mock-task-status-done">Complete</span>
+                  </li>
+                  <li>
+                    <div class="mock-task-icon mock-task-progress">&#8226;</div>
+                    <span class="mock-task-label">Submit to Notified Body</span>
+                    <span class="mock-task-status mock-task-status-progress">In Progress</span>
+                  </li>
+                  <li>
+                    <div class="mock-task-icon mock-task-pending">&#9675;</div>
+                    <span class="mock-task-label">Affix CE marking</span>
+                    <span class="mock-task-status mock-task-status-pending">Pending</span>
+                  </li>
+                  <li>
+                    <div class="mock-task-icon mock-task-pending">&#9675;</div>
+                    <span class="mock-task-label">Market surveillance registration</span>
+                    <span class="mock-task-status mock-task-status-pending">Pending</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CAPABILITIES -->
+  <section class="capabilities" id="capabilities">
+    <div class="container">
+      <div class="cap-header">
+        <div class="section-label">Platform Capabilities</div>
+        <div class="section-title">A complete compliance operating system</div>
+        <p class="section-subtitle">Every capability designed for enterprise manufacturers who refuse to compromise.</p>
+      </div>
+      <div class="cap-grid">
+        <div class="cap-card fade-in"><div class="cap-line"></div><h4>Global Compliance Map</h4><p>Interactive visualization of compliance status across every market. Drill down by product, region, regulation, and team.</p></div>
+        <div class="cap-card fade-in"><div class="cap-line"></div><h4>AI Auto-Identification</h4><p>Automatically identify every applicable regulation for any product. AI classifies requirements across all target markets.</p></div>
+        <div class="cap-card fade-in"><div class="cap-line"></div><h4>Impact &amp; Scenario Analysis</h4><p>Quantify compliance impact before it happens. Scenario planning for market entry, product changes, and regulatory shifts.</p></div>
+        <div class="cap-card fade-in"><div class="cap-line"></div><h4>Task &amp; Workflow Management</h4><p>Assign tasks to teams, suppliers, and consultants with templates, dependencies, and full traceability to regulatory clauses.</p></div>
+        <div class="cap-card fade-in"><div class="cap-line"></div><h4>Certificate Tracking</h4><p>Track every certificate and test report with automated expiry alerts, renewal workflows, and compliance evidence management.</p></div>
+        <div class="cap-card fade-in"><div class="cap-line"></div><h4>AI Document Generation</h4><p>Auto-generate Declarations of Conformity, technical files, and compliance reports. Every document traceable to source.</p></div>
+        <div class="cap-card fade-in"><div class="cap-line"></div><h4>Semantic Search</h4><p>Search the full regulatory corpus in natural language. Find clauses, requirements, and precedents with AI understanding.</p></div>
+        <div class="cap-card fade-in"><div class="cap-line"></div><h4>Legislative Tracking</h4><p>Monitor EU proposals, US Congress bills, and global regulatory activity from draft through adoption with impact assessments.</p></div>
+        <div class="cap-card fade-in"><div class="cap-line"></div><h4>Enterprise API</h4><p>Full REST API. Connect with ERP, PLM, and quality management systems. Webhook support and OAuth2 authentication.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials" id="testimonials">
+    <div class="container">
+      <div class="testimonials-header">
+        <div class="section-label">What Our Clients Say</div>
+        <div class="section-title">Trusted by compliance leaders worldwide</div>
+        <p class="section-subtitle">Enterprise manufacturers across industries rely on ProductLex AI to transform their compliance operations.</p>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card fade-in">
+          <div class="testimonial-stars">
+            <svg viewBox="0 0 16 16"><path d="M8 1l2.2 4.5L15 6.3l-3.5 3.4.8 4.8L8 12.2 3.7 14.5l.8-4.8L1 6.3l4.8-.8z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 1l2.2 4.5L15 6.3l-3.5 3.4.8 4.8L8 12.2 3.7 14.5l.8-4.8L1 6.3l4.8-.8z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 1l2.2 4.5L15 6.3l-3.5 3.4.8 4.8L8 12.2 3.7 14.5l.8-4.8L1 6.3l4.8-.8z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 1l2.2 4.5L15 6.3l-3.5 3.4.8 4.8L8 12.2 3.7 14.5l.8-4.8L1 6.3l4.8-.8z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 1l2.2 4.5L15 6.3l-3.5 3.4.8 4.8L8 12.2 3.7 14.5l.8-4.8L1 6.3l4.8-.8z"/></svg>
+          </div>
+          <p class="testimonial-quote">"ProductLex transformed how we approach market expansion. What used to require months of consultant engagement is now <strong>handled in days</strong>. The AI's ability to map every applicable regulation across our product portfolio gave us confidence to enter three new markets simultaneously."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">VP</div>
+            <div>
+              <div class="testimonial-name">VP of Regulatory Affairs</div>
+              <div class="testimonial-role">Global Industrial Automation Manufacturer</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card fade-in">
+          <div class="testimonial-stars">
+            <svg viewBox="0 0 16 16"><path d="M8 1l2.2 4.5L15 6.3l-3.5 3.4.8 4.8L8 12.2 3.7 14.5l.8-4.8L1 6.3l4.8-.8z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 1l2.2 4.5L15 6.3l-3.5 3.4.8 4.8L8 12.2 3.7 14.5l.8-4.8L1 6.3l4.8-.8z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 1l2.2 4.5L15 6.3l-3.5 3.4.8 4.8L8 12.2 3.7 14.5l.8-4.8L1 6.3l4.8-.8z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 1l2.2 4.5L15 6.3l-3.5 3.4.8 4.8L8 12.2 3.7 14.5l.8-4.8L1 6.3l4.8-.8z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 1l2.2 4.5L15 6.3l-3.5 3.4.8 4.8L8 12.2 3.7 14.5l.8-4.8L1 6.3l4.8-.8z"/></svg>
+          </div>
+          <p class="testimonial-quote">"The multi-LLM consensus architecture is what sold us. In medical devices, you cannot afford AI hallucinations. ProductLex's approach of <strong>cross-validating every answer</strong> across multiple models gives us the trust we need for regulatory decisions."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">HC</div>
+            <div>
+              <div class="testimonial-name">Head of Compliance</div>
+              <div class="testimonial-role">European Medical Device Company</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card fade-in">
+          <div class="testimonial-stars">
+            <svg viewBox="0 0 16 16"><path d="M8 1l2.2 4.5L15 6.3l-3.5 3.4.8 4.8L8 12.2 3.7 14.5l.8-4.8L1 6.3l4.8-.8z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 1l2.2 4.5L15 6.3l-3.5 3.4.8 4.8L8 12.2 3.7 14.5l.8-4.8L1 6.3l4.8-.8z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 1l2.2 4.5L15 6.3l-3.5 3.4.8 4.8L8 12.2 3.7 14.5l.8-4.8L1 6.3l4.8-.8z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 1l2.2 4.5L15 6.3l-3.5 3.4.8 4.8L8 12.2 3.7 14.5l.8-4.8L1 6.3l4.8-.8z"/></svg>
+            <svg viewBox="0 0 16 16"><path d="M8 1l2.2 4.5L15 6.3l-3.5 3.4.8 4.8L8 12.2 3.7 14.5l.8-4.8L1 6.3l4.8-.8z"/></svg>
+          </div>
+          <p class="testimonial-quote">"Our compliance team was drowning in spreadsheets tracking regulations across markets. ProductLex replaced all of it with <strong>one living platform</strong>. The proactive monitoring alone has prevented two critical compliance gaps that would have delayed product launches."</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">DR</div>
+            <div>
+              <div class="testimonial-name">Director of Regulatory Strategy</div>
+              <div class="testimonial-role">Multinational Consumer Electronics Group</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Investor Section -->
+  <section style="padding: 60px 0; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: #fff;">
+    <div class="container" style="max-width: 900px; text-align: center;">
+      <div style="display: inline-block; padding: 6px 16px; border: 1px solid rgba(255,255,255,0.2); border-radius: 50px; font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.7); margin-bottom: 24px;">Investment Opportunity</div>
+      <h2 style="font-size: 2.2rem; font-weight: 700; margin-bottom: 16px; color: #fff;">Bridge Round Open — Q3 2026</h2>
+      <p style="font-size: 1.15rem; color: rgba(255,255,255,0.75); line-height: 1.7; margin-bottom: 32px;">
+        ProductLex AI is raising a <strong style="color: #818cf8;">€1M bridge round</strong> at a <strong style="color: #818cf8;">€10M valuation</strong>.
+        We're scaling AI-powered compliance automation for enterprise manufacturers across Europe and beyond.
+        Backed by a venture capital company and leading Nordic angel investors.
+      </p>
+      <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+        <a href="mailto:carl@productlex.com?subject=Investment%20Inquiry%20-%20Bridge%20Round" class="btn btn-primary btn-lg" style="background: #818cf8; border-color: #818cf8;">Contact for Investment</a>
+        <a href="about.html" class="btn btn-outline btn-lg" style="border-color: rgba(255,255,255,0.3); color: #fff;">Learn Our Story</a>
+      </div>
+      <div style="display: flex; gap: 40px; justify-content: center; margin-top: 40px; flex-wrap: wrap;">
+        <div style="text-align: center;">
+          <div style="font-size: 1.8rem; font-weight: 700; color: #818cf8;">€1M</div>
+          <div style="font-size: 0.8rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.05em;">Bridge Round</div>
+        </div>
+        <div style="text-align: center;">
+          <div style="font-size: 1.8rem; font-weight: 700; color: #818cf8;">€10M</div>
+          <div style="font-size: 0.8rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.05em;">Valuation</div>
+        </div>
+        <div style="text-align: center;">
+          <div style="font-size: 1.8rem; font-weight: 700; color: #818cf8;">Q3 2026</div>
+          <div style="font-size: 0.8rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.05em;">Timeline</div>
+        </div>
+        <div style="text-align: center;">
+          <div style="font-size: 1.8rem; font-weight: 700; color: #818cf8;">10+</div>
+          <div style="font-size: 0.8rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.05em;">Years of Data</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="container">
+      <h2>Enterprise compliance is broken.<br>ProductLex fixes it with modular AI.</h2>
+      <p>Turn regulatory compliance from a cost center into a competitive advantage.</p>
+      <div class="cta-btns">
+        <a href="contact.html" class="btn btn-primary btn-lg">Request a Demo</a>
+        <a href="contact.html" class="btn btn-outline btn-lg">Talk to Our Team</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Cookie Consent Bar -->
+  <div class="cookie-consent" id="cookieConsent">
+    <div class="cookie-consent-inner">
+      <p class="cookie-consent-text">We use cookies to improve your experience. By continuing to browse, you agree to our use of cookies. Read our <a href="cookies.html">Cookie Policy</a>.</p>
+      <div class="cookie-consent-buttons">
+        <button class="cookie-btn cookie-btn-manage" onclick="manageCookies()">Manage Preferences</button>
+        <button class="cookie-btn cookie-btn-accept" onclick="acceptCookies()">Accept All</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="nav-logo"><div class="nav-logo-icon">P</div>ProductLex</a>
+          <p>Intelligent compliance automation for enterprise manufacturers. Total compliance control. Predictable market expansion.</p>
+        </div>
+        <div class="footer-col"><h4>Platform</h4><ul><li><a href="index.html#platform">Compliance Map</a></li><li><a href="index.html#ai-engine">AI Engine</a></li><li><a href="index.html#features">Regulatory Intelligence</a></li><li><a href="index.html#showcase">Monitoring</a></li><li><a href="documentation.html">API</a></li></ul></div>
+        <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About</a></li><li><a href="careers.html">Careers</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+        <div class="footer-col"><h4>Resources</h4><ul><li><a href="documentation.html">Documentation</a></li><li><a href="documentation.html">API Reference</a></li></ul></div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 ProductLex AI.</span>
+        <div class="footer-legal"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="security.html">Security</a><a href="cookies.html">Cookies</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Sticky Demo Button -->
+  <div class="sticky-demo" id="stickyDemo">
+    <a href="contact.html">
+      <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15.75 9A6.75 6.75 0 1 1 2.25 9a6.75 6.75 0 0 1 13.5 0z"/><path d="M7.5 6.75L11.25 9 7.5 11.25z" fill="currentColor"/></svg>
+      Request a Demo
+    </a>
+  </div>
+
+  <script>
+    const nav = document.getElementById('nav');
+    const stickyDemo = document.getElementById('stickyDemo');
+
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
+      stickyDemo.classList.toggle('visible', window.scrollY > 600);
+    });
+
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
+    document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', function(e) {
+        e.preventDefault();
+        const t = document.querySelector(this.getAttribute('href'));
+        if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  
+    // Cookie consent
+    function acceptCookies() {
+      localStorage.setItem('cookieConsent', 'accepted');
+      document.getElementById('cookieConsent').classList.remove('visible');
+    }
+    function manageCookies() {
+      localStorage.setItem('cookieConsent', 'essential');
+      document.getElementById('cookieConsent').classList.remove('visible');
+    }
+    (function() {
+      if (!localStorage.getItem('cookieConsent')) {
+        setTimeout(function() {
+          var el = document.getElementById('cookieConsent');
+          if (el) el.classList.add('visible');
+        }, 500);
+      }
+    })();
+
+    // ── LEAFLET COMPLIANCE MAP (CHOROPLETH) ──
+    (function() {
+      if (typeof L === 'undefined') return;
+
+      var el = document.getElementById('hero-map');
+      if (!el) return;
+
+      // Compliance data keyed by ISO 3166-1 alpha-3
+      var complianceData = {
+        // Compliant (green) - EU core + established markets
+        SWE: { status: 'compliant', label: 'Compliant', products: 42, standards: 312 },
+        FIN: { status: 'compliant', label: 'Compliant', products: 29, standards: 241 },
+        DEU: { status: 'compliant', label: 'Compliant', products: 38, standards: 289 },
+        FRA: { status: 'compliant', label: 'Compliant', products: 35, standards: 274 },
+        NLD: { status: 'compliant', label: 'Compliant', products: 31, standards: 256 },
+        DNK: { status: 'compliant', label: 'Compliant', products: 24, standards: 205 },
+        AUT: { status: 'compliant', label: 'Compliant', products: 22, standards: 198 },
+        CHE: { status: 'compliant', label: 'Compliant', products: 18, standards: 156 },
+        NOR: { status: 'compliant', label: 'Compliant', products: 26, standards: 218 },
+        CAN: { status: 'compliant', label: 'Compliant', products: 25, standards: 198 },
+        AUS: { status: 'compliant', label: 'Compliant', products: 15, standards: 112 },
+        JPN: { status: 'compliant', label: 'Compliant', products: 22, standards: 187 },
+        KOR: { status: 'compliant', label: 'Compliant', products: 19, standards: 164 },
+        SGP: { status: 'compliant', label: 'Compliant', products: 9, standards: 67 },
+        LUX: { status: 'compliant', label: 'Compliant', products: 8, standards: 54 },
+        EST: { status: 'compliant', label: 'Compliant', products: 7, standards: 48 },
+        ISL: { status: 'compliant', label: 'Compliant', products: 5, standards: 39 },
+        NZL: { status: 'compliant', label: 'Compliant', products: 11, standards: 86 },
+        // Info (blue) - markets with regulatory updates
+        GBR: { status: 'info', label: 'Info', products: 28, standards: 198 },
+        ESP: { status: 'info', label: 'Info', products: 28, standards: 234 },
+        ITA: { status: 'info', label: 'Info', products: 33, standards: 267 },
+        BEL: { status: 'info', label: 'Info', products: 20, standards: 187 },
+        IRL: { status: 'info', label: 'Info', products: 16, standards: 134 },
+        PRT: { status: 'info', label: 'Info', products: 14, standards: 118 },
+        GRC: { status: 'info', label: 'Info', products: 12, standards: 96 },
+        HRV: { status: 'info', label: 'Info', products: 8, standards: 62 },
+        SVN: { status: 'info', label: 'Info', products: 7, standards: 55 },
+        LTU: { status: 'info', label: 'Info', products: 6, standards: 44 },
+        LVA: { status: 'info', label: 'Info', products: 5, standards: 38 },
+        ISR: { status: 'info', label: 'Info', products: 10, standards: 78 },
+        // Task (purple) - pending compliance work
+        USA: { status: 'task', label: 'Task', products: 31, standards: 156 },
+        POL: { status: 'task', label: 'Task', products: 21, standards: 176 },
+        CZE: { status: 'task', label: 'Task', products: 17, standards: 145 },
+        ROU: { status: 'task', label: 'Task', products: 12, standards: 98 },
+        BGR: { status: 'task', label: 'Task', products: 9, standards: 72 },
+        SVK: { status: 'task', label: 'Task', products: 10, standards: 84 },
+        HUN: { status: 'task', label: 'Task', products: 11, standards: 89 },
+        TWN: { status: 'task', label: 'Task', products: 8, standards: 56 },
+        THA: { status: 'task', label: 'Task', products: 7, standards: 48 },
+        // Warning (orange) - regulatory changes pending
+        CHN: { status: 'warning', label: 'Warning', products: 18, standards: 143 },
+        IND: { status: 'warning', label: 'Warning', products: 14, standards: 98 },
+        BRA: { status: 'warning', label: 'Warning', products: 12, standards: 89 },
+        MEX: { status: 'warning', label: 'Warning', products: 10, standards: 72 },
+        TUR: { status: 'warning', label: 'Warning', products: 11, standards: 78 },
+        IDN: { status: 'warning', label: 'Warning', products: 8, standards: 56 },
+        ZAF: { status: 'warning', label: 'Warning', products: 7, standards: 48 },
+        ARG: { status: 'warning', label: 'Warning', products: 6, standards: 42 },
+        SAU: { status: 'warning', label: 'Warning', products: 9, standards: 64 },
+        ARE: { status: 'warning', label: 'Warning', products: 8, standards: 58 },
+        VNM: { status: 'warning', label: 'Warning', products: 5, standards: 34 },
+        EGY: { status: 'warning', label: 'Warning', products: 6, standards: 38 },
+        NGA: { status: 'warning', label: 'Warning', products: 4, standards: 28 },
+        COL: { status: 'warning', label: 'Warning', products: 5, standards: 36 },
+        MYS: { status: 'warning', label: 'Warning', products: 7, standards: 46 },
+        PHL: { status: 'warning', label: 'Warning', products: 5, standards: 32 },
+        CHL: { status: 'warning', label: 'Warning', products: 4, standards: 30 },
+        PAK: { status: 'warning', label: 'Warning', products: 3, standards: 22 },
+        // Critical (red)
+        RUS: { status: 'critical', label: 'Critical', products: 8, standards: 64 },
+        BLR: { status: 'critical', label: 'Critical', products: 3, standards: 18 },
+        IRN: { status: 'critical', label: 'Critical', products: 2, standards: 12 },
+        PRK: { status: 'critical', label: 'Critical', products: 0, standards: 4 }
+      };
+
+      var statusColors = {
+        compliant: '#079455',
+        info:      '#1570EF',
+        task:      '#7F56D9',
+        warning:   '#ff902b',
+        critical:  '#f05050'
+      };
+
+      var statusCSS = {
+        compliant: 'green',
+        info:      'blue',
+        task:      'purple',
+        warning:   'orange',
+        critical:  'red'
+      };
+
+      var map = L.map('hero-map', {
+        scrollWheelZoom: false,
+        zoomControl: false,
+        attributionControl: false,
+        dragging: true,
+        zoomSnap: 0.25
+      }).setView([25, 10], 2);
+
+      // Loading indicator
+      var loadingDiv = document.createElement('div');
+      loadingDiv.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:1000;background:rgba(255,255,255,0.9);padding:12px 24px;border-radius:8px;font-size:13px;color:#64748b;font-family:inherit;box-shadow:0 2px 8px rgba(0,0,0,0.1);';
+      loadingDiv.textContent = 'Loading compliance map\u2026';
+      el.style.position = 'relative';
+      el.appendChild(loadingDiv);
+
+      function getStyle(feature) {
+        var iso = feature.properties['ISO3166-1-Alpha-3'];
+        var data = complianceData[iso];
+        if (data) {
+          return {
+            fillColor: statusColors[data.status],
+            fillOpacity: 1,
+            color: '#ffffff',
+            weight: 0.8
+          };
+        }
+        return {
+          fillColor: '#e2e8f0',
+          fillOpacity: 1,
+          color: '#ffffff',
+          weight: 0.5
+        };
+      }
+
+      var geojsonLayer;
+
+      function highlightFeature(e) {
+        var layer = e.target;
+        var iso = layer.feature.properties['ISO3166-1-Alpha-3'];
+        var data = complianceData[iso];
+        if (data) {
+          layer.setStyle({ fillOpacity: 0.85, weight: 1.2 });
+        } else {
+          layer.setStyle({ fillOpacity: 0.5, fillColor: '#d1d5db' });
+        }
+        if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+          layer.bringToFront();
+        }
+      }
+
+      function resetHighlight(e) {
+        geojsonLayer.resetStyle(e.target);
+      }
+
+      function onEachFeature(feature, layer) {
+        var iso = feature.properties['ISO3166-1-Alpha-3'];
+        var countryName = feature.properties.ADMIN || feature.properties.name || iso;
+        var data = complianceData[iso];
+
+        // Tooltip on hover
+        var tooltipText = '<strong>' + countryName + '</strong>';
+        if (data) {
+          tooltipText += '<br>' + data.label;
+        } else {
+          tooltipText += '<br>No Data';
+        }
+        layer.bindTooltip(tooltipText, { sticky: true, direction: 'auto' });
+
+        // Popup on click
+        if (data) {
+          layer.bindPopup(
+            '<div class="map-popup-city">' + countryName + '</div>' +
+            '<div class="map-popup-status ' + statusCSS[data.status] + '">' + data.label + '</div>' +
+            '<div class="map-popup-detail" style="margin-top:6px"><strong>' + data.products + '</strong> products &middot; <strong>' + data.standards + '</strong> applicable standards</div>'
+          );
+        } else {
+          layer.bindPopup(
+            '<div class="map-popup-city">' + countryName + '</div>' +
+            '<div class="map-popup-status gray">No Data</div>'
+          );
+        }
+
+        layer.on({
+          mouseover: highlightFeature,
+          mouseout: resetHighlight
+        });
+      }
+
+      fetch('https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson')
+        .then(function(response) { return response.json(); })
+        .then(function(geoData) {
+          loadingDiv.remove();
+          geojsonLayer = L.geoJSON(geoData, {
+            style: getStyle,
+            onEachFeature: onEachFeature
+          }).addTo(map);
+        })
+        .catch(function() {
+          loadingDiv.textContent = 'Could not load map data';
+          loadingDiv.style.color = '#dc2626';
+        });
+
+      // Legend — horizontal pill buttons matching real ProductLex app
+      var legend = L.control({ position: 'bottomright' });
+      legend.onAdd = function() {
+        // Count countries per status
+        var counts = { compliant: 0, info: 0, task: 0, warning: 0, critical: 0, nodata: 0 };
+        // We'll update counts after GeoJSON loads; for now use static data counts
+        Object.keys(complianceData).forEach(function(k) { counts[complianceData[k].status]++; });
+
+        var div = L.DomUtil.create('div');
+        div.style.cssText = 'background:white;padding:8px 12px;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.12);font-size:12px;color:#334155;';
+
+        var pillStyle = 'display:inline-flex;align-items:center;gap:6px;padding:4px 10px 4px 8px;border-radius:9999px;border:1px solid #e5e7eb;background:#fafafa;font-size:11px;font-weight:600;color:#334155;cursor:default;white-space:nowrap;';
+        var squareStyle = 'display:inline-block;width:10px;height:10px;border-radius:2px;flex-shrink:0;';
+        var countStyle = 'color:#94a3b8;font-weight:500;margin-left:2px;';
+
+        var items = [
+          { label: 'Compliant', color: '#079455', count: counts.compliant },
+          { label: 'Info',      color: '#1570EF', count: counts.info },
+          { label: 'Task',      color: '#7F56D9', count: counts.task },
+          { label: 'Warning',   color: '#ff902b', count: counts.warning },
+          { label: 'Critical',  color: '#f05050', count: counts.critical },
+          { label: 'No Data',   color: '#6b7280', count: '' }
+        ];
+
+        var html = '<div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;align-items:center;">';
+        items.forEach(function(item) {
+          html += '<span style="' + pillStyle + '">' +
+            '<span style="' + squareStyle + 'background:' + item.color + ';"></span>' +
+            item.label +
+            (item.count !== '' ? '<span style="' + countStyle + '">' + item.count + '</span>' : '') +
+            '</span>';
+        });
+        html += '</div>';
+        div.innerHTML = html;
+        return div;
+      };
+      legend.addTo(map);
+    })();
+  </script>
+</body>
+</html>
