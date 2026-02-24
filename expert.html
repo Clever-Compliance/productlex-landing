@@ -1860,7 +1860,7 @@ if (continueInput) {
 // HIDE-ANSWERED TOGGLE + SYNC PANEL STATE
 // ═══════════════════════════════════════════════════════════════
 
-let hideAnswered = localStorage.getItem('productlex_hide_answered') === 'true';
+let hideAnswered = localStorage.getItem('productlex_hide_answered') !== 'false';
 
 function toggleHideAnswered() {
   hideAnswered = !hideAnswered;
@@ -1973,7 +1973,7 @@ function renderButtons(q) {
 
   return `
     <div class="q-actions">${buttons}</div>
-    <input class="notes-input" id="notes-${q.id}" placeholder="Optional: explain your reasoning..." onkeydown="if(event.key==='Enter')event.preventDefault();" />
+    <input class="notes-input" id="notes-${q.id}" placeholder="Optional: explain your reasoning..." />
   `;
 }
 
