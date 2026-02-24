@@ -258,7 +258,44 @@
     }
     .btn-change:hover { text-decoration: underline; }
 
-    /* Export bar */
+    /* Sticky top bar */
+    .sticky-bar {
+      position: fixed; top: 0; left: 0; right: 0;
+      background: var(--color-bg);
+      border-bottom: 1px solid var(--color-border);
+      padding: 10px 24px;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      z-index: 200;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .sticky-bar .bar-info {
+      font-size: 13px; color: var(--color-text-secondary); font-weight: 500;
+    }
+    .sticky-bar .bar-divider {
+      width: 1px; height: 20px; background: var(--color-border); margin: 0 4px;
+    }
+    .btn-bar {
+      font-family: var(--font);
+      font-size: 13px; font-weight: 600;
+      padding: 7px 18px; border-radius: 50px;
+      border: 1.5px solid var(--color-border);
+      background: var(--color-bg); color: var(--color-text);
+      cursor: pointer; transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .btn-bar:hover { border-color: var(--color-accent); color: var(--color-accent); }
+    .btn-bar.primary {
+      background: var(--color-accent); color: white; border-color: var(--color-accent);
+    }
+    .btn-bar.primary:hover {
+      background: var(--color-accent-light); box-shadow: 0 2px 12px rgba(79, 70, 229, 0.25);
+    }
+    .btn-bar.primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* Push page content below sticky bar */
+    .page-wrapper { padding-top: 70px; }
+
+    /* Export bar (bottom) */
     .export-bar {
       position: fixed; bottom: 0; left: 0; right: 0;
       background: var(--color-bg);
@@ -305,23 +342,22 @@
     .toggle-switch.on::after { transform: translateX(18px); }
     .toggle-label { font-size: 13px; color: var(--color-text-secondary); font-weight: 500; }
 
-    /* Sync panel */
-    .sync-panel {
+    /* Sync dropdown (anchored to sticky bar) */
+    .sync-dropdown {
+      position: fixed; top: 52px; right: 24px;
+      width: 360px;
       background: var(--color-bg);
       border: 1px solid var(--color-border);
       border-radius: var(--radius);
-      margin-bottom: 24px; overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      padding: 18px;
+      z-index: 250;
+      display: none;
     }
-    .sync-header {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 14px 18px; cursor: pointer;
-      font-size: 14px; font-weight: 600; color: var(--color-text-secondary);
+    .sync-dropdown.open { display: block; }
+    .sync-dropdown h3 {
+      font-size: 14px; font-weight: 700; margin-bottom: 14px;
     }
-    .sync-header:hover { color: var(--color-text); }
-    .sync-header svg { transition: transform 0.2s; }
-    .sync-header.open svg { transform: rotate(180deg); }
-    .sync-body { padding: 0 18px 18px; }
-    .sync-body.collapsed { display: none; }
     .sync-field { margin-bottom: 12px; }
     .sync-field label { display: block; font-size: 12px; font-weight: 600; color: var(--color-text-secondary); margin-bottom: 4px; }
     .sync-field input {
@@ -333,7 +369,7 @@
     .sync-field input:focus { border-color: var(--color-accent); }
     .btn-sync {
       font-family: var(--font); font-size: 13.5px; font-weight: 600;
-      padding: 9px 22px; border-radius: 50px;
+      padding: 9px 22px; border-radius: 50px; width: 100%;
       background: var(--color-accent); color: white;
       border: none; cursor: pointer; transition: all 0.2s;
     }
@@ -349,13 +385,42 @@
     .hidden { display: none !important; }
 
     @media (max-width: 600px) {
-      .page-wrapper { padding: 24px 16px 100px; }
+      .page-wrapper { padding: 70px 16px 100px; }
+      .sticky-bar { padding: 8px 12px; gap: 6px; flex-wrap: wrap; }
+      .sticky-bar .bar-info { font-size: 12px; }
+      .btn-bar { font-size: 12px; padding: 6px 12px; }
+      .sync-dropdown { right: 12px; left: 12px; width: auto; }
       .q-card { padding: 20px; }
       .btn-answer { padding: 9px 18px; font-size: 13.5px; }
     }
   </style>
 </head>
 <body>
+
+<!-- Sticky top bar — always visible -->
+<div class="sticky-bar">
+  <span class="bar-info" id="barInfo">0 / 0 answered</span>
+  <div class="bar-divider"></div>
+  <button class="btn-bar" onclick="copyAnswers()">Copy JSON</button>
+  <button class="btn-bar" onclick="downloadAnswers()">Download</button>
+  <div class="bar-divider"></div>
+  <button class="btn-bar primary" id="syncBarBtn" onclick="toggleSyncDropdown()">Sync to ProductLex</button>
+</div>
+
+<!-- Sync dropdown -->
+<div class="sync-dropdown" id="syncDropdown">
+  <h3>Sync Answers to ProductLex</h3>
+  <div class="sync-field">
+    <label>API URL</label>
+    <input type="text" id="syncApiUrl" placeholder="https://app.productlex.com" />
+  </div>
+  <div class="sync-field">
+    <label>Bearer Token (from your profile page)</label>
+    <input type="password" id="syncToken" placeholder="Paste your API token here" />
+  </div>
+  <button class="btn-sync" id="syncBtn" onclick="syncAnswers()">Sync Answers</button>
+  <div id="syncResult"></div>
+</div>
 
 <div class="page-wrapper">
   <!-- Logo -->
@@ -391,26 +456,6 @@
     <div class="toggle-row">
       <div class="toggle-switch" id="hideToggle" onclick="toggleHideAnswered()"></div>
       <span class="toggle-label" id="hideLabel">Hide answered questions</span>
-    </div>
-  </div>
-
-  <!-- Sync panel -->
-  <div class="sync-panel">
-    <div class="sync-header" id="syncHeader" onclick="toggleSyncPanel()">
-      Sync Answers to ProductLex
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-    </div>
-    <div class="sync-body collapsed" id="syncBody">
-      <div class="sync-field">
-        <label>API URL</label>
-        <input type="text" id="syncApiUrl" placeholder="https://app.productlex.com" />
-      </div>
-      <div class="sync-field">
-        <label>Bearer Token (from your profile page)</label>
-        <input type="password" id="syncToken" placeholder="Paste your API token here" />
-      </div>
-      <button class="btn-sync" id="syncBtn" onclick="syncAnswers()">Sync Answers</button>
-      <div id="syncResult"></div>
     </div>
   </div>
 
@@ -1577,12 +1622,19 @@ function toggleHideAnswered() {
   render();
 }
 
-function toggleSyncPanel() {
-  const body = document.getElementById('syncBody');
-  const header = document.getElementById('syncHeader');
-  body.classList.toggle('collapsed');
-  header.classList.toggle('open');
+function toggleSyncDropdown() {
+  const dd = document.getElementById('syncDropdown');
+  dd.classList.toggle('open');
 }
+
+// Close dropdown when clicking outside
+document.addEventListener('click', function(e) {
+  const dd = document.getElementById('syncDropdown');
+  const btn = document.getElementById('syncBarBtn');
+  if (dd && !dd.contains(e.target) && e.target !== btn) {
+    dd.classList.remove('open');
+  }
+});
 
 // Load saved sync settings
 function loadSyncSettings() {
@@ -1678,6 +1730,7 @@ function render() {
   // Progress
   document.getElementById('progressCount').textContent = `${totalA} / ${totalQ} answered`;
   document.getElementById('progressFill').style.width = totalQ ? `${(totalA/totalQ)*100}%` : '0%';
+  document.getElementById('barInfo').textContent = `${totalA} / ${totalQ} answered`;
 
   // Toggle state
   const toggleEl = document.getElementById('hideToggle');
