@@ -1972,8 +1972,8 @@ function renderButtons(q) {
   buttons += `<button class="btn-answer btn-skip" onclick="answer('${q.id}','not_sure')">Not sure</button>`;
 
   return `
+    <input class="notes-input" id="notes-${q.id}" placeholder="Optional: add context or reasoning before answering..." style="margin-bottom:12px" />
     <div class="q-actions">${buttons}</div>
-    <input class="notes-input" id="notes-${q.id}" placeholder="Optional: explain your reasoning..." onkeydown="if(event.key==='Enter')saveNotes('${q.id}')" />
   `;
 }
 
