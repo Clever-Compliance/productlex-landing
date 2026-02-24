@@ -67,7 +67,7 @@
     .page-wrapper {
       max-width: 780px;
       margin: 0 auto;
-      padding: 40px 24px 80px;
+      padding: 40px 24px 40px;
     }
 
     /* Header */
@@ -295,31 +295,65 @@
     /* Push page content below sticky bar */
     .page-wrapper { padding-top: 70px; }
 
-    /* Export bar (bottom) */
-    .export-bar {
-      position: fixed; bottom: 0; left: 0; right: 0;
-      background: var(--color-bg);
-      border-top: 1px solid var(--color-border);
-      padding: 14px 24px;
-      display: flex; align-items: center; justify-content: center; gap: 12px;
-      z-index: 100;
+    /* Respondent gate */
+    .respondent-gate {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 60px 0 40px;
     }
-    .btn-export {
+    .respondent-gate h2 {
+      font-size: 22px; font-weight: 800;
+      letter-spacing: -0.03em; margin-bottom: 6px;
+    }
+    .respondent-gate .gate-sub {
+      font-size: 15px; color: var(--color-text-secondary);
+      margin-bottom: 28px; line-height: 1.5;
+    }
+    .gate-form { display: flex; flex-direction: column; gap: 16px; }
+    .gate-field label {
+      display: block; font-size: 13.5px; font-weight: 600;
+      margin-bottom: 5px; color: var(--color-text);
+    }
+    .gate-field label .optional {
+      font-weight: 400; color: var(--color-text-tertiary);
+    }
+    .gate-field input {
+      width: 100%; font-family: var(--font); font-size: 15px;
+      padding: 12px 16px; border: 1.5px solid var(--color-border);
+      border-radius: 10px; background: var(--color-bg);
+      color: var(--color-text); outline: none; transition: border-color 0.2s;
+    }
+    .gate-field input::placeholder { color: var(--color-text-tertiary); }
+    .gate-field input:focus {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px var(--color-accent-soft);
+    }
+    .gate-field input.error { border-color: var(--color-red); }
+    .gate-error {
+      font-size: 13px; color: var(--color-red); margin-top: 4px; display: none;
+    }
+    .btn-start {
       font-family: var(--font);
-      font-size: 13.5px; font-weight: 600;
-      padding: 10px 24px; border-radius: 50px;
-      border: 1.5px solid var(--color-border);
-      background: var(--color-bg); color: var(--color-text);
-      cursor: pointer; transition: all 0.2s;
+      font-size: 15px; font-weight: 700;
+      padding: 14px 32px; border-radius: 50px;
+      border: none; cursor: pointer;
+      background: var(--color-accent); color: white;
+      transition: all 0.2s; margin-top: 8px;
     }
-    .btn-export:hover { border-color: var(--color-accent); color: var(--color-accent); }
-    .btn-export.primary {
-      background: var(--color-accent); color: white; border-color: var(--color-accent);
+    .btn-start:hover {
+      background: var(--color-accent-light);
+      box-shadow: 0 2px 16px rgba(79, 70, 229, 0.3);
+      transform: translateY(-1px);
     }
-    .btn-export.primary:hover {
-      background: var(--color-accent-light); box-shadow: 0 2px 12px rgba(79, 70, 229, 0.25);
+    .btn-start:disabled {
+      opacity: 0.6; cursor: not-allowed; transform: none;
     }
-    .export-info { font-size: 13px; color: var(--color-text-tertiary); }
+    .gate-returning {
+      margin-top: 20px; padding: 14px 18px;
+      background: var(--color-green-bg); border: 1px solid #bbf7d0;
+      border-radius: var(--radius); font-size: 14px; color: #166534;
+      display: none;
+    }
 
     /* Hide answered toggle */
     .toggle-row {
@@ -345,7 +379,7 @@
     .hidden { display: none !important; }
 
     @media (max-width: 600px) {
-      .page-wrapper { padding: 70px 16px 100px; }
+      .page-wrapper { padding: 70px 16px 40px; }
       .sticky-bar { padding: 8px 12px; gap: 6px; flex-wrap: wrap; }
       .sticky-bar .bar-info { font-size: 12px; }
       .btn-bar { font-size: 12px; padding: 6px 12px; }
@@ -353,15 +387,15 @@
       .btn-answer { padding: 9px 18px; font-size: 13.5px; }
     }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
 <!-- Sticky top bar — always visible -->
-<div class="sticky-bar">
+<div class="sticky-bar" id="stickyBar" style="display:none">
   <span class="bar-info" id="barInfo">0 / 0 answered</span>
   <div class="bar-divider"></div>
-  <button class="btn-bar" onclick="copyAnswers()">Copy JSON</button>
-  <button class="btn-bar primary" onclick="downloadAnswers()">Download Answers</button>
+  <button class="btn-bar primary" onclick="downloadAnswers()">Download Backup</button>
 </div>
 
 <div class="page-wrapper">
@@ -376,6 +410,36 @@
     <h1>Compliance Expert Questionnaire</h1>
     <p style="font-size:15px;color:var(--color-text-secondary);">Help our AI agents make smarter compliance decisions by answering these questions.</p>
   </div>
+
+  <!-- Respondent identification gate -->
+  <div id="respondentGate" class="respondent-gate">
+    <h2>Before we begin</h2>
+    <p class="gate-sub">Tell us who you are so we can save your progress and share results with the team.</p>
+    <div class="gate-form">
+      <div class="gate-field">
+        <label for="gateName">Name</label>
+        <input type="text" id="gateName" placeholder="Your full name" required>
+      </div>
+      <div class="gate-field">
+        <label for="gateEmail">Email</label>
+        <input type="email" id="gateEmail" placeholder="you@company.com" required>
+        <div class="gate-error" id="emailError">Please enter a valid email address</div>
+      </div>
+      <div class="gate-field">
+        <label for="gateCompany">Company <span class="optional">(optional)</span></label>
+        <input type="text" id="gateCompany" placeholder="Your company name">
+      </div>
+      <div class="gate-field">
+        <label for="gateRole">Role <span class="optional">(optional)</span></label>
+        <input type="text" id="gateRole" placeholder="e.g. Compliance Manager, QA Lead">
+      </div>
+      <button class="btn-start" id="btnStart" onclick="startQuestionnaire()">Start Questionnaire</button>
+    </div>
+    <div class="gate-returning" id="gateReturning">Welcome back! Loading your previous answers...</div>
+  </div>
+
+  <!-- Questionnaire content (hidden until respondent identified) -->
+  <div id="questionnaireContent" style="display:none">
 
   <!-- Warning -->
   <div class="warning-banner">
@@ -406,13 +470,8 @@
 
   <!-- Questions container -->
   <div id="questionsContainer"></div>
-</div>
 
-<!-- Export bar -->
-<div class="export-bar">
-  <span class="export-info" id="exportInfo"></span>
-  <button class="btn-export" onclick="copyAnswers()">Copy JSON</button>
-  <button class="btn-export primary" onclick="downloadAnswers()">Download Answers</button>
+  </div><!-- /questionnaireContent -->
 </div>
 
 <script>
@@ -1530,10 +1589,25 @@ const CATEGORIES = [
 ];
 
 // ═══════════════════════════════════════════════════════════════
-// STATE — localStorage persistence
+// SUPABASE CLIENT
+// ═══════════════════════════════════════════════════════════════
+
+// ⚠️  Replace these with your Supabase project credentials
+//     (Settings → API in Supabase dashboard)
+const SUPABASE_URL  = 'https://YOUR_PROJECT.supabase.co';
+const SUPABASE_ANON = 'YOUR_ANON_KEY';
+
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+// ═══════════════════════════════════════════════════════════════
+// STATE — localStorage + Supabase persistence
 // ═══════════════════════════════════════════════════════════════
 
 const STORAGE_KEY = 'productlex_expert_answers';
+const RESPONDENT_KEY = 'productlex_respondent_id';
+const RESPONDENT_INFO_KEY = 'productlex_respondent_info';
+
+let currentRespondentId = localStorage.getItem(RESPONDENT_KEY) || null;
 
 function loadAnswers() {
   try {
@@ -1549,8 +1623,121 @@ function saveAnswer(questionId, value, notes) {
     timestamp: new Date().toISOString(),
   };
   localStorage.setItem(STORAGE_KEY, JSON.stringify(answers));
+
+  // Upsert to Supabase (fire-and-forget)
+  if (currentRespondentId) {
+    const q = QUESTIONS.find(x => x.id === questionId);
+    sb.from('expert_answers').upsert({
+      respondent_id: currentRespondentId,
+      question_id: questionId,
+      category: q ? q.cat : 'unknown',
+      question_text: q ? q.q : questionId,
+      answer_value: value,
+      notes: notes || null,
+      answered_at: new Date().toISOString(),
+    }, { onConflict: 'respondent_id, question_id' }).then(({ error }) => {
+      if (error) console.warn('Supabase upsert error:', error.message);
+    });
+  }
+
   render();
 }
+
+// ═══════════════════════════════════════════════════════════════
+// RESPONDENT GATE
+// ═══════════════════════════════════════════════════════════════
+
+async function startQuestionnaire() {
+  const name = document.getElementById('gateName').value.trim();
+  const email = document.getElementById('gateEmail').value.trim();
+  const company = document.getElementById('gateCompany').value.trim();
+  const role = document.getElementById('gateRole').value.trim();
+
+  // Validate
+  if (!name) {
+    document.getElementById('gateName').classList.add('error');
+    document.getElementById('gateName').focus();
+    return;
+  }
+  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRe.test(email)) {
+    document.getElementById('gateEmail').classList.add('error');
+    document.getElementById('emailError').style.display = 'block';
+    document.getElementById('gateEmail').focus();
+    return;
+  }
+
+  const btn = document.getElementById('btnStart');
+  btn.disabled = true;
+  btn.textContent = 'Setting up...';
+
+  try {
+    const { data, error } = await sb.from('respondents').insert({
+      name, email, company: company || null, role: role || null,
+    }).select('id').single();
+
+    if (error) throw error;
+
+    currentRespondentId = data.id;
+    localStorage.setItem(RESPONDENT_KEY, data.id);
+    localStorage.setItem(RESPONDENT_INFO_KEY, JSON.stringify({ name, email, company, role }));
+
+    showQuestionnaire();
+  } catch (err) {
+    console.error('Supabase insert error:', err);
+    btn.disabled = false;
+    btn.textContent = 'Start Questionnaire';
+    alert('Could not connect to database. Please check the Supabase configuration.');
+  }
+}
+
+async function loadFromSupabase() {
+  if (!currentRespondentId) return;
+  try {
+    const { data, error } = await sb
+      .from('expert_answers')
+      .select('question_id, answer_value, notes, answered_at')
+      .eq('respondent_id', currentRespondentId);
+
+    if (error) throw error;
+    if (!data || data.length === 0) return;
+
+    // Merge Supabase answers into localStorage (Supabase wins)
+    const answers = loadAnswers();
+    for (const row of data) {
+      answers[row.question_id] = {
+        answer: row.answer_value,
+        notes: row.notes || null,
+        timestamp: row.answered_at || new Date().toISOString(),
+      };
+    }
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(answers));
+  } catch (err) {
+    console.warn('Could not load from Supabase:', err.message);
+  }
+}
+
+function showQuestionnaire() {
+  document.getElementById('respondentGate').style.display = 'none';
+  document.getElementById('questionnaireContent').style.display = 'block';
+  document.getElementById('stickyBar').style.display = 'flex';
+  render();
+}
+
+// Clear error styling on input
+document.querySelectorAll('.gate-field input').forEach(el => {
+  el.addEventListener('input', () => {
+    el.classList.remove('error');
+    const errEl = el.parentElement.querySelector('.gate-error');
+    if (errEl) errEl.style.display = 'none';
+  });
+});
+// Allow Enter key to submit gate form
+document.querySelectorAll('.gate-field input').forEach(el => {
+  el.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') startQuestionnaire();
+  });
+});
 
 // ═══════════════════════════════════════════════════════════════
 // HIDE-ANSWERED TOGGLE + SYNC PANEL STATE
@@ -1585,9 +1772,6 @@ function render() {
   if (toggleEl) {
     toggleEl.className = 'toggle-switch' + (hideAnswered ? ' on' : '');
   }
-
-  // Export info
-  document.getElementById('exportInfo').textContent = `${Object.keys(answers).length} responses saved locally`;
 
   // Category tabs — show remaining count when hiding answered
   const tabsEl = document.getElementById('catTabs');
@@ -1713,16 +1897,6 @@ function getExportData() {
   return exportData;
 }
 
-function copyAnswers() {
-  const data = getExportData();
-  navigator.clipboard.writeText(JSON.stringify(data, null, 2)).then(() => {
-    const btn = event.target;
-    const orig = btn.textContent;
-    btn.textContent = 'Copied!';
-    setTimeout(() => btn.textContent = orig, 2000);
-  });
-}
-
 function downloadAnswers() {
   const data = getExportData();
   const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
@@ -1736,8 +1910,26 @@ function downloadAnswers() {
   URL.revokeObjectURL(url);
 }
 
-// Initial render
-render();
+// ═══════════════════════════════════════════════════════════════
+// INITIALIZATION — check for returning user or show gate
+// ═══════════════════════════════════════════════════════════════
+
+(async function init() {
+  if (currentRespondentId) {
+    // Returning user — show loading state, fetch from Supabase, then show questions
+    document.getElementById('respondentGate').querySelector('.gate-form').style.display = 'none';
+    const returning = document.getElementById('gateReturning');
+    returning.style.display = 'block';
+
+    // Pre-fill form info from localStorage
+    const info = JSON.parse(localStorage.getItem(RESPONDENT_INFO_KEY) || '{}');
+    if (info.name) returning.textContent = `Welcome back, ${info.name}! Loading your answers...`;
+
+    await loadFromSupabase();
+    showQuestionnaire();
+  }
+  // Otherwise: gate form is visible by default
+})();
 </script>
 
 </body>
