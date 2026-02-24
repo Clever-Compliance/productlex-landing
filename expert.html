@@ -1973,7 +1973,7 @@ function renderButtons(q) {
 
   return `
     <div class="q-actions">${buttons}</div>
-    <input class="notes-input" id="notes-${q.id}" placeholder="Optional: explain your reasoning..." onkeydown="if(event.key==='Enter'){let v=this.value;this.value='';}" />
+    <input class="notes-input" id="notes-${q.id}" placeholder="Optional: explain your reasoning..." onkeydown="if(event.key==='Enter')event.preventDefault();" />
   `;
 }
 
