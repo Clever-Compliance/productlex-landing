@@ -284,6 +284,68 @@
     }
     .export-info { font-size: 13px; color: var(--color-text-tertiary); }
 
+    /* Hide answered toggle */
+    .toggle-row {
+      display: flex; align-items: center; gap: 10px;
+      margin-top: 12px; padding-top: 10px;
+      border-top: 1px solid var(--color-border-subtle);
+    }
+    .toggle-switch {
+      position: relative; width: 40px; height: 22px;
+      background: var(--color-surface); border-radius: 99px;
+      cursor: pointer; transition: background 0.2s; flex-shrink: 0;
+    }
+    .toggle-switch.on { background: var(--color-accent); }
+    .toggle-switch::after {
+      content: ''; position: absolute; top: 3px; left: 3px;
+      width: 16px; height: 16px; border-radius: 50%;
+      background: white; transition: transform 0.2s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+    .toggle-switch.on::after { transform: translateX(18px); }
+    .toggle-label { font-size: 13px; color: var(--color-text-secondary); font-weight: 500; }
+
+    /* Sync panel */
+    .sync-panel {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      margin-bottom: 24px; overflow: hidden;
+    }
+    .sync-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 18px; cursor: pointer;
+      font-size: 14px; font-weight: 600; color: var(--color-text-secondary);
+    }
+    .sync-header:hover { color: var(--color-text); }
+    .sync-header svg { transition: transform 0.2s; }
+    .sync-header.open svg { transform: rotate(180deg); }
+    .sync-body { padding: 0 18px 18px; }
+    .sync-body.collapsed { display: none; }
+    .sync-field { margin-bottom: 12px; }
+    .sync-field label { display: block; font-size: 12px; font-weight: 600; color: var(--color-text-secondary); margin-bottom: 4px; }
+    .sync-field input {
+      width: 100%; padding: 8px 12px; font-family: var(--font);
+      font-size: 13px; border: 1.5px solid var(--color-border);
+      border-radius: 8px; background: var(--color-bg-warm);
+      color: var(--color-text); outline: none;
+    }
+    .sync-field input:focus { border-color: var(--color-accent); }
+    .btn-sync {
+      font-family: var(--font); font-size: 13.5px; font-weight: 600;
+      padding: 9px 22px; border-radius: 50px;
+      background: var(--color-accent); color: white;
+      border: none; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-sync:hover { background: var(--color-accent-light); }
+    .btn-sync:disabled { opacity: 0.5; cursor: not-allowed; }
+    .sync-result {
+      margin-top: 12px; padding: 10px 14px; border-radius: 8px;
+      font-size: 13px; line-height: 1.5;
+    }
+    .sync-result.success { background: var(--color-green-bg); color: #166534; }
+    .sync-result.error { background: var(--color-red-bg); color: #991b1b; }
+
     .hidden { display: none !important; }
 
     @media (max-width: 600px) {
@@ -325,6 +387,30 @@
     </div>
     <div class="progress-bar">
       <div class="progress-fill" id="progressFill" style="width:0%"></div>
+    </div>
+    <div class="toggle-row">
+      <div class="toggle-switch" id="hideToggle" onclick="toggleHideAnswered()"></div>
+      <span class="toggle-label" id="hideLabel">Hide answered questions</span>
+    </div>
+  </div>
+
+  <!-- Sync panel -->
+  <div class="sync-panel">
+    <div class="sync-header" id="syncHeader" onclick="toggleSyncPanel()">
+      Sync Answers to ProductLex
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="sync-body collapsed" id="syncBody">
+      <div class="sync-field">
+        <label>API URL</label>
+        <input type="text" id="syncApiUrl" placeholder="https://app.productlex.com" />
+      </div>
+      <div class="sync-field">
+        <label>Bearer Token (from your profile page)</label>
+        <input type="password" id="syncToken" placeholder="Paste your API token here" />
+      </div>
+      <button class="btn-sync" id="syncBtn" onclick="syncAnswers()">Sync Answers</button>
+      <div id="syncResult"></div>
     </div>
   </div>
 
@@ -1480,6 +1566,105 @@ function saveAnswer(questionId, value, notes) {
 }
 
 // ═══════════════════════════════════════════════════════════════
+// HIDE-ANSWERED TOGGLE + SYNC PANEL STATE
+// ═══════════════════════════════════════════════════════════════
+
+let hideAnswered = localStorage.getItem('productlex_hide_answered') === 'true';
+
+function toggleHideAnswered() {
+  hideAnswered = !hideAnswered;
+  localStorage.setItem('productlex_hide_answered', hideAnswered);
+  render();
+}
+
+function toggleSyncPanel() {
+  const body = document.getElementById('syncBody');
+  const header = document.getElementById('syncHeader');
+  body.classList.toggle('collapsed');
+  header.classList.toggle('open');
+}
+
+// Load saved sync settings
+function loadSyncSettings() {
+  const url = localStorage.getItem('productlex_sync_url');
+  const token = localStorage.getItem('productlex_sync_token');
+  if (url) document.getElementById('syncApiUrl').value = url;
+  if (token) document.getElementById('syncToken').value = token;
+}
+
+async function syncAnswers() {
+  const apiUrl = document.getElementById('syncApiUrl').value.trim() || 'https://app.productlex.com';
+  const token = document.getElementById('syncToken').value.trim();
+  const resultEl = document.getElementById('syncResult');
+  const btn = document.getElementById('syncBtn');
+
+  if (!token) {
+    resultEl.className = 'sync-result error';
+    resultEl.textContent = 'Please enter your Bearer token.';
+    return;
+  }
+
+  // Save settings
+  localStorage.setItem('productlex_sync_url', apiUrl);
+  localStorage.setItem('productlex_sync_token', token);
+
+  // Collect answers
+  const answers = loadAnswers();
+  const items = [];
+  for (const q of QUESTIONS) {
+    const ans = answers[q.id];
+    if (ans) {
+      items.push({
+        question_id: q.id,
+        question_text: q.q,
+        category: q.cat,
+        answer_value: ans.answer,
+        notes: ans.notes || null,
+        timestamp: ans.timestamp || null,
+      });
+    }
+  }
+
+  if (items.length === 0) {
+    resultEl.className = 'sync-result error';
+    resultEl.textContent = 'No answers to sync.';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Syncing...';
+  resultEl.className = '';
+  resultEl.textContent = '';
+
+  try {
+    const resp = await fetch(`${apiUrl}/api/v1/compliance-knowledge/bulk-import`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify({ items }),
+    });
+
+    if (!resp.ok) {
+      const errText = await resp.text();
+      throw new Error(`HTTP ${resp.status}: ${errText}`);
+    }
+
+    const data = await resp.json();
+    resultEl.className = 'sync-result success';
+    resultEl.innerHTML = `Imported <strong>${data.imported}</strong> answers, created <strong>${data.questions_created}</strong> new questions, skipped <strong>${data.skipped}</strong>.`
+      + (data.errors.length ? `<br>Errors: ${data.errors.join(', ')}` : '');
+  } catch (err) {
+    resultEl.className = 'sync-result error';
+    resultEl.textContent = `Sync failed: ${err.message}`;
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Sync Answers';
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
 // RENDER
 // ═══════════════════════════════════════════════════════════════
 
@@ -1494,30 +1679,46 @@ function render() {
   document.getElementById('progressCount').textContent = `${totalA} / ${totalQ} answered`;
   document.getElementById('progressFill').style.width = totalQ ? `${(totalA/totalQ)*100}%` : '0%';
 
+  // Toggle state
+  const toggleEl = document.getElementById('hideToggle');
+  if (toggleEl) {
+    toggleEl.className = 'toggle-switch' + (hideAnswered ? ' on' : '');
+  }
+
   // Export info
   document.getElementById('exportInfo').textContent = `${Object.keys(answers).length} responses saved locally`;
 
-  // Category tabs
+  // Category tabs — show remaining count when hiding answered
   const tabsEl = document.getElementById('catTabs');
   tabsEl.innerHTML = CATEGORIES.map(c => {
     const catQs = QUESTIONS.filter(q => q.cat === c.key);
     const catAs = catQs.filter(q => answers[q.id] && answers[q.id].answer !== 'not_sure').length;
     const isActive = c.key === activeCat;
     const isComplete = catAs === catQs.length && catQs.length > 0;
+    const remaining = catQs.length - catAs;
+    const badgeText = hideAnswered ? `${remaining} left` : `${catAs}/${catQs.length}`;
     return `<button class="cat-tab${isActive?' active':''}" onclick="setCategory('${c.key}')">
       ${c.label}
-      <span class="cat-badge${isComplete?' complete':''}">${catAs}/${catQs.length}</span>
+      <span class="cat-badge${isComplete?' complete':''}">${badgeText}</span>
     </button>`;
   }).join('');
 
-  // Questions
+  // Questions — filter out answered when toggle is on
   const container = document.getElementById('questionsContainer');
   const catQs = QUESTIONS.filter(q => q.cat === activeCat);
-  container.innerHTML = catQs.map((q, i) => {
-    const ans = answers[q.id];
-    const isAnswered = ans && ans.answer !== 'not_sure';
-    return renderCard(q, i, catQs.length, ans, isAnswered);
-  }).join('');
+  const visibleQs = hideAnswered
+    ? catQs.filter(q => !(answers[q.id] && answers[q.id].answer !== 'not_sure'))
+    : catQs;
+
+  if (hideAnswered && visibleQs.length === 0 && catQs.length > 0) {
+    container.innerHTML = `<div style="text-align:center;padding:40px 0;color:var(--color-text-tertiary);font-size:15px;">All questions in this category are answered.</div>`;
+  } else {
+    container.innerHTML = visibleQs.map((q, i) => {
+      const ans = answers[q.id];
+      const isAnswered = ans && ans.answer !== 'not_sure';
+      return renderCard(q, i, visibleQs.length, ans, isAnswered);
+    }).join('');
+  }
 }
 
 function renderCard(q, idx, total, ans, isAnswered) {
@@ -1636,6 +1837,7 @@ function downloadAnswers() {
 
 // Initial render
 render();
+loadSyncSettings();
 </script>
 
 </body>
