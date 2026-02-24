@@ -388,6 +388,7 @@
     }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
 </head>
 <body>
 
@@ -1589,13 +1590,8 @@ const CATEGORIES = [
 ];
 
 // ═══════════════════════════════════════════════════════════════
-// SUPABASE CLIENT
+// SUPABASE CLIENT (keys loaded from supabase-config.js)
 // ═══════════════════════════════════════════════════════════════
-
-// ⚠️  Replace these with your Supabase project credentials
-//     (Settings → API in Supabase dashboard)
-const SUPABASE_URL  = 'https://YOUR_PROJECT.supabase.co';
-const SUPABASE_ANON = 'YOUR_ANON_KEY';
 
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
