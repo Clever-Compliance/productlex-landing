@@ -1693,8 +1693,9 @@ function saveAnswer(questionId, value, notes) {
       answer_value: value,
       notes: notes || null,
       answered_at: new Date().toISOString(),
-    }, { onConflict: 'respondent_id, question_id' }).then(({ error }) => {
-      if (error) console.warn('Supabase upsert error:', error.message);
+    }, { onConflict: 'respondent_id,question_id' }).then(({ data, error }) => {
+      if (error) console.error('Supabase save failed:', error.message, error);
+      else console.log('Saved to Supabase:', questionId, value);
     });
   }
 
