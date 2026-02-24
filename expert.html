@@ -342,46 +342,6 @@
     .toggle-switch.on::after { transform: translateX(18px); }
     .toggle-label { font-size: 13px; color: var(--color-text-secondary); font-weight: 500; }
 
-    /* Sync dropdown (anchored to sticky bar) */
-    .sync-dropdown {
-      position: fixed; top: 52px; right: 24px;
-      width: 360px;
-      background: var(--color-bg);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-      padding: 18px;
-      z-index: 250;
-      display: none;
-    }
-    .sync-dropdown.open { display: block; }
-    .sync-dropdown h3 {
-      font-size: 14px; font-weight: 700; margin-bottom: 14px;
-    }
-    .sync-field { margin-bottom: 12px; }
-    .sync-field label { display: block; font-size: 12px; font-weight: 600; color: var(--color-text-secondary); margin-bottom: 4px; }
-    .sync-field input {
-      width: 100%; padding: 8px 12px; font-family: var(--font);
-      font-size: 13px; border: 1.5px solid var(--color-border);
-      border-radius: 8px; background: var(--color-bg-warm);
-      color: var(--color-text); outline: none;
-    }
-    .sync-field input:focus { border-color: var(--color-accent); }
-    .btn-sync {
-      font-family: var(--font); font-size: 13.5px; font-weight: 600;
-      padding: 9px 22px; border-radius: 50px; width: 100%;
-      background: var(--color-accent); color: white;
-      border: none; cursor: pointer; transition: all 0.2s;
-    }
-    .btn-sync:hover { background: var(--color-accent-light); }
-    .btn-sync:disabled { opacity: 0.5; cursor: not-allowed; }
-    .sync-result {
-      margin-top: 12px; padding: 10px 14px; border-radius: 8px;
-      font-size: 13px; line-height: 1.5;
-    }
-    .sync-result.success { background: var(--color-green-bg); color: #166534; }
-    .sync-result.error { background: var(--color-red-bg); color: #991b1b; }
-
     .hidden { display: none !important; }
 
     @media (max-width: 600px) {
@@ -389,7 +349,6 @@
       .sticky-bar { padding: 8px 12px; gap: 6px; flex-wrap: wrap; }
       .sticky-bar .bar-info { font-size: 12px; }
       .btn-bar { font-size: 12px; padding: 6px 12px; }
-      .sync-dropdown { right: 12px; left: 12px; width: auto; }
       .q-card { padding: 20px; }
       .btn-answer { padding: 9px 18px; font-size: 13.5px; }
     }
@@ -402,24 +361,7 @@
   <span class="bar-info" id="barInfo">0 / 0 answered</span>
   <div class="bar-divider"></div>
   <button class="btn-bar" onclick="copyAnswers()">Copy JSON</button>
-  <button class="btn-bar" onclick="downloadAnswers()">Download</button>
-  <div class="bar-divider"></div>
-  <button class="btn-bar primary" id="syncBarBtn" onclick="toggleSyncDropdown()">Sync to ProductLex</button>
-</div>
-
-<!-- Sync dropdown -->
-<div class="sync-dropdown" id="syncDropdown">
-  <h3>Sync Answers to ProductLex</h3>
-  <div class="sync-field">
-    <label>API URL</label>
-    <input type="text" id="syncApiUrl" placeholder="https://app.productlex.com" />
-  </div>
-  <div class="sync-field">
-    <label>Bearer Token (from your profile page)</label>
-    <input type="password" id="syncToken" placeholder="Paste your API token here" />
-  </div>
-  <button class="btn-sync" id="syncBtn" onclick="syncAnswers()">Sync Answers</button>
-  <div id="syncResult"></div>
+  <button class="btn-bar primary" onclick="downloadAnswers()">Download Answers</button>
 </div>
 
 <div class="page-wrapper">
@@ -1622,100 +1564,6 @@ function toggleHideAnswered() {
   render();
 }
 
-function toggleSyncDropdown() {
-  const dd = document.getElementById('syncDropdown');
-  dd.classList.toggle('open');
-}
-
-// Close dropdown when clicking outside
-document.addEventListener('click', function(e) {
-  const dd = document.getElementById('syncDropdown');
-  const btn = document.getElementById('syncBarBtn');
-  if (dd && !dd.contains(e.target) && e.target !== btn) {
-    dd.classList.remove('open');
-  }
-});
-
-// Load saved sync settings
-function loadSyncSettings() {
-  const url = localStorage.getItem('productlex_sync_url');
-  const token = localStorage.getItem('productlex_sync_token');
-  if (url) document.getElementById('syncApiUrl').value = url;
-  if (token) document.getElementById('syncToken').value = token;
-}
-
-async function syncAnswers() {
-  const apiUrl = document.getElementById('syncApiUrl').value.trim() || 'https://app.productlex.com';
-  const token = document.getElementById('syncToken').value.trim();
-  const resultEl = document.getElementById('syncResult');
-  const btn = document.getElementById('syncBtn');
-
-  if (!token) {
-    resultEl.className = 'sync-result error';
-    resultEl.textContent = 'Please enter your Bearer token.';
-    return;
-  }
-
-  // Save settings
-  localStorage.setItem('productlex_sync_url', apiUrl);
-  localStorage.setItem('productlex_sync_token', token);
-
-  // Collect answers
-  const answers = loadAnswers();
-  const items = [];
-  for (const q of QUESTIONS) {
-    const ans = answers[q.id];
-    if (ans) {
-      items.push({
-        question_id: q.id,
-        question_text: q.q,
-        category: q.cat,
-        answer_value: ans.answer,
-        notes: ans.notes || null,
-        timestamp: ans.timestamp || null,
-      });
-    }
-  }
-
-  if (items.length === 0) {
-    resultEl.className = 'sync-result error';
-    resultEl.textContent = 'No answers to sync.';
-    return;
-  }
-
-  btn.disabled = true;
-  btn.textContent = 'Syncing...';
-  resultEl.className = '';
-  resultEl.textContent = '';
-
-  try {
-    const resp = await fetch(`${apiUrl}/api/v1/compliance-knowledge/bulk-import`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-      },
-      body: JSON.stringify({ items }),
-    });
-
-    if (!resp.ok) {
-      const errText = await resp.text();
-      throw new Error(`HTTP ${resp.status}: ${errText}`);
-    }
-
-    const data = await resp.json();
-    resultEl.className = 'sync-result success';
-    resultEl.innerHTML = `Imported <strong>${data.imported}</strong> answers, created <strong>${data.questions_created}</strong> new questions, skipped <strong>${data.skipped}</strong>.`
-      + (data.errors.length ? `<br>Errors: ${data.errors.join(', ')}` : '');
-  } catch (err) {
-    resultEl.className = 'sync-result error';
-    resultEl.textContent = `Sync failed: ${err.message}`;
-  } finally {
-    btn.disabled = false;
-    btn.textContent = 'Sync Answers';
-  }
-}
-
 // ═══════════════════════════════════════════════════════════════
 // RENDER
 // ═══════════════════════════════════════════════════════════════
@@ -1890,7 +1738,6 @@ function downloadAnswers() {
 
 // Initial render
 render();
-loadSyncSettings();
 </script>
 
 </body>
