@@ -354,6 +354,50 @@
       border-radius: var(--radius); font-size: 14px; color: #166534;
       display: none;
     }
+    .gate-divider {
+      display: flex; align-items: center; gap: 14px;
+      margin: 28px 0;
+    }
+    .gate-divider::before, .gate-divider::after {
+      content: ''; flex: 1; height: 1px; background: var(--color-border);
+    }
+    .gate-divider span {
+      font-size: 13px; font-weight: 600; color: var(--color-text-tertiary);
+      text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .gate-continue {
+      text-align: center;
+    }
+    .btn-continue-toggle {
+      font-family: var(--font);
+      font-size: 14px; font-weight: 600;
+      color: var(--color-accent); background: none; border: none;
+      cursor: pointer; padding: 4px 0;
+    }
+    .btn-continue-toggle:hover { text-decoration: underline; }
+    .continue-form {
+      display: none; margin-top: 16px;
+      text-align: left;
+    }
+    .continue-form .gate-field { margin-bottom: 12px; }
+    .btn-continue {
+      font-family: var(--font);
+      font-size: 15px; font-weight: 700;
+      padding: 14px 32px; border-radius: 50px;
+      border: 1.5px solid var(--color-accent); cursor: pointer;
+      background: var(--color-bg); color: var(--color-accent);
+      transition: all 0.2s; margin-top: 8px; width: 100%;
+    }
+    .btn-continue:hover {
+      background: var(--color-accent-bg);
+      transform: translateY(-1px);
+    }
+    .btn-continue:disabled {
+      opacity: 0.6; cursor: not-allowed; transform: none;
+    }
+    .continue-error {
+      font-size: 13px; color: var(--color-red); margin-top: 8px; display: none;
+    }
 
     /* Hide answered toggle */
     .toggle-row {
@@ -441,6 +485,20 @@
       <button class="btn-start" id="btnStart" onclick="startQuestionnaire()">Start Questionnaire</button>
     </div>
     <div class="gate-returning" id="gateReturning">Welcome back! Loading your previous answers...</div>
+
+    <div class="gate-divider"><span>or</span></div>
+
+    <div class="gate-continue">
+      <button class="btn-continue-toggle" onclick="document.getElementById('continueForm').style.display='block'; this.style.display='none';">Returning expert? Continue where you left off</button>
+      <div class="continue-form" id="continueForm">
+        <div class="gate-field">
+          <label for="continueEmail">Email you used before</label>
+          <input type="email" id="continueEmail" placeholder="you@company.com">
+        </div>
+        <button class="btn-continue" id="btnContinue" onclick="continueQuestionnaire()">Continue Answering</button>
+        <div class="continue-error" id="continueError">No answers found for this email. Try starting a new questionnaire instead.</div>
+      </div>
+    </div>
   </div>
 
   <!-- Questionnaire content (hidden until respondent identified) -->
@@ -1717,6 +1775,53 @@ async function loadFromSupabase() {
   }
 }
 
+async function continueQuestionnaire() {
+  const email = document.getElementById('continueEmail').value.trim();
+  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRe.test(email)) {
+    document.getElementById('continueEmail').classList.add('error');
+    return;
+  }
+
+  const btn = document.getElementById('btnContinue');
+  btn.disabled = true;
+  btn.textContent = 'Looking up...';
+  document.getElementById('continueError').style.display = 'none';
+
+  try {
+    // Find the most recent respondent with this email
+    const { data, error } = await sb
+      .from('respondents')
+      .select('id, name, email, company, role')
+      .eq('email', email)
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .single();
+
+    if (error || !data) {
+      document.getElementById('continueError').style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Continue Answering';
+      return;
+    }
+
+    currentRespondentId = data.id;
+    localStorage.setItem(RESPONDENT_KEY, data.id);
+    localStorage.setItem(RESPONDENT_INFO_KEY, JSON.stringify({
+      name: data.name, email: data.email,
+      company: data.company, role: data.role,
+    }));
+
+    await loadFromSupabase();
+    showQuestionnaire();
+  } catch (err) {
+    console.error('Continue error:', err);
+    document.getElementById('continueError').style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = 'Continue Answering';
+  }
+}
+
 function showQuestionnaire() {
   document.getElementById('respondentGate').style.display = 'none';
   document.getElementById('questionnaireContent').style.display = 'block';
@@ -1733,11 +1838,22 @@ document.querySelectorAll('.gate-field input').forEach(el => {
   });
 });
 // Allow Enter key to submit gate form
-document.querySelectorAll('.gate-field input').forEach(el => {
+document.querySelectorAll('.gate-form > .gate-field input').forEach(el => {
   el.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') startQuestionnaire();
   });
 });
+// Allow Enter key for continue form
+const continueInput = document.getElementById('continueEmail');
+if (continueInput) {
+  continueInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') continueQuestionnaire();
+  });
+  continueInput.addEventListener('input', () => {
+    continueInput.classList.remove('error');
+    document.getElementById('continueError').style.display = 'none';
+  });
+}
 
 // ═══════════════════════════════════════════════════════════════
 // HIDE-ANSWERED TOGGLE + SYNC PANEL STATE
