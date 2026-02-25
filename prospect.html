@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compliance Assessment — ProductLex AI</title>
+  <meta name="description" content="Discover which ProductLex compliance modules fit your needs. AI-powered assessment with personalized recommendations.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --color-bg: #ffffff;
+      --color-bg-warm: #fafaf8;
+      --color-bg-soft: #f4f3f0;
+      --color-bg-muted: #edecea;
+      --color-surface: #e8e7e4;
+      --color-border: #dddcd9;
+      --color-border-subtle: #e8e7e4;
+      --color-text: #1a1a1a;
+      --color-text-secondary: #5a5a58;
+      --color-text-tertiary: #8a8a86;
+      --color-accent: #4f46e5;
+      --color-accent-light: #6366f1;
+      --color-accent-bg: #eef2ff;
+      --color-accent-soft: rgba(79, 70, 229, 0.08);
+      --color-green: #16a34a;
+      --color-green-bg: #f0fdf4;
+      --color-amber: #d97706;
+      --color-amber-bg: #fffbeb;
+      --color-red: #dc2626;
+      --color-red-bg: #fef2f2;
+      --color-dark: #111111;
+      --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --radius: 12px;
+      --radius-lg: 20px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--color-bg-warm);
+      color: var(--color-text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      padding: 0;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 256px;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .page-wrapper {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 40px 24px 60px;
+    }
+
+    /* Header */
+    .page-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+    .page-logo-icon {
+      width: 38px; height: 38px;
+      background: var(--color-dark);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; font-weight: 800; color: white;
+    }
+    .page-logo-text {
+      font-weight: 700; font-size: 22px;
+      letter-spacing: -0.03em; color: var(--color-text);
+    }
+
+    .page-header { margin-bottom: 28px; }
+    .page-header h1 {
+      font-size: 26px; font-weight: 800;
+      letter-spacing: -0.03em; margin-bottom: 8px;
+    }
+    .page-header p {
+      font-size: 15px; color: var(--color-text-secondary); line-height: 1.5;
+    }
+
+    /* ─── Respondent Gate ─── */
+    .respondent-gate {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 60px 0 40px;
+    }
+    .respondent-gate h2 {
+      font-size: 22px; font-weight: 800;
+      letter-spacing: -0.03em; margin-bottom: 6px;
+    }
+    .respondent-gate .gate-sub {
+      font-size: 15px; color: var(--color-text-secondary);
+      margin-bottom: 28px; line-height: 1.5;
+    }
+    .gate-form { display: flex; flex-direction: column; gap: 16px; }
+    .gate-field label {
+      display: block; font-size: 13.5px; font-weight: 600;
+      margin-bottom: 5px; color: var(--color-text);
+    }
+    .gate-field label .optional {
+      font-weight: 400; color: var(--color-text-tertiary);
+    }
+    .gate-field input, .gate-field select {
+      width: 100%; font-family: var(--font); font-size: 15px;
+      padding: 12px 16px; border: 1.5px solid var(--color-border);
+      border-radius: 10px; background: var(--color-bg);
+      color: var(--color-text); outline: none; transition: border-color 0.2s;
+      appearance: none; -webkit-appearance: none;
+    }
+    .gate-field select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238a8a86' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 40px;
+    }
+    .gate-field input::placeholder, .gate-field select option[value=""] { color: var(--color-text-tertiary); }
+    .gate-field input:focus, .gate-field select:focus {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px var(--color-accent-soft);
+    }
+    .gate-field input.error, .gate-field select.error { border-color: var(--color-red); }
+    .gate-error {
+      font-size: 13px; color: var(--color-red); margin-top: 4px; display: none;
+    }
+    .btn-start {
+      font-family: var(--font);
+      font-size: 15px; font-weight: 700;
+      padding: 14px 32px; border-radius: 50px;
+      border: none; cursor: pointer;
+      background: var(--color-accent); color: white;
+      transition: all 0.2s; margin-top: 8px;
+    }
+    .btn-start:hover {
+      background: var(--color-accent-light);
+      box-shadow: 0 2px 16px rgba(79, 70, 229, 0.3);
+      transform: translateY(-1px);
+    }
+    .btn-start:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .gate-returning {
+      margin-top: 20px; padding: 14px 18px;
+      background: var(--color-green-bg); border: 1px solid #bbf7d0;
+      border-radius: var(--radius); font-size: 14px; color: #166534;
+      display: none;
+    }
+    .gate-divider {
+      display: flex; align-items: center; gap: 14px; margin: 28px 0;
+    }
+    .gate-divider::before, .gate-divider::after {
+      content: ''; flex: 1; height: 1px; background: var(--color-border);
+    }
+    .gate-divider span {
+      font-size: 13px; font-weight: 600; color: var(--color-text-tertiary);
+      text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .gate-continue { text-align: center; }
+    .btn-continue-toggle {
+      font-family: var(--font);
+      font-size: 14px; font-weight: 600;
+      color: var(--color-accent); background: none; border: none;
+      cursor: pointer; padding: 4px 0;
+    }
+    .btn-continue-toggle:hover { text-decoration: underline; }
+    .continue-form { display: none; margin-top: 16px; text-align: left; }
+    .continue-form .gate-field { margin-bottom: 12px; }
+    .btn-continue {
+      font-family: var(--font);
+      font-size: 15px; font-weight: 700;
+      padding: 14px 32px; border-radius: 50px;
+      border: 1.5px solid var(--color-accent); cursor: pointer;
+      background: var(--color-bg); color: var(--color-accent);
+      transition: all 0.2s; margin-top: 8px; width: 100%;
+    }
+    .btn-continue:hover {
+      background: var(--color-accent-bg); transform: translateY(-1px);
+    }
+    .btn-continue:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .continue-error {
+      font-size: 13px; color: var(--color-red); margin-top: 8px; display: none;
+    }
+
+    /* ─── Phase Stepper ─── */
+    .phase-stepper {
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 36px; gap: 0;
+    }
+    .phase-step {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .phase-circle {
+      width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700;
+      border: 2px solid var(--color-border);
+      background: var(--color-bg); color: var(--color-text-tertiary);
+      transition: all 0.3s;
+      flex-shrink: 0;
+    }
+    .phase-step.active .phase-circle {
+      background: var(--color-accent); color: white;
+      border-color: var(--color-accent);
+    }
+    .phase-step.completed .phase-circle {
+      background: var(--color-green); color: white;
+      border-color: var(--color-green);
+    }
+    .phase-label {
+      font-size: 13.5px; font-weight: 600; color: var(--color-text-tertiary);
+      transition: color 0.3s; white-space: nowrap;
+    }
+    .phase-step.active .phase-label { color: var(--color-accent); }
+    .phase-step.completed .phase-label { color: var(--color-green); }
+    .phase-connector {
+      width: 48px; height: 2px;
+      background: var(--color-border);
+      margin: 0 12px; flex-shrink: 0;
+      transition: background 0.3s;
+    }
+    .phase-connector.completed { background: var(--color-green); }
+
+    /* ─── Question Cards (reused from expert.html) ─── */
+    .q-card {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      margin-bottom: 16px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .q-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
+    .q-card.answered {
+      background: var(--color-bg-warm);
+      border-color: var(--color-border-subtle);
+    }
+    .q-meta {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 12px;
+    }
+    .q-num { font-size: 12px; color: var(--color-text-tertiary); font-weight: 500; }
+    .q-text {
+      font-size: 16px; font-weight: 600; line-height: 1.45;
+      letter-spacing: -0.01em; margin-bottom: 8px;
+    }
+    .q-context {
+      font-size: 13.5px; color: var(--color-text-secondary);
+      line-height: 1.55; margin-bottom: 20px;
+    }
+
+    /* Answer controls */
+    .q-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .btn-answer {
+      font-family: var(--font);
+      font-size: 14px; font-weight: 600;
+      padding: 10px 24px; border-radius: 50px;
+      border: none; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-answer:hover { transform: translateY(-1px); }
+    .btn-answer:active { transform: translateY(0); }
+    .btn-yes { background: var(--color-green); color: white; }
+    .btn-yes:hover { box-shadow: 0 2px 12px rgba(22, 163, 74, 0.3); }
+    .btn-no { background: var(--color-red); color: white; }
+    .btn-no:hover { box-shadow: 0 2px 12px rgba(220, 38, 38, 0.3); }
+    .btn-choice { background: var(--color-accent); color: white; }
+    .btn-choice:hover { background: var(--color-accent-light); box-shadow: 0 2px 12px rgba(79, 70, 229, 0.25); }
+    .btn-skip {
+      background: var(--color-bg-muted); color: var(--color-text-secondary);
+    }
+    .btn-skip:hover { background: var(--color-surface); }
+
+    /* Multi-choice pill buttons */
+    .pill-group { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+    .pill-btn {
+      font-family: var(--font);
+      font-size: 14px; font-weight: 600;
+      padding: 10px 20px; border-radius: 50px;
+      border: 1.5px solid var(--color-border);
+      background: var(--color-bg); color: var(--color-text-secondary);
+      cursor: pointer; transition: all 0.2s;
+    }
+    .pill-btn:hover { border-color: var(--color-accent); color: var(--color-accent); }
+    .pill-btn.selected {
+      background: var(--color-accent); color: white;
+      border-color: var(--color-accent);
+    }
+
+    /* Textarea for text questions */
+    .text-input {
+      width: 100%; font-family: var(--font); font-size: 14px;
+      padding: 12px 16px; border: 1.5px solid var(--color-border);
+      border-radius: 10px; background: var(--color-bg);
+      color: var(--color-text); outline: none; transition: border-color 0.2s;
+      min-height: 100px; resize: vertical; line-height: 1.5;
+    }
+    .text-input::placeholder { color: var(--color-text-tertiary); }
+    .text-input:focus {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px var(--color-accent-soft);
+    }
+    .text-input.error { border-color: var(--color-red); }
+
+    /* Short text input (for AI follow-up questions) */
+    .short-input {
+      width: 100%; font-family: var(--font); font-size: 14px;
+      padding: 12px 16px; border: 1.5px solid var(--color-border);
+      border-radius: 10px; background: var(--color-bg);
+      color: var(--color-text); outline: none; transition: border-color 0.2s;
+    }
+    .short-input::placeholder { color: var(--color-text-tertiary); }
+    .short-input:focus {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px var(--color-accent-soft);
+    }
+
+    /* Answered state */
+    .q-answered-box {
+      display: flex; align-items: center; gap: 10px;
+      background: var(--color-green-bg);
+      border: 1px solid #bbf7d0;
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      margin-bottom: 8px;
+    }
+    .q-answered-box svg { flex-shrink: 0; }
+    .q-answer-val { font-size: 14px; font-weight: 700; color: #166534; }
+    .btn-change {
+      font-family: var(--font);
+      font-size: 12px; font-weight: 600;
+      color: var(--color-accent); background: none; border: none;
+      cursor: pointer; padding: 4px 0; margin-left: auto;
+    }
+    .btn-change:hover { text-decoration: underline; }
+
+    /* Continue / action buttons */
+    .phase-actions {
+      margin-top: 32px; display: flex; justify-content: center;
+    }
+    .btn-phase {
+      font-family: var(--font);
+      font-size: 15px; font-weight: 700;
+      padding: 14px 36px; border-radius: 50px;
+      border: none; cursor: pointer;
+      background: var(--color-accent); color: white;
+      transition: all 0.2s;
+    }
+    .btn-phase:hover {
+      background: var(--color-accent-light);
+      box-shadow: 0 2px 16px rgba(79, 70, 229, 0.3);
+      transform: translateY(-1px);
+    }
+    .btn-phase:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    /* ─── Loading Spinner ─── */
+    .loading-container {
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; padding: 80px 20px; gap: 20px;
+    }
+    .spinner {
+      width: 48px; height: 48px;
+      border: 3px solid var(--color-border);
+      border-top-color: var(--color-accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-text {
+      font-size: 15px; color: var(--color-text-secondary);
+      font-weight: 500; text-align: center;
+    }
+
+    /* ─── AI Suggestions Phase ─── */
+    .assessment-block {
+      background: var(--color-accent-bg);
+      border: 1px solid rgba(79, 70, 229, 0.15);
+      border-radius: var(--radius-lg);
+      padding: 24px 28px;
+      margin-bottom: 28px;
+    }
+    .assessment-block h3 {
+      font-size: 16px; font-weight: 700; color: var(--color-accent);
+      margin-bottom: 8px;
+    }
+    .assessment-block p {
+      font-size: 15px; color: var(--color-text-secondary); line-height: 1.6;
+    }
+
+    /* Recommendation cards */
+    .rec-card {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 24px 28px;
+      margin-bottom: 14px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .rec-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
+    .rec-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 10px;
+    }
+    .rec-module {
+      font-size: 16px; font-weight: 700; letter-spacing: -0.01em;
+    }
+    .rec-badge {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.05em; padding: 4px 12px; border-radius: 50px;
+    }
+    .rec-badge.essential { background: var(--color-green-bg); color: var(--color-green); }
+    .rec-badge.recommended { background: var(--color-accent-bg); color: var(--color-accent); }
+    .rec-badge.nice_to_have { background: var(--color-bg-muted); color: var(--color-text-tertiary); }
+    .rec-reason {
+      font-size: 14px; color: var(--color-text-secondary); line-height: 1.55;
+      margin-bottom: 8px;
+    }
+    .rec-example {
+      font-size: 13.5px; color: var(--color-text-tertiary); line-height: 1.5;
+      font-style: italic;
+    }
+    .rec-reactions {
+      display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap;
+    }
+    .btn-reaction {
+      font-family: var(--font);
+      font-size: 13px; font-weight: 600;
+      padding: 8px 16px; border-radius: 50px;
+      border: 1.5px solid var(--color-border);
+      background: var(--color-bg); color: var(--color-text-secondary);
+      cursor: pointer; transition: all 0.2s;
+    }
+    .btn-reaction:hover { border-color: var(--color-accent); color: var(--color-accent); }
+    .btn-reaction.selected {
+      background: var(--color-accent); color: white; border-color: var(--color-accent);
+    }
+
+    /* Gaps section */
+    .gaps-section {
+      background: var(--color-amber-bg);
+      border: 1px solid #fde68a;
+      border-radius: var(--radius-lg);
+      padding: 24px 28px;
+      margin: 28px 0;
+    }
+    .gaps-section h3 {
+      font-size: 15px; font-weight: 700; color: #92400e;
+      margin-bottom: 10px; display: flex; align-items: center; gap: 8px;
+    }
+    .gaps-section ul {
+      list-style: none; padding: 0;
+    }
+    .gaps-section li {
+      font-size: 14px; color: #92400e; line-height: 1.55;
+      padding: 4px 0; padding-left: 18px; position: relative;
+    }
+    .gaps-section li::before {
+      content: '\2022'; position: absolute; left: 0; color: #d97706;
+    }
+
+    /* Onboarding order */
+    .onboarding-section {
+      margin: 28px 0;
+    }
+    .onboarding-section h3 {
+      font-size: 16px; font-weight: 700; margin-bottom: 14px;
+    }
+    .onboarding-list {
+      list-style: none; padding: 0; counter-reset: onboard;
+    }
+    .onboarding-list li {
+      counter-increment: onboard;
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 16px; margin-bottom: 8px;
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      font-size: 14px; font-weight: 600;
+    }
+    .onboarding-list li::before {
+      content: counter(onboard);
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--color-accent); color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700; flex-shrink: 0;
+    }
+
+    /* Final section */
+    .final-section {
+      margin-top: 36px; text-align: center;
+    }
+    .final-section h3 {
+      font-size: 18px; font-weight: 700; margin-bottom: 12px;
+    }
+    .final-input {
+      width: 100%; font-family: var(--font); font-size: 14px;
+      padding: 12px 16px; border: 1.5px solid var(--color-border);
+      border-radius: 10px; background: var(--color-bg);
+      color: var(--color-text); outline: none; transition: border-color 0.2s;
+      min-height: 80px; resize: vertical; margin-bottom: 20px;
+    }
+    .final-input:focus {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px var(--color-accent-soft);
+    }
+    .btn-finish {
+      font-family: var(--font);
+      font-size: 16px; font-weight: 700;
+      padding: 16px 40px; border-radius: 50px;
+      border: none; cursor: pointer;
+      background: var(--color-green); color: white;
+      transition: all 0.2s;
+    }
+    .btn-finish:hover {
+      box-shadow: 0 4px 20px rgba(22, 163, 74, 0.3);
+      transform: translateY(-1px);
+    }
+
+    /* Error banner */
+    .error-banner {
+      background: var(--color-red-bg);
+      border: 1px solid #fecaca;
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      margin-bottom: 20px;
+      font-size: 14px; color: #991b1b;
+      display: none;
+    }
+
+    .hidden { display: none !important; }
+
+    @media (max-width: 600px) {
+      .page-wrapper { padding: 24px 16px 40px; }
+      .q-card, .rec-card { padding: 20px; }
+      .btn-answer, .pill-btn { padding: 9px 16px; font-size: 13.5px; }
+      .phase-stepper { flex-wrap: wrap; gap: 8px; }
+      .phase-connector { width: 24px; margin: 0 4px; }
+      .phase-label { font-size: 12px; }
+      .phase-circle { width: 30px; height: 30px; font-size: 12px; }
+      .rec-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+</head>
+<body>
+
+<div class="page-wrapper">
+  <!-- Logo -->
+  <a href="index.html" class="page-logo">
+    <div class="page-logo-icon">P</div>
+    <span class="page-logo-text">ProductLex</span>
+  </a>
+
+  <!-- Header -->
+  <div class="page-header">
+    <h1>Compliance Assessment</h1>
+    <p>Discover which ProductLex modules fit your compliance needs. Our AI will analyze your responses and provide personalized recommendations.</p>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- RESPONDENT GATE                                     -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div id="respondentGate" class="respondent-gate">
+    <h2>Before we begin</h2>
+    <p class="gate-sub">Tell us about yourself so we can personalize the experience and save your progress.</p>
+    <div class="gate-form" id="gateForm">
+      <div class="gate-field">
+        <label for="gateName">Name</label>
+        <input type="text" id="gateName" placeholder="Your full name" required>
+      </div>
+      <div class="gate-field">
+        <label for="gateEmail">Email</label>
+        <input type="email" id="gateEmail" placeholder="you@company.com" required>
+        <div class="gate-error" id="emailError">Please enter a valid email address</div>
+      </div>
+      <div class="gate-field">
+        <label for="gateCompany">Company <span class="optional">(optional)</span></label>
+        <input type="text" id="gateCompany" placeholder="Your company name">
+      </div>
+      <div class="gate-field">
+        <label for="gateRole">Role <span class="optional">(optional)</span></label>
+        <input type="text" id="gateRole" placeholder="e.g. Compliance Manager, QA Lead">
+      </div>
+      <div class="gate-field">
+        <label for="gateIndustry">Industry</label>
+        <select id="gateIndustry" required>
+          <option value="" disabled selected>Select your industry</option>
+          <option value="medical_devices">Medical Devices</option>
+          <option value="electronics">Electronics & Electrical</option>
+          <option value="machinery">Industrial Machinery</option>
+          <option value="toys">Toys & Children's Products</option>
+          <option value="cosmetics">Cosmetics & Personal Care</option>
+          <option value="chemicals">Chemicals (REACH/CLP)</option>
+          <option value="food_contact">Food Contact Materials</option>
+          <option value="construction">Construction Products</option>
+          <option value="ppe">PPE (Personal Protective Equipment)</option>
+          <option value="automotive">Automotive Components</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="gate-field">
+        <label for="gateSize">Company Size</label>
+        <select id="gateSize" required>
+          <option value="" disabled selected>Select company size</option>
+          <option value="1-10">1–10 employees</option>
+          <option value="11-50">11–50 employees</option>
+          <option value="51-200">51–200 employees</option>
+          <option value="201-1000">201–1,000 employees</option>
+          <option value="1000+">1,000+ employees</option>
+        </select>
+      </div>
+      <button class="btn-start" id="btnStart" onclick="startAssessment()">Start Assessment</button>
+    </div>
+    <div class="gate-returning" id="gateReturning">Welcome back! Loading your previous answers...</div>
+
+    <div class="gate-divider"><span>or</span></div>
+
+    <div class="gate-continue">
+      <button class="btn-continue-toggle" onclick="document.getElementById('continueForm').style.display='block'; this.style.display='none';">Returning? Continue where you left off</button>
+      <div class="continue-form" id="continueForm">
+        <div class="gate-field">
+          <label for="continueEmail">Email you used before</label>
+          <input type="email" id="continueEmail" placeholder="you@company.com">
+        </div>
+        <button class="btn-continue" id="btnContinue" onclick="continueAssessment()">Continue Assessment</button>
+        <div class="continue-error" id="continueError">No assessment found for this email. Try starting a new one instead.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- QUESTIONNAIRE CONTENT (hidden until gate passed)   -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div id="questionnaireContent" style="display:none">
+
+    <!-- Phase Stepper -->
+    <div class="phase-stepper" id="phaseStepper">
+      <div class="phase-step active" id="step1">
+        <div class="phase-circle">1</div>
+        <span class="phase-label">Discovery</span>
+      </div>
+      <div class="phase-connector" id="conn1"></div>
+      <div class="phase-step" id="step2">
+        <div class="phase-circle">2</div>
+        <span class="phase-label">Follow-up</span>
+      </div>
+      <div class="phase-connector" id="conn2"></div>
+      <div class="phase-step" id="step3">
+        <div class="phase-circle">3</div>
+        <span class="phase-label">Recommendations</span>
+      </div>
+    </div>
+
+    <!-- Error banner -->
+    <div class="error-banner" id="errorBanner"></div>
+
+    <!-- Dynamic content rendered here -->
+    <div id="phaseContent"></div>
+
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+const PROSPECT_KEY = 'productlex_prospect_id';
+const PROSPECT_INFO_KEY = 'productlex_prospect_info';
+
+const EDGE_FUNCTION_URL = SUPABASE_URL + '/functions/v1/prospect-ai';
+
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+let prospectId = localStorage.getItem(PROSPECT_KEY) || null;
+let prospectInfo = JSON.parse(localStorage.getItem(PROSPECT_INFO_KEY) || '{}');
+let currentPhase = 'discovery';
+let responses = {};          // { questionId: { answer, timestamp } }
+let aiFollowupQuestions = null;
+let aiSuggestions = null;
+
+// ═══════════════════════════════════════════════════════════════
+// DISCOVERY QUESTIONS (10 static)
+// ═══════════════════════════════════════════════════════════════
+const DISCOVERY_QUESTIONS = [
+  {
+    id: 'disc-1',
+    text: 'What industry are your products in?',
+    type: 'single_choice',
+    options: ['Medical devices', 'Electronics & electrical', 'Industrial machinery', 'Toys & children\'s products', 'Cosmetics & personal care', 'Chemicals (REACH/CLP)', 'Food contact materials', 'Construction products', 'PPE', 'Automotive components', 'Other'],
+    required: true
+  },
+  {
+    id: 'disc-2',
+    text: 'Which markets do you sell into or plan to sell into?',
+    type: 'multi_choice',
+    options: ['European Union', 'United Kingdom', 'United States', 'Canada', 'Australia', 'Japan', 'South Korea', 'Switzerland', 'China', 'Other'],
+    required: true
+  },
+  {
+    id: 'disc-3',
+    text: 'How many products do you manage compliance for?',
+    type: 'single_choice',
+    options: ['1–5 products', '6–20 products', '21–50 products', '51–200 products', '200+ products'],
+    required: true
+  },
+  {
+    id: 'disc-4',
+    text: 'What is your biggest compliance pain point right now?',
+    type: 'text',
+    placeholder: 'Describe the compliance challenge that causes you the most frustration or risk...',
+    required: true
+  },
+  {
+    id: 'disc-5',
+    text: 'How do you currently track applicable regulations and standards?',
+    type: 'text',
+    placeholder: 'e.g. spreadsheets, consultant updates, manual searches, existing software...',
+    required: true
+  },
+  {
+    id: 'disc-6',
+    text: 'How do you currently find out about regulatory changes?',
+    type: 'single_choice',
+    options: ['Manual monitoring of official sources', 'Regulatory consultant or law firm', 'Industry association newsletters', 'Colleagues / word of mouth', 'We often find out too late', 'We don\'t have a systematic approach'],
+    required: true
+  },
+  {
+    id: 'disc-7',
+    text: 'What types of compliance documents do you manage?',
+    type: 'multi_choice',
+    options: ['CE/UKCA certificates', 'ISO management system certificates', 'Test reports', 'Declarations of Conformity', 'Technical files / documentation', 'Risk assessments', 'Notified Body certificates', 'FDA registrations', 'Other regulatory approvals'],
+    required: true
+  },
+  {
+    id: 'disc-8',
+    text: 'If you could wave a magic wand, what would your ideal compliance tool do?',
+    type: 'text',
+    placeholder: 'Describe the capabilities that would make the biggest difference for your team...',
+    required: true
+  },
+  {
+    id: 'disc-9',
+    text: 'How important is it for you to predict upcoming regulatory changes before they\'re finalized?',
+    type: 'single_choice',
+    options: ['Critical — we need maximum lead time', 'Very important — early warnings would help a lot', 'Somewhat important — nice to have', 'Not important — we react when changes are published'],
+    required: true
+  },
+  {
+    id: 'disc-10',
+    text: 'Is there anything else you\'d like us to know about your compliance situation?',
+    type: 'text',
+    placeholder: 'Optional — any additional context helps us give better recommendations...',
+    required: false
+  }
+];
+
+// ═══════════════════════════════════════════════════════════════
+// GATE FUNCTIONS
+// ═══════════════════════════════════════════════════════════════
+
+async function startAssessment() {
+  const name = document.getElementById('gateName').value.trim();
+  const email = document.getElementById('gateEmail').value.trim();
+  const company = document.getElementById('gateCompany').value.trim();
+  const role = document.getElementById('gateRole').value.trim();
+  const industry = document.getElementById('gateIndustry').value;
+  const companySize = document.getElementById('gateSize').value;
+
+  // Validate
+  if (!name) { document.getElementById('gateName').classList.add('error'); return; }
+  document.getElementById('gateName').classList.remove('error');
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    document.getElementById('gateEmail').classList.add('error');
+    document.getElementById('emailError').style.display = 'block';
+    return;
+  }
+  document.getElementById('gateEmail').classList.remove('error');
+  document.getElementById('emailError').style.display = 'none';
+
+  if (!industry) { document.getElementById('gateIndustry').classList.add('error'); return; }
+  document.getElementById('gateIndustry').classList.remove('error');
+
+  if (!companySize) { document.getElementById('gateSize').classList.add('error'); return; }
+  document.getElementById('gateSize').classList.remove('error');
+
+  const btn = document.getElementById('btnStart');
+  btn.disabled = true;
+  btn.textContent = 'Starting...';
+
+  try {
+    const { data, error } = await sb.from('prospects').insert({
+      name, email, company: company || null, role: role || null,
+      industry, company_size: companySize, current_phase: 'discovery'
+    }).select().single();
+
+    if (error) throw error;
+
+    prospectId = data.id;
+    prospectInfo = { name, email, company, role, industry, company_size: companySize };
+    localStorage.setItem(PROSPECT_KEY, prospectId);
+    localStorage.setItem(PROSPECT_INFO_KEY, JSON.stringify(prospectInfo));
+
+    showQuestionnaire();
+  } catch (err) {
+    console.error('Failed to create prospect:', err);
+    alert('Failed to start assessment. Please try again.');
+    btn.disabled = false;
+    btn.textContent = 'Start Assessment';
+  }
+}
+
+async function continueAssessment() {
+  const email = document.getElementById('continueEmail').value.trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return;
+
+  const btn = document.getElementById('btnContinue');
+  btn.disabled = true;
+  btn.textContent = 'Looking up...';
+
+  try {
+    const { data, error } = await sb.from('prospects')
+      .select('*')
+      .eq('email', email)
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .single();
+
+    if (error || !data) {
+      document.getElementById('continueError').style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Continue Assessment';
+      return;
+    }
+
+    prospectId = data.id;
+    prospectInfo = {
+      name: data.name, email: data.email,
+      company: data.company, role: data.role,
+      industry: data.industry, company_size: data.company_size
+    };
+    currentPhase = data.current_phase || 'discovery';
+    localStorage.setItem(PROSPECT_KEY, prospectId);
+    localStorage.setItem(PROSPECT_INFO_KEY, JSON.stringify(prospectInfo));
+
+    await loadFromSupabase();
+    showQuestionnaire();
+  } catch (err) {
+    console.error('Failed to continue:', err);
+    document.getElementById('continueError').style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = 'Continue Assessment';
+  }
+}
+
+async function loadFromSupabase() {
+  // Load responses
+  const { data: respData } = await sb.from('prospect_responses')
+    .select('*')
+    .eq('prospect_id', prospectId);
+
+  if (respData) {
+    respData.forEach(r => {
+      responses[r.question_id] = {
+        answer: r.answer_value,
+        timestamp: r.answered_at,
+        phase: r.phase,
+        question_text: r.question_text,
+        question_type: r.question_type
+      };
+    });
+  }
+
+  // Load AI outputs
+  const { data: aiData } = await sb.from('prospect_ai_outputs')
+    .select('*')
+    .eq('prospect_id', prospectId)
+    .order('created_at', { ascending: false });
+
+  if (aiData) {
+    aiData.forEach(a => {
+      if (a.phase === 'followup' && !aiFollowupQuestions) {
+        aiFollowupQuestions = a.output_json;
+      }
+      if (a.phase === 'suggestions' && !aiSuggestions) {
+        aiSuggestions = a.output_json;
+      }
+    });
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// SHOW QUESTIONNAIRE
+// ═══════════════════════════════════════════════════════════════
+
+function showQuestionnaire() {
+  document.getElementById('respondentGate').style.display = 'none';
+  document.getElementById('questionnaireContent').style.display = 'block';
+  renderPhase();
+}
+
+function renderPhase() {
+  updateStepper();
+
+  const container = document.getElementById('phaseContent');
+
+  if (currentPhase === 'discovery') {
+    renderDiscovery(container);
+  } else if (currentPhase === 'followup') {
+    if (aiFollowupQuestions) {
+      renderFollowup(container);
+    } else {
+      renderLoading(container, 'Analyzing your responses...', 'Our AI is reviewing your answers to generate targeted follow-up questions.');
+      callAI('followup');
+    }
+  } else if (currentPhase === 'suggestions') {
+    if (aiSuggestions) {
+      renderSuggestions(container);
+    } else {
+      renderLoading(container, 'Generating recommendations...', 'Our AI is matching your needs to specific ProductLex modules.');
+      callAI('suggestions');
+    }
+  }
+}
+
+function updateStepper() {
+  const phases = ['discovery', 'followup', 'suggestions'];
+  const idx = phases.indexOf(currentPhase);
+
+  ['step1', 'step2', 'step3'].forEach((id, i) => {
+    const el = document.getElementById(id);
+    el.className = 'phase-step';
+    if (i < idx) el.classList.add('completed');
+    else if (i === idx) el.classList.add('active');
+  });
+
+  ['conn1', 'conn2'].forEach((id, i) => {
+    const el = document.getElementById(id);
+    el.className = 'phase-connector';
+    if (i < idx) el.classList.add('completed');
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PHASE 1: DISCOVERY
+// ═══════════════════════════════════════════════════════════════
+
+function renderDiscovery(container) {
+  let html = '';
+
+  DISCOVERY_QUESTIONS.forEach((q, i) => {
+    const ans = responses[q.id];
+    const isAnswered = !!ans;
+
+    html += `<div class="q-card ${isAnswered ? 'answered' : ''}" id="card-${q.id}">`;
+    html += `<div class="q-meta"><span class="q-num">Question ${i + 1} of ${DISCOVERY_QUESTIONS.length}</span>`;
+    if (q.required) html += `<span style="font-size:11px;font-weight:600;color:var(--color-red);">Required</span>`;
+    html += `</div>`;
+    html += `<div class="q-text">${q.text}</div>`;
+
+    if (isAnswered && !document.getElementById('editing-' + q.id)) {
+      html += renderAnsweredState(q.id, ans.answer);
+    } else {
+      html += renderQuestionInput(q);
+    }
+
+    html += `</div>`;
+  });
+
+  // Continue button
+  html += `<div class="phase-actions">
+    <button class="btn-phase" id="btnToFollowup" onclick="goToFollowup()">Continue to AI Analysis</button>
+  </div>`;
+
+  container.innerHTML = html;
+
+  // Restore text input values from responses
+  DISCOVERY_QUESTIONS.forEach(q => {
+    if (q.type === 'text' && responses[q.id]) {
+      const textarea = document.getElementById('input-' + q.id);
+      if (textarea) textarea.value = responses[q.id].answer;
+    }
+    if (q.type === 'multi_choice' && responses[q.id]) {
+      try {
+        const selected = JSON.parse(responses[q.id].answer);
+        selected.forEach(val => {
+          const pill = document.querySelector(`[data-q="${q.id}"][data-val="${CSS.escape(val)}"]`);
+          if (pill) pill.classList.add('selected');
+        });
+      } catch {}
+    }
+  });
+}
+
+function renderQuestionInput(q) {
+  let html = '';
+
+  if (q.type === 'single_choice') {
+    html += `<div class="q-actions">`;
+    q.options.forEach(opt => {
+      html += `<button class="btn-answer btn-choice" onclick="saveDiscoveryAnswer('${q.id}', '${escapeHtml(opt)}', this)">${opt}</button>`;
+    });
+    html += `</div>`;
+  } else if (q.type === 'multi_choice') {
+    html += `<div class="pill-group" id="pills-${q.id}">`;
+    q.options.forEach(opt => {
+      html += `<button class="pill-btn" data-q="${q.id}" data-val="${escapeHtml(opt)}" onclick="togglePill(this, '${q.id}')">${opt}</button>`;
+    });
+    html += `</div>`;
+    html += `<button class="btn-answer btn-choice" style="margin-top:4px" onclick="saveMultiChoice('${q.id}')">Confirm selection</button>`;
+  } else if (q.type === 'text') {
+    html += `<textarea class="text-input" id="input-${q.id}" placeholder="${q.placeholder || ''}" onblur="saveTextAnswer('${q.id}')"></textarea>`;
+  }
+
+  return html;
+}
+
+function renderAnsweredState(qId, answer) {
+  let displayAnswer = answer;
+  try {
+    const parsed = JSON.parse(answer);
+    if (Array.isArray(parsed)) displayAnswer = parsed.join(', ');
+  } catch {}
+
+  if (displayAnswer.length > 120) displayAnswer = displayAnswer.substring(0, 120) + '...';
+
+  return `<div class="q-answered-box">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    <span class="q-answer-val">${escapeHtml(displayAnswer)}</span>
+    <button class="btn-change" onclick="editAnswer('${qId}')">Change</button>
+  </div>`;
+}
+
+function saveDiscoveryAnswer(qId, value, btnEl) {
+  responses[qId] = { answer: value, timestamp: new Date().toISOString(), phase: 'discovery' };
+  persistResponse(qId, 'discovery', value, 'single_choice');
+  renderDiscovery(document.getElementById('phaseContent'));
+}
+
+function togglePill(btn, qId) {
+  btn.classList.toggle('selected');
+}
+
+function saveMultiChoice(qId) {
+  const pills = document.querySelectorAll(`[data-q="${qId}"].selected`);
+  if (pills.length === 0) return;
+  const values = Array.from(pills).map(p => p.dataset.val);
+  const jsonVal = JSON.stringify(values);
+  responses[qId] = { answer: jsonVal, timestamp: new Date().toISOString(), phase: 'discovery' };
+  persistResponse(qId, 'discovery', jsonVal, 'multi_choice');
+  renderDiscovery(document.getElementById('phaseContent'));
+}
+
+function saveTextAnswer(qId) {
+  const textarea = document.getElementById('input-' + qId);
+  if (!textarea) return;
+  const val = textarea.value.trim();
+  if (!val) { delete responses[qId]; return; }
+  responses[qId] = { answer: val, timestamp: new Date().toISOString(), phase: 'discovery' };
+  persistResponse(qId, 'discovery', val, 'text');
+}
+
+function editAnswer(qId) {
+  delete responses[qId];
+  renderDiscovery(document.getElementById('phaseContent'));
+}
+
+function goToFollowup() {
+  // Save any unsaved text answers first
+  DISCOVERY_QUESTIONS.forEach(q => {
+    if (q.type === 'text') {
+      const textarea = document.getElementById('input-' + q.id);
+      if (textarea && textarea.value.trim()) {
+        responses[q.id] = { answer: textarea.value.trim(), timestamp: new Date().toISOString(), phase: 'discovery' };
+        persistResponse(q.id, 'discovery', textarea.value.trim(), 'text');
+      }
+    }
+  });
+
+  // Validate required fields
+  const missing = DISCOVERY_QUESTIONS.filter(q => q.required && !responses[q.id]);
+  if (missing.length > 0) {
+    const firstMissing = document.getElementById('card-' + missing[0].id);
+    if (firstMissing) {
+      firstMissing.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      firstMissing.style.borderColor = 'var(--color-red)';
+      setTimeout(() => firstMissing.style.borderColor = '', 2000);
+    }
+    showError(`Please answer all required questions. Missing: ${missing.map((q, i) => `Q${DISCOVERY_QUESTIONS.indexOf(q) + 1}`).join(', ')}`);
+    return;
+  }
+
+  currentPhase = 'followup';
+  updateProspectPhase('followup');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  renderPhase();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PHASE 2: AI FOLLOW-UPS
+// ═══════════════════════════════════════════════════════════════
+
+function renderFollowup(container) {
+  const questions = aiFollowupQuestions.questions || [];
+  let html = '';
+
+  questions.forEach((q, i) => {
+    const ans = responses[q.id];
+    const isAnswered = !!ans;
+
+    html += `<div class="q-card ${isAnswered ? 'answered' : ''}" id="card-${q.id}">`;
+    html += `<div class="q-meta"><span class="q-num">Follow-up ${i + 1} of ${questions.length}</span></div>`;
+    html += `<div class="q-text">${escapeHtml(q.text)}</div>`;
+    if (q.context) html += `<div class="q-context">${escapeHtml(q.context)}</div>`;
+
+    if (isAnswered) {
+      html += renderAnsweredState(q.id, ans.answer);
+    } else {
+      html += renderAIQuestionInput(q);
+    }
+
+    html += `</div>`;
+  });
+
+  html += `<div class="phase-actions">
+    <button class="btn-phase" id="btnToSuggestions" onclick="goToSuggestions()">Continue to Recommendations</button>
+  </div>`;
+
+  container.innerHTML = html;
+}
+
+function renderAIQuestionInput(q) {
+  let html = '';
+
+  if (q.type === 'yes_no') {
+    html += `<div class="q-actions">`;
+    html += `<button class="btn-answer btn-yes" onclick="saveFollowupAnswer('${q.id}', 'Yes')">Yes</button>`;
+    html += `<button class="btn-answer btn-no" onclick="saveFollowupAnswer('${q.id}', 'No')">No</button>`;
+    html += `<button class="btn-answer btn-skip" onclick="saveFollowupAnswer('${q.id}', 'Not sure')">Not sure</button>`;
+    html += `</div>`;
+  } else if (q.type === 'single_choice' && q.options) {
+    html += `<div class="q-actions">`;
+    q.options.forEach(opt => {
+      html += `<button class="btn-answer btn-choice" onclick="saveFollowupAnswer('${q.id}', '${escapeHtml(opt)}')">${escapeHtml(opt)}</button>`;
+    });
+    html += `</div>`;
+  } else {
+    html += `<input class="short-input" id="input-${q.id}" placeholder="Type your answer..." onkeydown="if(event.key==='Enter'){saveFollowupText('${q.id}')}">`;
+    html += `<button class="btn-answer btn-choice" style="margin-top:10px" onclick="saveFollowupText('${q.id}')">Submit</button>`;
+  }
+
+  return html;
+}
+
+function saveFollowupAnswer(qId, value) {
+  responses[qId] = { answer: value, timestamp: new Date().toISOString(), phase: 'followup' };
+  const q = (aiFollowupQuestions.questions || []).find(x => x.id === qId);
+  persistResponse(qId, 'followup', value, q ? q.type : 'unknown');
+  renderFollowup(document.getElementById('phaseContent'));
+}
+
+function saveFollowupText(qId) {
+  const input = document.getElementById('input-' + qId);
+  if (!input || !input.value.trim()) return;
+  saveFollowupAnswer(qId, input.value.trim());
+}
+
+function goToSuggestions() {
+  currentPhase = 'suggestions';
+  updateProspectPhase('suggestions');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  renderPhase();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PHASE 3: AI SUGGESTIONS
+// ═══════════════════════════════════════════════════════════════
+
+function renderSuggestions(container) {
+  const s = aiSuggestions;
+  let html = '';
+
+  // Overall assessment
+  if (s.overall_assessment) {
+    html += `<div class="assessment-block">
+      <h3>Your Compliance Profile</h3>
+      <p>${escapeHtml(s.overall_assessment)}</p>
+    </div>`;
+  }
+
+  // Module recommendations
+  if (s.recommendations && s.recommendations.length) {
+    html += `<h3 style="font-size:18px;font-weight:700;margin-bottom:16px;">Recommended Modules</h3>`;
+    s.recommendations.forEach((rec, i) => {
+      const badgeClass = rec.fit === 'essential' ? 'essential' : rec.fit === 'recommended' ? 'recommended' : 'nice_to_have';
+      const badgeLabel = rec.fit === 'nice_to_have' ? 'Nice to Have' : rec.fit.charAt(0).toUpperCase() + rec.fit.slice(1);
+
+      html += `<div class="rec-card" id="rec-${i}">
+        <div class="rec-header">
+          <span class="rec-module">${escapeHtml(rec.module)}</span>
+          <span class="rec-badge ${badgeClass}">${badgeLabel}</span>
+        </div>
+        <div class="rec-reason">${escapeHtml(rec.reason)}</div>
+        ${rec.example ? `<div class="rec-example">"${escapeHtml(rec.example)}"</div>` : ''}
+        <div class="rec-reactions">
+          <button class="btn-reaction ${responses['reaction-' + i] && responses['reaction-' + i].answer === 'exactly' ? 'selected' : ''}" onclick="saveReaction(${i}, 'exactly', this)">Exactly what I need</button>
+          <button class="btn-reaction ${responses['reaction-' + i] && responses['reaction-' + i].answer === 'interesting' ? 'selected' : ''}" onclick="saveReaction(${i}, 'interesting', this)">Interesting</button>
+          <button class="btn-reaction ${responses['reaction-' + i] && responses['reaction-' + i].answer === 'not_relevant' ? 'selected' : ''}" onclick="saveReaction(${i}, 'not_relevant', this)">Not relevant</button>
+        </div>
+      </div>`;
+    });
+  }
+
+  // Gaps
+  if (s.gaps && s.gaps.length) {
+    html += `<div class="gaps-section">
+      <h3>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        Areas We're Still Building
+      </h3>
+      <ul>${s.gaps.map(g => `<li>${escapeHtml(g)}</li>`).join('')}</ul>
+    </div>`;
+  }
+
+  // Onboarding order
+  if (s.onboarding_order && s.onboarding_order.length) {
+    html += `<div class="onboarding-section">
+      <h3>Recommended Onboarding Order</h3>
+      <ol class="onboarding-list">
+        ${s.onboarding_order.map(m => `<li>${escapeHtml(m)}</li>`).join('')}
+      </ol>
+    </div>`;
+  }
+
+  // Final question + finish
+  html += `<div class="final-section">
+    <h3>Is there anything else you'd like to know?</h3>
+    <textarea class="final-input" id="finalInput" placeholder="Optional — tell us about any specific features or concerns..."></textarea>
+    <br>
+    <button class="btn-finish" onclick="finishAssessment()">Finish & Request Demo</button>
+  </div>`;
+
+  container.innerHTML = html;
+
+  // Restore final input if previously saved
+  if (responses['final-comment']) {
+    const fi = document.getElementById('finalInput');
+    if (fi) fi.value = responses['final-comment'].answer;
+  }
+}
+
+function saveReaction(idx, value, btn) {
+  const qId = 'reaction-' + idx;
+  responses[qId] = { answer: value, timestamp: new Date().toISOString(), phase: 'suggestions' };
+
+  const rec = aiSuggestions.recommendations[idx];
+  persistResponse(qId, 'suggestions', value, 'reaction', rec ? rec.module : '');
+
+  // Update UI
+  const card = document.getElementById('rec-' + idx);
+  if (card) {
+    card.querySelectorAll('.btn-reaction').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+  }
+}
+
+function finishAssessment() {
+  const finalInput = document.getElementById('finalInput');
+  if (finalInput && finalInput.value.trim()) {
+    responses['final-comment'] = { answer: finalInput.value.trim(), timestamp: new Date().toISOString(), phase: 'suggestions' };
+    persistResponse('final-comment', 'suggestions', finalInput.value.trim(), 'text');
+  }
+
+  updateProspectPhase('completed');
+  window.location.href = 'contact.html';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// AI CALLS
+// ═══════════════════════════════════════════════════════════════
+
+async function callAI(phase) {
+  try {
+    // Collect relevant responses
+    let relevantResponses;
+    if (phase === 'followup') {
+      relevantResponses = DISCOVERY_QUESTIONS
+        .filter(q => responses[q.id])
+        .map(q => ({
+          question_id: q.id,
+          question_text: q.text,
+          answer_value: responses[q.id].answer
+        }));
+    } else {
+      // Include all responses for suggestions
+      const allQuestions = [...DISCOVERY_QUESTIONS];
+      if (aiFollowupQuestions && aiFollowupQuestions.questions) {
+        allQuestions.push(...aiFollowupQuestions.questions.map(q => ({ id: q.id, text: q.text })));
+      }
+      relevantResponses = allQuestions
+        .filter(q => responses[q.id])
+        .map(q => ({
+          question_id: q.id,
+          question_text: q.text,
+          answer_value: responses[q.id].answer
+        }));
+    }
+
+    const res = await fetch(EDGE_FUNCTION_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${SUPABASE_ANON}`
+      },
+      body: JSON.stringify({
+        phase,
+        responses: relevantResponses,
+        prospect_info: prospectInfo
+      })
+    });
+
+    if (!res.ok) {
+      const errData = await res.json().catch(() => ({}));
+      throw new Error(errData.error || `HTTP ${res.status}`);
+    }
+
+    const data = await res.json();
+
+    // Store AI output
+    await sb.from('prospect_ai_outputs').insert({
+      prospect_id: prospectId,
+      phase,
+      ai_model: data.model || 'gpt-4o-mini',
+      output_json: data.result,
+      tokens_used: data.tokens_used || 0
+    });
+
+    if (phase === 'followup') {
+      aiFollowupQuestions = data.result;
+    } else {
+      aiSuggestions = data.result;
+    }
+
+    renderPhase();
+  } catch (err) {
+    console.error('AI call failed:', err);
+    showError(`AI analysis failed: ${err.message}. Please try refreshing the page.`);
+    // Show retry button
+    const container = document.getElementById('phaseContent');
+    container.innerHTML = `<div class="loading-container">
+      <div style="font-size:48px;">&#9888;</div>
+      <div class="loading-text">Something went wrong while generating ${phase === 'followup' ? 'follow-up questions' : 'recommendations'}.</div>
+      <button class="btn-phase" onclick="renderPhase()">Try Again</button>
+    </div>`;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PERSISTENCE HELPERS
+// ═══════════════════════════════════════════════════════════════
+
+async function persistResponse(questionId, phase, answerValue, questionType, questionText) {
+  if (!prospectId) return;
+
+  const q = DISCOVERY_QUESTIONS.find(x => x.id === questionId);
+  const qText = questionText || (q ? q.text : '');
+
+  try {
+    await sb.from('prospect_responses').upsert({
+      prospect_id: prospectId,
+      phase,
+      question_id: questionId,
+      question_text: qText,
+      question_type: questionType,
+      answer_value: answerValue,
+      answered_at: new Date().toISOString()
+    }, { onConflict: 'prospect_id,question_id' });
+  } catch (err) {
+    console.error('Failed to persist response:', err);
+  }
+}
+
+async function updateProspectPhase(phase) {
+  if (!prospectId) return;
+  try {
+    await sb.from('prospects').update({
+      current_phase: phase,
+      updated_at: new Date().toISOString()
+    }).eq('id', prospectId);
+  } catch (err) {
+    console.error('Failed to update phase:', err);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════════════════════════════
+
+function renderLoading(container, title, subtitle) {
+  container.innerHTML = `<div class="loading-container">
+    <div class="spinner"></div>
+    <div class="loading-text"><strong>${title}</strong><br>${subtitle}</div>
+  </div>`;
+}
+
+function showError(msg) {
+  const banner = document.getElementById('errorBanner');
+  banner.textContent = msg;
+  banner.style.display = 'block';
+  setTimeout(() => banner.style.display = 'none', 8000);
+}
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// INIT — check for returning user
+// ═══════════════════════════════════════════════════════════════
+
+(async function init() {
+  if (prospectId) {
+    document.getElementById('gateForm').style.display = 'none';
+    const returning = document.getElementById('gateReturning');
+    returning.style.display = 'block';
+
+    if (prospectInfo.name) {
+      returning.textContent = `Welcome back, ${prospectInfo.name}! Loading your assessment...`;
+    }
+
+    try {
+      // Verify prospect still exists
+      const { data } = await sb.from('prospects')
+        .select('*')
+        .eq('id', prospectId)
+        .single();
+
+      if (data) {
+        currentPhase = data.current_phase || 'discovery';
+        if (currentPhase === 'completed') currentPhase = 'suggestions';
+        await loadFromSupabase();
+        showQuestionnaire();
+      } else {
+        // Prospect not found, clear localStorage
+        localStorage.removeItem(PROSPECT_KEY);
+        localStorage.removeItem(PROSPECT_INFO_KEY);
+        prospectId = null;
+        returning.style.display = 'none';
+        document.getElementById('gateForm').style.display = 'flex';
+      }
+    } catch (err) {
+      console.error('Init error:', err);
+      returning.style.display = 'none';
+      document.getElementById('gateForm').style.display = 'flex';
+    }
+  }
+})();
+</script>
+
+</body>
+</html>
