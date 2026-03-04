@@ -236,6 +236,24 @@
     .btn-phase:hover { background: var(--color-accent-light); box-shadow: 0 2px 16px rgba(79, 70, 229, 0.3); transform: translateY(-1px); }
     .btn-phase:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
+    .btn-back {
+      font-family: var(--font); font-size: 15px; font-weight: 600;
+      padding: 14px 36px; border-radius: 50px; border: 1.5px solid var(--color-border);
+      background: var(--color-bg); color: var(--color-text-secondary); cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-back:hover { border-color: var(--color-accent); color: var(--color-accent); }
+
+    .sonstiges-input {
+      width: 100%; font-family: var(--font); font-size: 14px;
+      padding: 10px 14px; border: 1.5px solid var(--color-border);
+      border-radius: 10px; background: var(--color-bg);
+      color: var(--color-text); outline: none; transition: border-color 0.2s;
+      margin-top: 8px;
+    }
+    .sonstiges-input:focus { border-color: var(--color-accent); box-shadow: 0 0 0 3px var(--color-accent-soft); }
+    .sonstiges-input::placeholder { color: var(--color-text-tertiary); }
+
     /* Loading */
     .loading-container { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 20px; gap: 20px; }
     .spinner { width: 48px; height: 48px; border: 3px solid var(--color-border); border-top-color: var(--color-accent); border-radius: 50%; animation: spin 0.8s linear infinite; }
@@ -393,6 +411,22 @@ const PHASE_QUESTIONS = {
       type: 'text',
       placeholder: 'z.B. ~5.000 Dokumente / 20.000 neue Listings',
       required: true
+    },
+    {
+      id: 'a5',
+      text: 'Pr\u00fcfen Sie CE-Kennzeichnungen oder Sicherheitsetiketten anhand von Produktfotos?',
+      context: 'KI-gest\u00fctzte Bildanalyse kann CE-Markierungen, Notified-Body-Nummern, WEEE-Symbole und Normenverweise automatisch aus Produktfotos extrahieren und validieren.',
+      type: 'single_choice',
+      options: ['Ja, systematisch', 'Ja, stichprobenartig', 'Nein, nur Dokumente', 'Geplant, aber noch nicht umgesetzt'],
+      required: true
+    },
+    {
+      id: 'a6',
+      text: 'Werden Notified-Body-Nummern gegen die EU NANDO-Datenbank abgeglichen?',
+      context: 'NANDO ist die offizielle EU-Datenbank aller benannten Stellen. Ein automatischer Abgleich erkennt ung\u00fcltige oder f\u00fcr die falsche Richtlinie autorisierte NB-Nummern.',
+      type: 'single_choice',
+      options: ['Ja, automatisiert', 'Ja, manuell bei Verdacht', 'Nein', 'Was ist NANDO?'],
+      required: false
     }
   ],
   probleme: [
@@ -415,13 +449,29 @@ const PHASE_QUESTIONS = {
     },
     {
       id: 'b2',
+      text: 'Wie erfahren Sie aktuell von \u00c4nderungen bei harmonisierten Normen oder EU-Richtlinien?',
+      context: 'Normen\u00e4nderungen k\u00f6nnen bestehende Zertifikate und Konformit\u00e4tserkl\u00e4rungen ung\u00fcltig machen.',
+      type: 'multi_choice',
+      options: ['Manuelle Recherche (EUR-Lex, Amtsblatt)', 'Newsletter / Alerts von Normungsgremien', '\u00dcber Branchenverb\u00e4nde', 'Benachrichtigung durch Pr\u00fcfstellen', 'Gar nicht systematisch', 'Sonstiges'],
+      required: true
+    },
+    {
+      id: 'b3',
+      text: 'Wie lange dauert die manuelle Pr\u00fcfung eines einzelnen Dokumentenpakets durchschnittlich?',
+      context: 'Von der Einreichung bis zur finalen Freigabe oder Ablehnung.',
+      type: 'single_choice',
+      options: ['< 5 Minuten', '5\u201315 Minuten', '15\u201330 Minuten', '> 30 Minuten', 'Unbekannt / nicht gemessen'],
+      required: true
+    },
+    {
+      id: 'b4',
       text: 'Gab es in den letzten 12 Monaten beh\u00f6rdliche Beanstandungen, Produktr\u00fcckrufe oder Listing-Entfernungen?',
       type: 'text',
       placeholder: 'z.B. 3 Beanstandungen durch Markt\u00fcberwachung, 1 R\u00fcckruf wegen fehlendem CE, ~200 Listings entfernt...',
       required: false
     },
     {
-      id: 'b3',
+      id: 'b5',
       text: 'Was ist der gr\u00f6\u00dfte einzelne Schmerzpunkt im Bereich Dokumentenpr\u00fcfung?',
       context: 'Bitte beschreiben Sie das Problem so konkret wie m\u00f6glich.',
       type: 'text',
@@ -441,7 +491,9 @@ const PHASE_QUESTIONS = {
         'Fr\u00fchwarnsystem bei Normen\u00e4nderungen',
         'Vollst\u00e4ndige GPSR-Compliance aller Produkte',
         'Vertrauensbewertung (Trust Score) pro Verk\u00e4ufer',
-        'KI-basierte Produktfoto-Analyse (CE, Etiketten)'
+        'KI-basierte Produktfoto-Analyse (CE, Etiketten, NB-Nummern)',
+        'Automatische Normen\u00fcberwachung (\u00c4nderungen bei EN-Standards)',
+        'Barcode/QR-Code-Dekodierung zur Produktidentifikation'
       ],
       required: true
     },
@@ -460,6 +512,14 @@ const PHASE_QUESTIONS = {
       required: true
     },
     {
+      id: 'c4',
+      text: 'Welche Sprachen m\u00fcssen bei der Dokumentenpr\u00fcfung unterst\u00fctzt werden?',
+      context: 'Viele Marketplace-Dokumente kommen in der Sprache des Herstellers. KI-gest\u00fctzte \u00dcbersetzung und Extraktion kann mehrsprachige Dokumente automatisch verarbeiten.',
+      type: 'multi_choice',
+      options: ['Deutsch', 'Englisch', 'Chinesisch (vereinfacht)', 'T\u00fcrkisch', 'Polnisch', 'Italienisch', 'Sonstiges'],
+      required: false
+    },
+    {
       id: 'd1',
       text: 'Gibt es einen Budgetrahmen f\u00fcr eine solche L\u00f6sung?',
       type: 'single_choice',
@@ -471,6 +531,14 @@ const PHASE_QUESTIONS = {
       text: 'Nutzen oder evaluieren Sie bereits L\u00f6sungen f\u00fcr dieses Thema?',
       type: 'text',
       placeholder: 'z.B. osapiens (DPP/Nachhaltigkeit), eigene ACC-Pr\u00fcfung, T\u00dcV-Dienstleistungen...',
+      required: false
+    },
+    {
+      id: 'd3',
+      text: 'Gibt es weitere Themen oder Anforderungen, die wir nicht abgedeckt haben?',
+      context: 'Bitte teilen Sie uns alles mit, was Ihnen wichtig erscheint \u2014 egal ob technisch, organisatorisch oder strategisch.',
+      type: 'text',
+      placeholder: 'Weitere Anmerkungen, W\u00fcnsche oder Fragen...',
       required: false
     }
   ]
@@ -560,13 +628,16 @@ function renderPhase() {
     html += `</div>`;
   });
 
-  // Phase action button
+  // Phase action buttons
   const phaseIdx = PHASE_ORDER.indexOf(currentPhase);
   const isLast = phaseIdx === PHASE_ORDER.length - 1;
   const allRequired = questions.filter(q => q.required).every(q => responses[q.id]);
 
-  html += `<div class="phase-actions">`;
-  html += `<button class="btn-phase" ${allRequired ? '' : 'disabled'} onclick="${isLast ? 'submitAll()' : 'nextPhase()'}">${isLast ? 'Antworten absenden &#10148;' : 'Weiter &#10148;'}</button>`;
+  html += `<div class="phase-actions" style="gap:12px;">`;
+  if (phaseIdx > 0) {
+    html += `<button class="btn-back" onclick="prevPhase()">&#10094; Zur\u00fcck</button>`;
+  }
+  html += `<button class="btn-phase" id="weiterBtn" ${allRequired ? '' : 'disabled'} onclick="${isLast ? 'submitAll()' : 'nextPhase()'}">${isLast ? 'Antworten absenden &#10148;' : 'Weiter &#10148;'}</button>`;
   html += `</div>`;
 
   container.innerHTML = html;
@@ -588,6 +659,7 @@ function renderInput(q) {
       html += `<button class="pill-btn" onclick="toggleMulti('${q.id}', this, '${escapeHtml(opt)}')">${escapeHtml(opt)}</button>`;
     });
     html += `</div>`;
+    html += `<input type="text" class="sonstiges-input" id="sonstiges-${q.id}" placeholder="Bitte beschreiben..." style="display:none;">`;
     html += `<button class="pill-btn" style="margin-top:8px;background:var(--color-accent);color:white;border-color:var(--color-accent);display:none;" id="confirm-${q.id}" onclick="confirmMulti('${q.id}')">Auswahl best\u00e4tigen &#10003;</button>`;
   }
   else if (q.type === 'text') {
@@ -658,7 +730,26 @@ function selectSingle(qId, btn, value) {
   btn.classList.add('selected');
   responses[qId] = value;
   persistResponse(qId, currentPhase, value, 'single_choice');
-  setTimeout(renderPhase, 300);
+  // Mark card as answered visually without full re-render
+  const card = document.getElementById('card-' + qId);
+  if (card) card.classList.add('answered');
+  updateWeiterButton();
+}
+
+function updateWeiterButton() {
+  const questions = PHASE_QUESTIONS[currentPhase] || [];
+  const allRequired = questions.filter(q => q.required).every(q => responses[q.id]);
+  const btn = document.getElementById('weiterBtn');
+  if (btn) btn.disabled = !allRequired;
+}
+
+function prevPhase() {
+  const idx = PHASE_ORDER.indexOf(currentPhase);
+  if (idx > 0) {
+    currentPhase = PHASE_ORDER[idx - 1];
+    renderPhase();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 }
 
 let _multiSelections = {};
@@ -668,13 +759,29 @@ function toggleMulti(qId, btn, value) {
   if (btn.classList.contains('selected')) _multiSelections[qId].add(value);
   else _multiSelections[qId].delete(value);
 
+  // Show/hide Sonstiges free text input
+  if (value === 'Sonstiges') {
+    const sonstigesInput = document.getElementById('sonstiges-' + qId);
+    if (sonstigesInput) {
+      sonstigesInput.style.display = btn.classList.contains('selected') ? 'block' : 'none';
+      if (btn.classList.contains('selected')) sonstigesInput.focus();
+    }
+  }
+
   const confirmBtn = document.getElementById('confirm-' + qId);
   if (confirmBtn) confirmBtn.style.display = _multiSelections[qId].size > 0 ? 'inline-block' : 'none';
 }
 
 function confirmMulti(qId) {
-  const selected = Array.from(_multiSelections[qId] || []);
+  let selected = Array.from(_multiSelections[qId] || []);
   if (selected.length === 0) return;
+
+  // Replace "Sonstiges" with the actual free text if provided
+  const sonstigesInput = document.getElementById('sonstiges-' + qId);
+  if (sonstigesInput && sonstigesInput.value.trim() && selected.includes('Sonstiges')) {
+    selected = selected.map(s => s === 'Sonstiges' ? 'Sonstiges: ' + sonstigesInput.value.trim() : s);
+  }
+
   responses[qId] = selected;
   persistResponse(qId, currentPhase, selected.join(', '), 'multi_choice');
   renderPhase();
