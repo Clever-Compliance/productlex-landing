@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client 122 &mdash; Responses</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+  <script src="supabase-config.js" defer></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --color-bg: #ffffff;
+      --color-bg-warm: #fafaf8;
+      --color-bg-soft: #f4f3f0;
+      --color-border: #dddcd9;
+      --color-text: #1a1a1a;
+      --color-text-secondary: #5a5a58;
+      --color-text-tertiary: #8a8a86;
+      --color-accent: #4f46e5;
+      --color-accent-light: #6366f1;
+      --color-accent-bg: #eef2ff;
+      --color-green: #16a34a;
+      --color-green-bg: #f0fdf4;
+      --color-amber: #d97706;
+      --color-amber-bg: #fffbeb;
+      --color-red: #dc2626;
+      --color-red-bg: #fef2f2;
+      --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --radius: 12px;
+      --radius-lg: 20px;
+    }
+    body { font-family: var(--font); background: var(--color-bg-warm); color: var(--color-text); line-height: 1.6; -webkit-font-smoothing: antialiased; padding: 0; }
+    .page { max-width: 960px; margin: 0 auto; padding: 40px 24px 60px; }
+
+    /* Header */
+    .header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; flex-wrap: wrap; gap: 12px; }
+    .header h1 { font-size: 24px; font-weight: 800; letter-spacing: -0.03em; }
+    .header .badge { font-size: 12px; font-weight: 700; padding: 5px 14px; border-radius: 50px; background: var(--color-amber-bg); color: #92400e; border: 1px solid #fde68a; }
+    .btn-refresh {
+      font-family: var(--font); font-size: 13px; font-weight: 600;
+      padding: 8px 18px; border-radius: 50px; border: 1.5px solid var(--color-border);
+      background: var(--color-bg); color: var(--color-text-secondary); cursor: pointer;
+    }
+    .btn-refresh:hover { border-color: var(--color-accent); color: var(--color-accent); }
+
+    /* Gate */
+    .gate { max-width: 380px; margin: 80px auto; text-align: center; }
+    .gate h2 { font-size: 20px; font-weight: 800; margin-bottom: 16px; }
+    .gate input {
+      width: 100%; font-family: var(--font); font-size: 15px;
+      padding: 12px 16px; border: 1.5px solid var(--color-border);
+      border-radius: 10px; background: var(--color-bg); color: var(--color-text);
+      outline: none; margin-bottom: 12px; text-align: center;
+    }
+    .gate input:focus { border-color: var(--color-accent); }
+    .gate button {
+      font-family: var(--font); font-size: 15px; font-weight: 700;
+      padding: 12px 32px; border-radius: 50px; border: none; cursor: pointer;
+      background: var(--color-accent); color: white;
+    }
+    .gate .error { color: var(--color-red); font-size: 13px; margin-top: 8px; display: none; }
+
+    /* Stats */
+    .stats { display: flex; gap: 16px; margin-bottom: 28px; flex-wrap: wrap; }
+    .stat-card {
+      flex: 1; min-width: 140px; padding: 16px 20px;
+      background: var(--color-bg); border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+    }
+    .stat-card .num { font-size: 28px; font-weight: 800; letter-spacing: -0.03em; color: var(--color-accent); }
+    .stat-card .label { font-size: 12px; color: var(--color-text-tertiary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
+
+    /* Respondent cards */
+    .respondent {
+      background: var(--color-bg); border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg); margin-bottom: 16px; overflow: hidden;
+    }
+    .respondent-header {
+      padding: 20px 24px; cursor: pointer; display: flex; align-items: center;
+      justify-content: space-between; transition: background 0.15s;
+    }
+    .respondent-header:hover { background: var(--color-bg-soft); }
+    .respondent-name { font-size: 16px; font-weight: 700; }
+    .respondent-meta { font-size: 13px; color: var(--color-text-secondary); margin-top: 2px; }
+    .respondent-phase {
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+      padding: 4px 12px; border-radius: 50px;
+    }
+    .phase-situation { background: var(--color-accent-bg); color: var(--color-accent); }
+    .phase-probleme { background: var(--color-amber-bg); color: var(--color-amber); }
+    .phase-zielbild { background: var(--color-green-bg); color: var(--color-green); }
+    .phase-completed { background: var(--color-green-bg); color: var(--color-green); }
+    .chevron { font-size: 18px; color: var(--color-text-tertiary); transition: transform 0.2s; }
+    .respondent.open .chevron { transform: rotate(180deg); }
+
+    .respondent-body { display: none; padding: 0 24px 24px; border-top: 1px solid var(--color-border); }
+    .respondent.open .respondent-body { display: block; }
+
+    .answer-row { padding: 14px 0; border-bottom: 1px solid var(--color-bg-soft); }
+    .answer-row:last-child { border-bottom: none; }
+    .answer-q { font-size: 13px; font-weight: 600; color: var(--color-text-secondary); margin-bottom: 4px; }
+    .answer-v { font-size: 15px; font-weight: 500; line-height: 1.5; }
+    .answer-type { font-size: 11px; color: var(--color-text-tertiary); margin-left: 8px; }
+    .answer-time { font-size: 11px; color: var(--color-text-tertiary); float: right; }
+
+    .no-answers { font-size: 14px; color: var(--color-text-tertiary); font-style: italic; padding: 16px 0; }
+
+    /* Loading */
+    .loading { display: flex; flex-direction: column; align-items: center; padding: 80px 20px; gap: 16px; }
+    .spinner { width: 40px; height: 40px; border: 3px solid var(--color-border); border-top-color: var(--color-accent); border-radius: 50%; animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .empty { text-align: center; padding: 60px 20px; color: var(--color-text-tertiary); font-size: 15px; }
+
+    @media (max-width: 640px) {
+      .stats { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- Password gate -->
+  <div id="gate" class="gate">
+    <h2>Client 122 Responses</h2>
+    <input type="password" id="gatePass" placeholder="Passwort" onkeydown="if(event.key==='Enter')checkPass()">
+    <br>
+    <button onclick="checkPass()">Anmelden</button>
+    <div class="error" id="gateError">Falsches Passwort</div>
+  </div>
+
+  <!-- Dashboard (hidden until authenticated) -->
+  <div id="dashboard" style="display:none">
+    <div class="header">
+      <div>
+        <h1>Client 122 &mdash; Antworten</h1>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <span class="badge">Vertraulich</span>
+        <button class="btn-refresh" onclick="loadData()">&#8635; Aktualisieren</button>
+      </div>
+    </div>
+
+    <div class="stats" id="stats"></div>
+
+    <div id="content">
+      <div class="loading"><div class="spinner"></div><span style="font-size:14px;color:var(--color-text-secondary);">Daten werden geladen...</span></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const PASS = 'productlex2026';
+let sb;
+
+function checkPass() {
+  const input = document.getElementById('gatePass').value;
+  if (input === PASS) {
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    initDashboard();
+  } else {
+    document.getElementById('gateError').style.display = 'block';
+  }
+}
+
+async function initDashboard() {
+  try {
+    if (typeof window.supabase !== 'undefined' && typeof SUPABASE_URL !== 'undefined') {
+      sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+    }
+  } catch (e) {
+    console.warn('Supabase init failed:', e);
+  }
+
+  if (!sb) {
+    document.getElementById('content').innerHTML = '<div class="empty">Supabase nicht verf&uuml;gbar. Bitte supabase-config.js pr&uuml;fen.</div>';
+    return;
+  }
+
+  await loadData();
+}
+
+async function loadData() {
+  document.getElementById('content').innerHTML = '<div class="loading"><div class="spinner"></div><span style="font-size:14px;color:var(--color-text-secondary);">Daten werden geladen...</span></div>';
+
+  try {
+    // Load prospects for client122
+    const { data: prospects, error: pErr } = await sb
+      .from('prospects')
+      .select('*')
+      .eq('source', 'client122')
+      .order('created_at', { ascending: false });
+
+    if (pErr) throw pErr;
+
+    if (!prospects || prospects.length === 0) {
+      document.getElementById('stats').innerHTML = '';
+      document.getElementById('content').innerHTML = '<div class="empty">Noch keine Antworten eingegangen.</div>';
+      return;
+    }
+
+    // Load all responses for these prospects
+    const prospectIds = prospects.map(p => p.id);
+    const { data: allResponses, error: rErr } = await sb
+      .from('prospect_responses')
+      .select('*')
+      .in('prospect_id', prospectIds)
+      .order('answered_at', { ascending: true });
+
+    if (rErr) throw rErr;
+
+    // Group responses by prospect
+    const responseMap = {};
+    (allResponses || []).forEach(r => {
+      if (!responseMap[r.prospect_id]) responseMap[r.prospect_id] = [];
+      responseMap[r.prospect_id].push(r);
+    });
+
+    // Render stats
+    const completed = prospects.filter(p => p.current_phase === 'completed').length;
+    const inProgress = prospects.length - completed;
+    const totalAnswers = (allResponses || []).length;
+
+    document.getElementById('stats').innerHTML = `
+      <div class="stat-card"><div class="num">${prospects.length}</div><div class="label">Teilnehmer</div></div>
+      <div class="stat-card"><div class="num">${completed}</div><div class="label">Abgeschlossen</div></div>
+      <div class="stat-card"><div class="num">${inProgress}</div><div class="label">In Bearbeitung</div></div>
+      <div class="stat-card"><div class="num">${totalAnswers}</div><div class="label">Antworten gesamt</div></div>
+    `;
+
+    // Render respondent cards
+    let html = '';
+    prospects.forEach(p => {
+      const responses = responseMap[p.id] || [];
+      const phaseClass = 'phase-' + (p.current_phase || 'situation');
+      const phaseLabel = { situation: 'Phase 1', probleme: 'Phase 2', zielbild: 'Phase 3', completed: 'Fertig' }[p.current_phase] || p.current_phase;
+      const date = new Date(p.created_at).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+
+      html += `<div class="respondent" id="resp-${p.id}">`;
+      html += `<div class="respondent-header" onclick="toggleResp('${p.id}')">`;
+      html += `<div><div class="respondent-name">${esc(p.name || 'Unbekannt')}</div>`;
+      html += `<div class="respondent-meta">${esc(p.company || '')} &middot; ${esc(p.email || '')} &middot; ${date}</div></div>`;
+      html += `<div style="display:flex;align-items:center;gap:10px;"><span class="respondent-phase ${phaseClass}">${phaseLabel}</span><span class="chevron">&#9662;</span></div>`;
+      html += `</div>`;
+
+      html += `<div class="respondent-body">`;
+      if (responses.length === 0) {
+        html += `<div class="no-answers">Noch keine Antworten.</div>`;
+      } else {
+        // Group by phase
+        const phases = {};
+        responses.forEach(r => {
+          if (!phases[r.phase]) phases[r.phase] = [];
+          phases[r.phase].push(r);
+        });
+
+        const phaseOrder = ['situation', 'probleme', 'zielbild'];
+        const phaseNames = { situation: 'Phase 1: Situation', probleme: 'Phase 2: Probleme', zielbild: 'Phase 3: Zielbild' };
+
+        phaseOrder.forEach(phase => {
+          if (!phases[phase]) return;
+          html += `<div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--color-accent);margin-top:16px;margin-bottom:8px;">${phaseNames[phase] || phase}</div>`;
+          phases[phase].forEach(r => {
+            const time = r.answered_at ? new Date(r.answered_at).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }) : '';
+            html += `<div class="answer-row">`;
+            html += `<div class="answer-q">${esc(r.question_text || r.question_id)}<span class="answer-type">${esc(r.question_type || '')}</span><span class="answer-time">${time}</span></div>`;
+            html += `<div class="answer-v">${esc(r.answer_value || '—')}</div>`;
+            html += `</div>`;
+          });
+        });
+      }
+      html += `</div></div>`;
+    });
+
+    document.getElementById('content').innerHTML = html;
+
+  } catch (err) {
+    console.error('Load error:', err);
+    document.getElementById('content').innerHTML = `<div class="empty" style="color:var(--color-red);">Fehler beim Laden: ${esc(err.message || String(err))}</div>`;
+  }
+}
+
+function toggleResp(id) {
+  document.getElementById('resp-' + id)?.classList.toggle('open');
+}
+
+function esc(str) {
+  if (!str) return '';
+  return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+// Auto-init if Supabase loads before DOMContentLoaded
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('gatePass').focus();
+});
+</script>
+
+</body>
+</html>
