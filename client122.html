@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Produktkonformit&auml;t &amp; Dokumentenpr&uuml;fung &mdash; ProductLex AI</title>
+  <meta name="description" content="Fragebogen zur Dokumentenpr&uuml;fung von Marketplace-Verk&auml;ufern. Vertraulich f&uuml;r Hermes Europe / Otto Group.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+  <script src="supabase-config.js" defer></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --color-bg: #ffffff;
+      --color-bg-warm: #fafaf8;
+      --color-bg-soft: #f4f3f0;
+      --color-bg-muted: #edecea;
+      --color-surface: #e8e7e4;
+      --color-border: #dddcd9;
+      --color-border-subtle: #e8e7e4;
+      --color-text: #1a1a1a;
+      --color-text-secondary: #5a5a58;
+      --color-text-tertiary: #8a8a86;
+      --color-accent: #4f46e5;
+      --color-accent-light: #6366f1;
+      --color-accent-bg: #eef2ff;
+      --color-accent-soft: rgba(79, 70, 229, 0.08);
+      --color-green: #16a34a;
+      --color-green-bg: #f0fdf4;
+      --color-amber: #d97706;
+      --color-amber-bg: #fffbeb;
+      --color-red: #dc2626;
+      --color-red-bg: #fef2f2;
+      --color-dark: #111111;
+      --font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --radius: 12px;
+      --radius-lg: 20px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--color-bg-warm);
+      color: var(--color-text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      padding: 0;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 256px;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .page-wrapper { max-width: 780px; margin: 0 auto; padding: 40px 24px 60px; }
+
+    /* Header */
+    .page-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 32px; }
+    .page-logo-icon {
+      width: 38px; height: 38px;
+      background: var(--color-dark); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; font-weight: 800; color: white;
+    }
+    .page-logo-text { font-weight: 700; font-size: 22px; letter-spacing: -0.03em; color: var(--color-text); }
+
+    .page-header { margin-bottom: 28px; }
+    .page-header h1 { font-size: 26px; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 8px; }
+    .page-header p { font-size: 15px; color: var(--color-text-secondary); line-height: 1.5; }
+
+    .confidential-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; color: #92400e;
+      background: var(--color-amber-bg); border: 1px solid #fde68a;
+      padding: 5px 14px; border-radius: 50px; margin-bottom: 16px;
+    }
+
+    /* Gate */
+    .respondent-gate { max-width: 480px; margin: 0 auto; padding: 60px 0 40px; }
+    .respondent-gate h2 { font-size: 22px; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 6px; }
+    .respondent-gate .gate-sub { font-size: 15px; color: var(--color-text-secondary); margin-bottom: 28px; line-height: 1.5; }
+    .gate-form { display: flex; flex-direction: column; gap: 16px; }
+    .gate-field label { display: block; font-size: 13.5px; font-weight: 600; margin-bottom: 5px; color: var(--color-text); }
+    .gate-field label .optional { font-weight: 400; color: var(--color-text-tertiary); }
+    .gate-field input, .gate-field select {
+      width: 100%; font-family: var(--font); font-size: 15px;
+      padding: 12px 16px; border: 1.5px solid var(--color-border);
+      border-radius: 10px; background: var(--color-bg);
+      color: var(--color-text); outline: none; transition: border-color 0.2s;
+    }
+    .gate-field input::placeholder { color: var(--color-text-tertiary); }
+    .gate-field input:focus { border-color: var(--color-accent); box-shadow: 0 0 0 3px var(--color-accent-soft); }
+    .gate-field input.error { border-color: var(--color-red); }
+    .gate-error { font-size: 13px; color: var(--color-red); margin-top: 4px; display: none; }
+    .btn-start {
+      font-family: var(--font); font-size: 15px; font-weight: 700;
+      padding: 14px 32px; border-radius: 50px; border: none; cursor: pointer;
+      background: var(--color-accent); color: white;
+      transition: all 0.2s; margin-top: 8px;
+    }
+    .btn-start:hover { background: var(--color-accent-light); box-shadow: 0 2px 16px rgba(79, 70, 229, 0.3); transform: translateY(-1px); }
+    .btn-start:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .gate-returning {
+      margin-top: 20px; padding: 14px 18px;
+      background: var(--color-green-bg); border: 1px solid #bbf7d0;
+      border-radius: var(--radius); font-size: 14px; color: #166534; display: none;
+    }
+
+    /* Phase Stepper */
+    .phase-stepper { display: flex; align-items: center; justify-content: center; margin-bottom: 36px; gap: 0; }
+    .phase-step { display: flex; align-items: center; gap: 10px; }
+    .phase-circle {
+      width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700;
+      border: 2px solid var(--color-border); background: var(--color-bg);
+      color: var(--color-text-tertiary); transition: all 0.3s; flex-shrink: 0;
+    }
+    .phase-step.active .phase-circle { background: var(--color-accent); color: white; border-color: var(--color-accent); }
+    .phase-step.completed .phase-circle { background: var(--color-green); color: white; border-color: var(--color-green); }
+    .phase-label { font-size: 13.5px; font-weight: 600; color: var(--color-text-tertiary); transition: color 0.3s; white-space: nowrap; }
+    .phase-step.active .phase-label { color: var(--color-accent); }
+    .phase-step.completed .phase-label { color: var(--color-green); }
+    .phase-connector { width: 48px; height: 2px; background: var(--color-border); margin: 0 12px; flex-shrink: 0; transition: background 0.3s; }
+    .phase-connector.completed { background: var(--color-green); }
+
+    /* Question Cards */
+    .q-card {
+      background: var(--color-bg); border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg); padding: 28px; margin-bottom: 16px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .q-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
+    .q-card.answered { background: var(--color-bg-warm); border-color: var(--color-border-subtle); }
+    .q-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .q-num { font-size: 12px; color: var(--color-text-tertiary); font-weight: 500; }
+    .q-tag { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 3px 10px; border-radius: 50px; }
+    .q-tag.required { background: var(--color-red-bg); color: var(--color-red); }
+    .q-text { font-size: 16px; font-weight: 600; line-height: 1.45; letter-spacing: -0.01em; margin-bottom: 8px; }
+    .q-context { font-size: 13.5px; color: var(--color-text-secondary); line-height: 1.55; margin-bottom: 20px; }
+
+    /* Pill buttons for choices */
+    .pill-group { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+    .pill-btn {
+      font-family: var(--font); font-size: 14px; font-weight: 600;
+      padding: 10px 20px; border-radius: 50px;
+      border: 1.5px solid var(--color-border); background: var(--color-bg);
+      color: var(--color-text-secondary); cursor: pointer; transition: all 0.2s;
+    }
+    .pill-btn:hover { border-color: var(--color-accent); color: var(--color-accent); }
+    .pill-btn.selected { background: var(--color-accent); color: white; border-color: var(--color-accent); }
+
+    /* Text inputs */
+    .text-input {
+      width: 100%; font-family: var(--font); font-size: 14px;
+      padding: 12px 16px; border: 1.5px solid var(--color-border);
+      border-radius: 10px; background: var(--color-bg);
+      color: var(--color-text); outline: none; transition: border-color 0.2s;
+      min-height: 100px; resize: vertical; line-height: 1.5;
+    }
+    .text-input::placeholder { color: var(--color-text-tertiary); }
+    .text-input:focus { border-color: var(--color-accent); box-shadow: 0 0 0 3px var(--color-accent-soft); }
+
+    .short-input {
+      width: 100%; font-family: var(--font); font-size: 14px;
+      padding: 12px 16px; border: 1.5px solid var(--color-border);
+      border-radius: 10px; background: var(--color-bg);
+      color: var(--color-text); outline: none; transition: border-color 0.2s;
+    }
+    .short-input::placeholder { color: var(--color-text-tertiary); }
+    .short-input:focus { border-color: var(--color-accent); box-shadow: 0 0 0 3px var(--color-accent-soft); }
+
+    /* Rating scale */
+    .rating-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .rating-label { flex: 1; font-size: 14px; font-weight: 500; min-width: 0; }
+    .rating-scale { display: flex; gap: 6px; flex-shrink: 0; }
+    .rating-btn {
+      font-family: var(--font); width: 36px; height: 36px;
+      border-radius: 50%; border: 1.5px solid var(--color-border);
+      background: var(--color-bg); color: var(--color-text-secondary);
+      font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.15s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .rating-btn:hover { border-color: var(--color-accent); color: var(--color-accent); }
+    .rating-btn.selected { background: var(--color-accent); color: white; border-color: var(--color-accent); }
+    .rating-legend { display: flex; justify-content: space-between; font-size: 11px; color: var(--color-text-tertiary); padding-left: calc(100% - 210px); margin-bottom: 20px; }
+
+    /* Priority select */
+    .priority-row { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border: 1px solid var(--color-border); border-radius: var(--radius); margin-bottom: 8px; background: var(--color-bg); }
+    .priority-select {
+      font-family: var(--font); width: 50px; padding: 6px;
+      border: 1.5px solid var(--color-border); border-radius: 8px;
+      font-size: 14px; font-weight: 700; text-align: center;
+      color: var(--color-accent); background: var(--color-accent-bg);
+      outline: none; cursor: pointer; flex-shrink: 0;
+    }
+    .priority-label { font-size: 14px; font-weight: 500; }
+
+    /* Answered state */
+    .q-answered-box {
+      display: flex; align-items: center; gap: 10px;
+      background: var(--color-green-bg); border: 1px solid #bbf7d0;
+      border-radius: var(--radius); padding: 12px 16px; margin-bottom: 8px;
+    }
+    .q-answer-val { font-size: 14px; font-weight: 700; color: #166534; }
+    .btn-change {
+      font-family: var(--font); font-size: 12px; font-weight: 600;
+      color: var(--color-accent); background: none; border: none;
+      cursor: pointer; padding: 4px 0; margin-left: auto;
+    }
+    .btn-change:hover { text-decoration: underline; }
+
+    /* Action buttons */
+    .phase-actions { margin-top: 32px; display: flex; justify-content: center; }
+    .btn-phase {
+      font-family: var(--font); font-size: 15px; font-weight: 700;
+      padding: 14px 36px; border-radius: 50px; border: none; cursor: pointer;
+      background: var(--color-accent); color: white; transition: all 0.2s;
+    }
+    .btn-phase:hover { background: var(--color-accent-light); box-shadow: 0 2px 16px rgba(79, 70, 229, 0.3); transform: translateY(-1px); }
+    .btn-phase:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    /* Loading */
+    .loading-container { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 20px; gap: 20px; }
+    .spinner { width: 48px; height: 48px; border: 3px solid var(--color-border); border-top-color: var(--color-accent); border-radius: 50%; animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-text { font-size: 15px; color: var(--color-text-secondary); font-weight: 500; text-align: center; }
+
+    /* Error banner */
+    .error-banner {
+      display: none; padding: 12px 18px; background: var(--color-red-bg);
+      border: 1px solid #fecaca; border-radius: var(--radius);
+      font-size: 14px; color: #991b1b; margin-bottom: 20px;
+    }
+
+    /* Success */
+    .success-card {
+      background: var(--color-green-bg); border: 1px solid #bbf7d0;
+      border-radius: var(--radius-lg); padding: 48px 32px;
+      text-align: center;
+    }
+    .success-card .check { font-size: 48px; margin-bottom: 16px; }
+    .success-card h2 { font-size: 22px; font-weight: 800; color: #166534; margin-bottom: 8px; }
+    .success-card p { font-size: 15px; color: #047857; line-height: 1.6; }
+    .success-card a { color: #065f46; font-weight: 700; }
+
+    /* Footer */
+    .page-footer {
+      text-align: center; padding: 32px 24px; font-size: 13px; color: var(--color-text-tertiary);
+    }
+    .page-footer a { color: var(--color-accent); }
+    .page-footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 640px) {
+      .phase-stepper { flex-wrap: wrap; gap: 8px; }
+      .phase-connector { width: 24px; margin: 0 4px; }
+      .rating-row { flex-direction: column; align-items: flex-start; gap: 6px; }
+      .rating-legend { padding-left: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page-wrapper">
+
+  <!-- Logo -->
+  <div class="page-logo">
+    <div class="page-logo-icon">P</div>
+    <span class="page-logo-text">ProductLex AI</span>
+  </div>
+
+  <!-- Gate -->
+  <div id="gateSection">
+    <div class="respondent-gate">
+      <div class="confidential-badge">&#128274; Vertraulich</div>
+      <h2>Fragebogen: Produktkonformit&auml;t &amp; Dokumentenpr&uuml;fung</h2>
+      <p class="gate-sub">Helfen Sie uns, Ihre Herausforderungen bei der Dokumentenpr&uuml;fung von Marketplace-Verk&auml;ufern zu verstehen. Dauert ca. 10&ndash;15 Minuten.</p>
+
+      <div class="gate-form" id="gateForm">
+        <div class="gate-field">
+          <label for="gateName">Name</label>
+          <input type="text" id="gateName" placeholder="Vor- und Nachname" required>
+        </div>
+        <div class="gate-field">
+          <label for="gateEmail">E-Mail</label>
+          <input type="email" id="gateEmail" placeholder="name@hermes-europe.de" required>
+        </div>
+        <div class="gate-field">
+          <label for="gateRole">Rolle / Abteilung <span class="optional">(optional)</span></label>
+          <input type="text" id="gateRole" placeholder="z.B. Leiter Marketplace Compliance">
+        </div>
+        <div class="gate-field">
+          <label for="gateCompany">Unternehmen</label>
+          <input type="text" id="gateCompany" placeholder="z.B. Hermes Europe GmbH" required>
+        </div>
+        <button class="btn-start" id="btnStart" onclick="startAssessment()">Fragebogen starten</button>
+      </div>
+      <div class="gate-returning" id="gateReturning">Willkommen zur&uuml;ck! Ihre vorherigen Antworten werden geladen...</div>
+    </div>
+  </div>
+
+  <!-- Questionnaire (hidden until gate passed) -->
+  <div id="questionnaireContent" style="display:none">
+
+    <div class="phase-stepper" id="phaseStepper">
+      <div class="phase-step active" id="step1">
+        <div class="phase-circle">1</div>
+        <span class="phase-label">Situation</span>
+      </div>
+      <div class="phase-connector" id="conn1"></div>
+      <div class="phase-step" id="step2">
+        <div class="phase-circle">2</div>
+        <span class="phase-label">Probleme</span>
+      </div>
+      <div class="phase-connector" id="conn2"></div>
+      <div class="phase-step" id="step3">
+        <div class="phase-circle">3</div>
+        <span class="phase-label">Zielbild</span>
+      </div>
+    </div>
+
+    <div class="error-banner" id="errorBanner"></div>
+    <div id="phaseContent"></div>
+
+  </div>
+
+</div>
+
+<div class="page-footer">
+  <p>&copy; 2026 <a href="https://productlex.com">ProductLex AI</a> &mdash; Regulatory Compliance Management</p>
+  <p style="margin-top:4px;">Kontakt: <a href="mailto:info@productlex.com">info@productlex.com</a></p>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+const PROSPECT_KEY = 'productlex_client122_id';
+const PROSPECT_INFO_KEY = 'productlex_client122_info';
+
+let sb;
+let prospectId = localStorage.getItem(PROSPECT_KEY) || null;
+let prospectInfo = JSON.parse(localStorage.getItem(PROSPECT_INFO_KEY) || '{}');
+let currentPhase = 'situation';
+let responses = {};
+
+// ═══════════════════════════════════════════════════════════════
+// QUESTIONS
+// ═══════════════════════════════════════════════════════════════
+
+const PHASE_QUESTIONS = {
+  situation: [
+    {
+      id: 'a1',
+      text: 'Wie viele Marketplace-Partner sind derzeit aktiv, und wie viele kommen monatlich hinzu?',
+      type: 'text',
+      placeholder: 'z.B. ~4.500 aktive Partner, ca. 50 neue pro Monat',
+      required: true
+    },
+    {
+      id: 'a2',
+      text: 'Welche Dokumente fordern Sie von Verk\u00e4ufern bei der Produktlistung an?',
+      type: 'multi_choice',
+      options: ['EU-Konformit\u00e4tserkl\u00e4rung (DoC)', 'Pr\u00fcfberichte / Testberichte', 'Zertifikate (CE, GS, T\u00dcV)', 'Notified-Body-Bescheinigungen', 'GPSR-Herstellerangaben', 'Technische Dokumentation', 'Sicherheitsdatenbl\u00e4tter (SDS)', 'Sonstiges'],
+      required: true
+    },
+    {
+      id: 'a3',
+      text: 'Wie werden diese Dokumente heute gepr\u00fcft?',
+      type: 'single_choice',
+      options: ['Manuelle Pr\u00fcfung durch Mitarbeiter', 'Automatisierte Pr\u00fcfung (ACC oder anderes System)', 'Stichprobenartige Pr\u00fcfung', 'Keine systematische Pr\u00fcfung', 'Kombination aus mehreren'],
+      required: true
+    },
+    {
+      id: 'a4',
+      text: 'Wie viele Dokumente / Produktlistungen m\u00fcssen pro Monat gepr\u00fcft werden?',
+      type: 'text',
+      placeholder: 'z.B. ~5.000 Dokumente / 20.000 neue Listings',
+      required: true
+    }
+  ],
+  probleme: [
+    {
+      id: 'b1',
+      text: 'Wie h\u00e4ufig treten die folgenden Probleme auf?',
+      context: 'Bewerten Sie jedes Problem auf einer Skala von 1 (selten) bis 5 (sehr h\u00e4ufig).',
+      type: 'rating_matrix',
+      items: [
+        'Fehlende Konformit\u00e4tserkl\u00e4rungen',
+        'Gef\u00e4lschte oder manipulierte Dokumente',
+        'Abgelaufene Zertifikate / Pr\u00fcfberichte',
+        'Falsche oder ung\u00fcltige CE-Kennzeichnung',
+        'Fehlender EU-Wirtschaftsakteur (kein AR)',
+        'Veraltete Normenreferenzen in Dokumenten',
+        'Unvollst\u00e4ndige GPSR-Herstellerangaben',
+        'Produkte ohne erforderliche NB-Zertifizierung'
+      ],
+      required: true
+    },
+    {
+      id: 'b2',
+      text: 'Gab es in den letzten 12 Monaten beh\u00f6rdliche Beanstandungen, Produktr\u00fcckrufe oder Listing-Entfernungen?',
+      type: 'text',
+      placeholder: 'z.B. 3 Beanstandungen durch Markt\u00fcberwachung, 1 R\u00fcckruf wegen fehlendem CE, ~200 Listings entfernt...',
+      required: false
+    },
+    {
+      id: 'b3',
+      text: 'Was ist der gr\u00f6\u00dfte einzelne Schmerzpunkt im Bereich Dokumentenpr\u00fcfung?',
+      context: 'Bitte beschreiben Sie das Problem so konkret wie m\u00f6glich.',
+      type: 'text',
+      placeholder: 'Das gr\u00f6\u00dfte Problem ist...',
+      required: true
+    }
+  ],
+  zielbild: [
+    {
+      id: 'c1',
+      text: 'Was m\u00f6chten Sie in 6 Monaten erreicht haben?',
+      context: 'Bitte priorisieren Sie (1 = h\u00f6chste Priorit\u00e4t).',
+      type: 'priority_rank',
+      items: [
+        'Automatisierte Echtheitsprüfung von Konformit\u00e4tserkl\u00e4rungen',
+        'L\u00fcckenlose Dokumentation f\u00fcr Beh\u00f6rdenanfragen (Due Diligence)',
+        'Fr\u00fchwarnsystem bei Normen\u00e4nderungen',
+        'Vollst\u00e4ndige GPSR-Compliance aller Produkte',
+        'Vertrauensbewertung (Trust Score) pro Verk\u00e4ufer',
+        'KI-basierte Produktfoto-Analyse (CE, Etiketten)'
+      ],
+      required: true
+    },
+    {
+      id: 'c2',
+      text: 'Wie soll die L\u00f6sung integriert werden?',
+      type: 'single_choice',
+      options: ['Standalone-Plattform (Verk\u00e4ufer laden direkt hoch)', 'API-Integration in bestehendes System', 'Beides (Portal + API)', 'Noch unklar \u2014 wir brauchen Beratung'],
+      required: true
+    },
+    {
+      id: 'c3',
+      text: 'F\u00fcr welche Produktkategorien ist das Problem am dringendsten?',
+      type: 'multi_choice',
+      options: ['Elektronik & Elektroger\u00e4te', 'Spielzeug', 'Haushaltsger\u00e4te', 'Kosmetik & K\u00f6rperpflege', 'Textilien & Bekleidung', 'M\u00f6bel & Einrichtung', 'Pers\u00f6nliche Schutzausr\u00fcstung (PSA)', 'Sonstiges'],
+      required: true
+    },
+    {
+      id: 'd1',
+      text: 'Gibt es einen Budgetrahmen f\u00fcr eine solche L\u00f6sung?',
+      type: 'single_choice',
+      options: ['< 50.000 \u20ac / Jahr', '50.000\u2013150.000 \u20ac / Jahr', '150.000\u2013500.000 \u20ac / Jahr', '> 500.000 \u20ac / Jahr', 'Noch nicht definiert'],
+      required: false
+    },
+    {
+      id: 'd2',
+      text: 'Nutzen oder evaluieren Sie bereits L\u00f6sungen f\u00fcr dieses Thema?',
+      type: 'text',
+      placeholder: 'z.B. osapiens (DPP/Nachhaltigkeit), eigene ACC-Pr\u00fcfung, T\u00dcV-Dienstleistungen...',
+      required: false
+    }
+  ]
+};
+
+const PHASE_ORDER = ['situation', 'probleme', 'zielbild'];
+const PHASE_LABELS = { situation: 'Situation', probleme: 'Probleme', zielbild: 'Zielbild' };
+
+// ═══════════════════════════════════════════════════════════════
+// GATE
+// ═══════════════════════════════════════════════════════════════
+
+async function startAssessment() {
+  const name = document.getElementById('gateName').value.trim();
+  const email = document.getElementById('gateEmail').value.trim();
+  const role = document.getElementById('gateRole').value.trim();
+  const company = document.getElementById('gateCompany').value.trim();
+
+  if (!name || !email || !company) {
+    alert('Bitte f\u00fcllen Sie alle Pflichtfelder aus.');
+    return;
+  }
+
+  document.getElementById('btnStart').disabled = true;
+  document.getElementById('btnStart').textContent = 'Wird geladen...';
+
+  try {
+    if (typeof sb !== 'undefined' && sb) {
+      const { data, error } = await sb.from('prospects').insert({
+        name, email, role, company,
+        source: 'client122',
+        current_phase: 'situation',
+        created_at: new Date().toISOString()
+      }).select().single();
+
+      if (data) {
+        prospectId = data.id;
+        localStorage.setItem(PROSPECT_KEY, prospectId);
+      }
+    }
+  } catch (err) {
+    console.warn('Supabase not available, continuing locally:', err);
+  }
+
+  prospectInfo = { name, email, role, company };
+  localStorage.setItem(PROSPECT_INFO_KEY, JSON.stringify(prospectInfo));
+  showQuestionnaire();
+}
+
+function showQuestionnaire() {
+  document.getElementById('gateSection').style.display = 'none';
+  document.getElementById('questionnaireContent').style.display = 'block';
+  renderPhase();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════════════════════
+
+function renderPhase() {
+  updateStepper();
+  const container = document.getElementById('phaseContent');
+
+  if (currentPhase === 'completed') {
+    renderCompleted(container);
+    return;
+  }
+
+  const questions = PHASE_QUESTIONS[currentPhase] || [];
+  let html = '';
+
+  questions.forEach((q, idx) => {
+    const answered = responses[q.id];
+    html += `<div class="q-card ${answered ? 'answered' : ''}" id="card-${q.id}">`;
+    html += `<div class="q-meta"><span class="q-num">${PHASE_LABELS[currentPhase]} &mdash; Frage ${idx + 1} von ${questions.length}</span>`;
+    if (q.required) html += `<span class="q-tag required">Pflicht</span>`;
+    html += `</div>`;
+    html += `<div class="q-text">${escapeHtml(q.text)}</div>`;
+    if (q.context) html += `<div class="q-context">${escapeHtml(q.context)}</div>`;
+
+    if (answered) {
+      html += renderAnswered(q, answered);
+    } else {
+      html += renderInput(q);
+    }
+
+    html += `</div>`;
+  });
+
+  // Phase action button
+  const phaseIdx = PHASE_ORDER.indexOf(currentPhase);
+  const isLast = phaseIdx === PHASE_ORDER.length - 1;
+  const allRequired = questions.filter(q => q.required).every(q => responses[q.id]);
+
+  html += `<div class="phase-actions">`;
+  html += `<button class="btn-phase" ${allRequired ? '' : 'disabled'} onclick="${isLast ? 'submitAll()' : 'nextPhase()'}">${isLast ? 'Antworten absenden &#10148;' : 'Weiter &#10148;'}</button>`;
+  html += `</div>`;
+
+  container.innerHTML = html;
+}
+
+function renderInput(q) {
+  let html = '';
+
+  if (q.type === 'single_choice') {
+    html += `<div class="pill-group">`;
+    q.options.forEach(opt => {
+      html += `<button class="pill-btn" onclick="selectSingle('${q.id}', this, '${escapeHtml(opt)}')">${escapeHtml(opt)}</button>`;
+    });
+    html += `</div>`;
+  }
+  else if (q.type === 'multi_choice') {
+    html += `<div class="pill-group" id="pills-${q.id}">`;
+    q.options.forEach(opt => {
+      html += `<button class="pill-btn" onclick="toggleMulti('${q.id}', this, '${escapeHtml(opt)}')">${escapeHtml(opt)}</button>`;
+    });
+    html += `</div>`;
+    html += `<button class="pill-btn" style="margin-top:8px;background:var(--color-accent);color:white;border-color:var(--color-accent);display:none;" id="confirm-${q.id}" onclick="confirmMulti('${q.id}')">Auswahl best\u00e4tigen &#10003;</button>`;
+  }
+  else if (q.type === 'text') {
+    html += `<textarea class="text-input" id="input-${q.id}" placeholder="${escapeHtml(q.placeholder || '')}" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();saveText('${q.id}')}"></textarea>`;
+    html += `<button class="pill-btn" style="margin-top:10px;background:var(--color-accent);color:white;border-color:var(--color-accent);" onclick="saveText('${q.id}')">Speichern</button>`;
+  }
+  else if (q.type === 'rating_matrix') {
+    html += `<div class="rating-legend"><span>Selten</span><span>Sehr h\u00e4ufig</span></div>`;
+    q.items.forEach((item, i) => {
+      html += `<div class="rating-row">`;
+      html += `<span class="rating-label">${escapeHtml(item)}</span>`;
+      html += `<div class="rating-scale">`;
+      for (let v = 1; v <= 5; v++) {
+        html += `<button class="rating-btn" onclick="selectRating('${q.id}', ${i}, ${v}, this)">${v}</button>`;
+      }
+      html += `</div></div>`;
+    });
+    html += `<button class="pill-btn" style="margin-top:16px;background:var(--color-accent);color:white;border-color:var(--color-accent);display:none;" id="confirm-${q.id}" onclick="confirmRatings('${q.id}')">Bewertung best\u00e4tigen &#10003;</button>`;
+    // Store temp ratings
+    if (!window._tempRatings) window._tempRatings = {};
+    window._tempRatings[q.id] = {};
+  }
+  else if (q.type === 'priority_rank') {
+    q.items.forEach((item, i) => {
+      html += `<div class="priority-row">`;
+      html += `<select class="priority-select" id="prio-${q.id}-${i}" onchange="checkPriorities('${q.id}')">`;
+      html += `<option value="">-</option>`;
+      for (let v = 1; v <= q.items.length; v++) {
+        html += `<option value="${v}">${v}</option>`;
+      }
+      html += `</select>`;
+      html += `<span class="priority-label">${escapeHtml(item)}</span>`;
+      html += `</div>`;
+    });
+    html += `<button class="pill-btn" style="margin-top:12px;background:var(--color-accent);color:white;border-color:var(--color-accent);display:none;" id="confirm-${q.id}" onclick="confirmPriorities('${q.id}')">Priorisierung best\u00e4tigen &#10003;</button>`;
+  }
+
+  return html;
+}
+
+function renderAnswered(q, answer) {
+  let display = answer;
+  if (Array.isArray(answer)) display = answer.join(', ');
+  if (typeof answer === 'object' && !Array.isArray(answer)) display = JSON.stringify(answer);
+
+  return `<div class="q-answered-box">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+    <span class="q-answer-val">${escapeHtml(String(display).substring(0, 200))}${String(display).length > 200 ? '...' : ''}</span>
+    <button class="btn-change" onclick="clearAnswer('${q.id}')">&#x270E; \u00c4ndern</button>
+  </div>`;
+}
+
+function renderCompleted(container) {
+  container.innerHTML = `<div class="success-card">
+    <div class="check">&#10003;</div>
+    <h2>Vielen Dank f\u00fcr Ihre Antworten!</h2>
+    <p>Wir werden uns innerhalb von 2 Werktagen mit einer ma\u00dfgeschneiderten Demo-Einladung bei Ihnen melden.</p>
+    <p style="margin-top:16px;">Bei Fragen: <a href="mailto:info@productlex.com">info@productlex.com</a></p>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// INTERACTIONS
+// ═══════════════════════════════════════════════════════════════
+
+function selectSingle(qId, btn, value) {
+  btn.closest('.pill-group').querySelectorAll('.pill-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  responses[qId] = value;
+  persistResponse(qId, currentPhase, value, 'single_choice');
+  setTimeout(renderPhase, 300);
+}
+
+let _multiSelections = {};
+function toggleMulti(qId, btn, value) {
+  btn.classList.toggle('selected');
+  if (!_multiSelections[qId]) _multiSelections[qId] = new Set();
+  if (btn.classList.contains('selected')) _multiSelections[qId].add(value);
+  else _multiSelections[qId].delete(value);
+
+  const confirmBtn = document.getElementById('confirm-' + qId);
+  if (confirmBtn) confirmBtn.style.display = _multiSelections[qId].size > 0 ? 'inline-block' : 'none';
+}
+
+function confirmMulti(qId) {
+  const selected = Array.from(_multiSelections[qId] || []);
+  if (selected.length === 0) return;
+  responses[qId] = selected;
+  persistResponse(qId, currentPhase, selected.join(', '), 'multi_choice');
+  renderPhase();
+}
+
+function saveText(qId) {
+  const el = document.getElementById('input-' + qId);
+  if (!el) return;
+  const val = el.value.trim();
+  if (!val) return;
+  responses[qId] = val;
+  persistResponse(qId, currentPhase, val, 'text');
+  renderPhase();
+}
+
+function selectRating(qId, itemIdx, value, btn) {
+  btn.closest('.rating-scale').querySelectorAll('.rating-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  if (!window._tempRatings) window._tempRatings = {};
+  if (!window._tempRatings[qId]) window._tempRatings[qId] = {};
+  window._tempRatings[qId][itemIdx] = value;
+
+  const q = findQuestion(qId);
+  const confirmBtn = document.getElementById('confirm-' + qId);
+  if (confirmBtn && q) {
+    const allRated = q.items.every((_, i) => window._tempRatings[qId][i]);
+    confirmBtn.style.display = allRated ? 'inline-block' : 'none';
+  }
+}
+
+function confirmRatings(qId) {
+  const q = findQuestion(qId);
+  if (!q) return;
+  const result = {};
+  q.items.forEach((item, i) => {
+    result[item] = window._tempRatings[qId]?.[i] || 0;
+  });
+  responses[qId] = result;
+  const summary = Object.entries(result).map(([k, v]) => `${k}: ${v}`).join('; ');
+  persistResponse(qId, currentPhase, summary, 'rating_matrix');
+  renderPhase();
+}
+
+function checkPriorities(qId) {
+  const q = findQuestion(qId);
+  if (!q) return;
+  const anyFilled = q.items.some((_, i) => document.getElementById(`prio-${qId}-${i}`)?.value);
+  const confirmBtn = document.getElementById('confirm-' + qId);
+  if (confirmBtn) confirmBtn.style.display = anyFilled ? 'inline-block' : 'none';
+}
+
+function confirmPriorities(qId) {
+  const q = findQuestion(qId);
+  if (!q) return;
+  const result = {};
+  q.items.forEach((item, i) => {
+    const val = document.getElementById(`prio-${qId}-${i}`)?.value;
+    if (val) result[item] = parseInt(val);
+  });
+  responses[qId] = result;
+  const summary = Object.entries(result).sort((a, b) => a[1] - b[1]).map(([k, v]) => `${v}. ${k}`).join('; ');
+  persistResponse(qId, currentPhase, summary, 'priority_rank');
+  renderPhase();
+}
+
+function clearAnswer(qId) {
+  delete responses[qId];
+  renderPhase();
+}
+
+function findQuestion(qId) {
+  for (const phase of PHASE_ORDER) {
+    const q = PHASE_QUESTIONS[phase].find(q => q.id === qId);
+    if (q) return q;
+  }
+  return null;
+}
+
+function nextPhase() {
+  const idx = PHASE_ORDER.indexOf(currentPhase);
+  if (idx < PHASE_ORDER.length - 1) {
+    currentPhase = PHASE_ORDER[idx + 1];
+    updateProspectPhase(currentPhase);
+    renderPhase();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+async function submitAll() {
+  currentPhase = 'completed';
+  updateProspectPhase('completed');
+
+  // Also send email notification
+  try {
+    const body = Object.entries(responses).map(([k, v]) => {
+      const q = findQuestion(k);
+      const label = q ? q.text : k;
+      const val = typeof v === 'object' ? JSON.stringify(v) : v;
+      return `${label}\n  -> ${val}`;
+    }).join('\n\n');
+
+    const subject = `[Client122] Neue Antworten von ${prospectInfo.name || 'Unbekannt'} (${prospectInfo.company || ''})`;
+    const mailTo = `mailto:info@productlex.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+    // Try to open email client as backup
+    const a = document.createElement('a');
+    a.href = mailTo;
+    a.click();
+  } catch (e) { /* ignore */ }
+
+  renderPhase();
+}
+
+function updateStepper() {
+  const idx = currentPhase === 'completed' ? PHASE_ORDER.length : PHASE_ORDER.indexOf(currentPhase);
+  PHASE_ORDER.forEach((phase, i) => {
+    const step = document.getElementById(`step${i + 1}`);
+    const conn = document.getElementById(`conn${i + 1}`);
+    if (!step) return;
+    step.classList.remove('active', 'completed');
+    if (i < idx) step.classList.add('completed');
+    else if (i === idx) step.classList.add('active');
+    if (conn) {
+      conn.classList.remove('completed');
+      if (i < idx) conn.classList.add('completed');
+    }
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PERSISTENCE
+// ═══════════════════════════════════════════════════════════════
+
+async function persistResponse(questionId, phase, answerValue, questionType) {
+  if (!prospectId || typeof sb === 'undefined' || !sb) return;
+  try {
+    await sb.from('prospect_responses').upsert({
+      prospect_id: prospectId,
+      phase,
+      question_id: questionId,
+      question_text: (findQuestion(questionId) || {}).text || '',
+      question_type: questionType,
+      answer_value: answerValue,
+      answered_at: new Date().toISOString()
+    }, { onConflict: 'prospect_id,question_id' });
+  } catch (err) {
+    console.warn('Failed to persist:', err);
+  }
+}
+
+async function updateProspectPhase(phase) {
+  if (!prospectId || typeof sb === 'undefined' || !sb) return;
+  try {
+    await sb.from('prospects').update({
+      current_phase: phase,
+      updated_at: new Date().toISOString()
+    }).eq('id', prospectId);
+  } catch (err) {
+    console.warn('Failed to update phase:', err);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════════════════════
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════
+
+document.addEventListener('DOMContentLoaded', async function() {
+  // Init Supabase if available
+  try {
+    if (typeof window.supabase !== 'undefined' && typeof SUPABASE_URL !== 'undefined') {
+      sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+    }
+  } catch (e) {
+    console.warn('Supabase init skipped:', e);
+  }
+
+  // Check returning user
+  if (prospectId && sb) {
+    document.getElementById('gateForm').style.display = 'none';
+    const returning = document.getElementById('gateReturning');
+    returning.style.display = 'block';
+    if (prospectInfo.name) returning.textContent = `Willkommen zur\u00fcck, ${prospectInfo.name}! Ihre Antworten werden geladen...`;
+
+    try {
+      const { data } = await sb.from('prospects').select('*').eq('id', prospectId).single();
+      if (data) {
+        currentPhase = data.current_phase || 'situation';
+        if (currentPhase === 'completed') currentPhase = 'completed';
+
+        // Load previous responses
+        const { data: resps } = await sb.from('prospect_responses').select('*').eq('prospect_id', prospectId);
+        if (resps) {
+          resps.forEach(r => {
+            try { responses[r.question_id] = JSON.parse(r.answer_value); } catch { responses[r.question_id] = r.answer_value; }
+          });
+        }
+
+        showQuestionnaire();
+      } else {
+        localStorage.removeItem(PROSPECT_KEY);
+        prospectId = null;
+        returning.style.display = 'none';
+        document.getElementById('gateForm').style.display = 'flex';
+      }
+    } catch (err) {
+      console.warn('Init error:', err);
+      returning.style.display = 'none';
+      document.getElementById('gateForm').style.display = 'flex';
+    }
+  }
+});
+</script>
+
+</body>
+</html>
