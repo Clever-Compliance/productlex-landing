@@ -9,8 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-  <script src="supabase-config.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -958,9 +957,11 @@ function escapeHtml(str) {
 // ═══════════════════════════════════════════════════════════════
 
 document.addEventListener('DOMContentLoaded', async function() {
-  // Init Supabase if available
+  // Init Supabase
+  const SUPABASE_URL  = 'https://metmksufpnzkknrdgexa.supabase.co';
+  const SUPABASE_ANON = 'sb_publishable_lzHG7uz77AD1-lg6tAgOLw_w9S5zAXV';
   try {
-    if (typeof window.supabase !== 'undefined' && typeof SUPABASE_URL !== 'undefined') {
+    if (typeof window.supabase !== 'undefined') {
       sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
     }
   } catch (e) {
