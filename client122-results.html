@@ -196,7 +196,7 @@ async function loadData() {
     const { data: prospects, error: pErr } = await sb
       .from('prospects')
       .select('*')
-      .eq('source', 'client122')
+      .eq('sourse', 'client122')
       .order('created_at', { ascending: false });
 
     if (pErr) throw pErr;

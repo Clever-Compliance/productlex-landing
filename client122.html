@@ -568,7 +568,7 @@ async function startAssessment() {
     if (typeof sb !== 'undefined' && sb) {
       const { data, error } = await sb.from('prospects').insert({
         name, email, role, company,
-        source: 'client122',
+        sourse: 'client122',
         current_phase: 'situation',
         created_at: new Date().toISOString()
       }).select().single();
